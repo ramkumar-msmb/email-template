@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const EmailService = require('./email-service');
+const EmailService = require('../services/email-service');
 
 async function testEmailSending() {
   console.log('🚀 Starting Email Template Test...\n');

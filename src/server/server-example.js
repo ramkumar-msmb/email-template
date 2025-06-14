@@ -1,5 +1,6 @@
 const express = require('express');
-const EmailService = require('./email-service');
+const path = require('path');
+const EmailService = require('../services/email-service');
 
 const app = express();
 const port = 3000;
@@ -11,8 +12,8 @@ app.use(express.urlencoded({ extended: true }));
 // Initialize email service
 const emailService = new EmailService();
 
-// Serve the HTML preview
-app.use(express.static('.'));
+// Serve static files from public directory
+app.use(express.static(path.join(__dirname, '../../public')));
 
 // API endpoint to send doctor account created email
 app.post('/api/send-doctor-email', async (req, res) => {

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const EmailService = require('./email-service');
+const EmailService = require('../services/email-service');
 
 // Sample data for different templates
 const sampleData = {

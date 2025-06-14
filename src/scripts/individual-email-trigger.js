@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const readline = require('readline');
-const EmailService = require('./email-service');
+const EmailService = require('../services/email-service');
 
 // Create readline interface for user input
 const rl = readline.createInterface({
