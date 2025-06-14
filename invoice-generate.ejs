@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .invoice-container {
+            height: 29.7cm;
+            width: 21cm;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            page-break-after: always;
+        }
+
+        .header {
+            background-color: #1b3f6d;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-left img {
+            width: 120px;
+            margin-bottom: 70px;
+        }
+
+        .header-left p {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .header-right {
+            text-align: right;
+            line-height: 1.7;
+        }
+
+        .header-right p {
+            font-size: 12px;
+            margin: 2px 0;
+        }
+
+        .header-right p:first-child {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .table-container {
+            margin: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th,
+        table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        table th {
+            font-weight: bold;
+            background-color: #1b3f6d;
+            color: #fff;
+            text-align: center;
+        }
+
+        table td {
+            text-align: left;
+        }
+
+        table td:first-child,
+        table td:nth-child(3),
+        table td:nth-child(4) {
+            text-align: center;
+        }
+
+        .totals-container {
+            padding: 20px;
+            background-color: white;
+            flex-grow: 1;
+            line-height: 2.2;
+        }
+
+        .amount-calc {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .totals {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+            font-weight: bold;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+
+        .fixed-bottom {
+            position: relative;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .delivery-type {
+            background-color: #e8ecf0;
+            padding: 8px;
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        .footer {
+            background-color: #1b3f6d;
+            height: 23px;
+            color: #fff;
+            text-align: center;
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        .details-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            margin-top: 10px;
+        }
+
+        .details-box {
+            width: 48%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .patient-details, .invoice-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 15px;
+            background-color: #F3F9FF;
+            border-radius: 5px;
+            flex-grow: 1;
+            font-size: 12px;
+        }
+
+        .details-heading {
+            font-size: 13px;
+            font-weight: 400;
+            margin-bottom: 5px;
+            color: #242424;
+            padding-left: 10px;
+            padding-top: 5px;
+        }
+
+        .patient-details p, .invoice-details p {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 5px 0;
+        }
+
+        .patient-details strong, .invoice-details strong {
+            min-width: 140px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .patient-details span, .invoice-details span {
+            flex-grow: 1;
+            text-align: left;
+            color: #1B3F6D;
+        }
+
+        @media print {
+            .invoice-container {
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <% 
+    const items = prescription_items || [];
+    // Calculate total pages needed
+    const itemsPerPage = 10;
+    const totalPages = Math.ceil(items.length / itemsPerPage);
+    
+    // Loop through pages
+    for (let page = 0; page < totalPages; page++) {
+        const startIndex = page * itemsPerPage;
+        const endIndex = Math.min(startIndex + itemsPerPage, items.length);
+        const pageItems = items.slice(startIndex, endIndex);
+        const isLastPage = page === totalPages - 1;
+    %>
+    <div class="invoice-container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-left">
+                <img src="https://d2en3yjhr69gmk.cloudfront.net/common/WebLogo.svg" alt="SendScript">
+                <p>Invoice</p>
+            </div>
+            <div class="header-right">
+                <p><%= pharmacy.name %></p>
+                <p>
+                    <%= [
+                      pharmacy.address_line_1,
+                      pharmacy.address_line_2,
+                      pharmacy.address_line_3,
+                      pharmacy.city,
+                      pharmacy.county,
+                      pharmacy.country
+                    ].filter(Boolean).join(', ') %>
+                </p>
+                <p><%= pharmacy.postal_code %></p>
+                <p>Tel: <%= pharmacy.contact_number %></p>
+                <p>Email: <%= pharmacy.email %></p>
+            </div>
+        </div>
+
+        <!-- Patient Details and Invoice Details -->
+        <div class="details-container">
+            <!-- Patient Details -->
+            <div class="details-box">
+                <div class="details-heading">Patient Details</div>
+                <div class="patient-details">
+                    <p>
+                        <strong>Full Name:</strong>
+                        <span><%= patient_details.patient_title %> <%= patient_details.patient_first_name %> <%= patient_details.patient_sur_name %></span>
+                    </p>
+                    <p>
+                        <strong>Date Of Birth:</strong>
+                        <span><% 
+                            // Parse the ISO date string
+                            const dobOriginal = new Date(patient_details.patient_dob);
+                            
+                            // Create a new date object with the date incremented by 1
+                            const dob = new Date(dobOriginal);
+                            dob.setDate(dobOriginal.getDate());
+                            
+                            // Format as DD/MM/YYYY
+                            const day = String(dob.getDate()).padStart(2, '0');
+                            const month = String(dob.getMonth() + 1).padStart(2, '0'); // Month is 0-based
+                            const year = dob.getFullYear();
+                            
+                            const formattedDate = `${day}/${month}/${year}`;
+                          %>
+                          <%= formattedDate %></span>
+                    </p>
+                    <p>
+                        <strong>Address:</strong>
+                        <span><%= patient_details.patient_address_line_1 %>, <%= patient_details.patient_address_line_2 %>, <%= patient_details.patient_city %>, <%= patient_details.patient_country %>, <%= patient_details.patient_postal_code %></span>
+                    </p>
+                    <p>
+                        <strong>Contact Number:</strong>
+                        <span><%= patient_details.patient_mobile %></span>
+                    </p>
+                </div>
+            </div>
+        
+            <!-- Invoice Details -->
+            <div class="details-box">
+                <div class="details-heading">Invoice Details</div>
+                <div class="invoice-details">
+                    <p>
+                        <strong>Invoice Number:</strong>
+                        <span><%= invoice_id %></span>
+                    </p>
+                    <p>
+                        <strong>Invoice Date:</strong>
+                        <span><% 
+                            // Parse the ISO date string
+                            const dobOriginal_invoice = new Date(invoice_date);
+                            
+                            // Create a new date object with the date incremented by 1
+                            const dob_invoice = new Date(dobOriginal_invoice);
+                            dob_invoice.setDate(dobOriginal_invoice.getDate());
+                            
+                            // Format as DD/MM/YYYY
+                            const day_invoice = String(dob_invoice.getDate()).padStart(2, '0');
+                            const month_invoice = String(dob_invoice.getMonth() + 1).padStart(2, '0'); // Month is 0-based
+                            const year_invoice = dob_invoice.getFullYear();
+                            
+                            const formattedDate_invoice = `${day_invoice}/${month_invoice}/${year_invoice}`;
+                          %>
+                        <%= formattedDate_invoice %></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- TABLE -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>SL No</th>
+                        <th>Medicine</th>
+                        <th>Quantity</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let i = 0; i < pageItems.length; i++) { 
+                        const item = pageItems[i];
+                        const itemNumber = startIndex + i + 1; // Global item number
+                    %>
+                    <tr>
+                        <td><%= itemNumber %></td>
+                        <td><%= item.name %></td>
+                        <td>
+                            <%= item.quantity %>
+                            <%= item.unit %>
+                        </td>
+                        <td>£ <%= item.price %></td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TOTALS SECTION - Only show on the last page -->
+        <% if (isLastPage) { %>
+        <div class="totals-container">
+            <div class="amount-calc">
+                <div>Gross Amount</div>
+                <div>£ <%= (total_price - (delivery_charge || 0)).toFixed(2) %></div>
+            </div>
+            <div class="amount-calc">
+                <div>Delivery Charge</div>
+                <div>£ <%= (delivery_charge || 0).toFixed(2) %></div>
+            </div>
+            <div class="totals">
+                <div>Net Amount</div>
+                <div>£ <%= Number(total_price || 0).toFixed(2) %></div>
+            </div>
+        </div>
+        <% } else { %>
+        <div class="totals-container"></div>
+        <% } %>
+
+        <div class="footer"></div>
+    </div>
+    <% } %>
+</body>
+
+</html>

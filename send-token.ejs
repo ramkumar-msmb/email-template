@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electronic Private Prescription</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+      }
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 2px;
+        padding: 20px;
+      }
+      .logo img {
+        max-width: 170px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+
+      .content {
+        font-size: 16px;
+        line-height: 26px;
+        color: #4a4a4a;
+      }
+      .footer {
+        background-color: #1b3f6d;
+        color: #fff;
+        text-align: center;
+        font-size: 12px;
+        padding: 10px;
+        margin-top: 20px;
+      }
+      .clinic-details {
+        border-top: 1px solid #ddd;
+        margin-top: 15px;
+        padding-top: 10px;
+      }
+
+      .clinic-details h4 {
+        margin-bottom: 8px;
+        color: #1b3f6d;
+      }
+
+      .clinic-info-line {
+        margin-bottom: 4px;
+        line-height: 1.4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <img src="https://public-consumables.s3.eu-west-2.amazonaws.com/sendscript-logo.png" alt="SendScript Logo" />
+      </div>
+      
+      <div class="content">
+        <p>Dear <%= patient_name %>,</p>
+        <p>Thank you for your consultation with <%= doctor_name %> at <%= clinic_name %>. Below is your electronic private prescription ID for your convenience.</p>
+        
+        <p><strong>Prescription ID:</strong> <%= prescription_id %></p>
+        <h4>Patient Instructions:</h4>
+        <ul>
+          <li>Please present this Prescription ID to the responsible pharmacist at your preferred pharmacy.</li>
+          <li>To retrieve your prescription, provide the pharmacist with the Prescription ID and your date of birth.</li>
+          <li>Do not download or print the prescription. It will be processed electronically.</li>
+        </ul>
+        
+        <h4>Pharmacist Instructions:</h4>
+        <ul>
+          <li>Visit <a href="https://www.sendscript.com/dispense">www.sendscript.com/dispense</a></li>
+          <li>Enter the Prescription ID and patient's date of birth to retrieve the prescription.</li>
+          <li>Download the prescription and select "Dispensed" once you have processed it.</li>
+        </ul>
+        
+        <p>If you have any questions or need assistance, please do not hesitate to contact us.</p>
+        
+        <p>Warm regards,</p>
+        <div class="clinic-details">
+          <h4>Clinic Information</h4>
+          <div class="clinic-info-line"><strong>Name:</strong> <%= clinic_name %></div>
+          <div class="clinic-info-line"><strong>Address:</strong> <%= clinic_address %></div>
+          <div class="clinic-info-line"><strong>City:</strong> <%= clinic_city %></div>
+          <div class="clinic-info-line"><strong>Postal Code:</strong> <%= clinic_postal_code %></div>
+          <div class="clinic-info-line"><strong>Country:</strong> <%= clinic_country %></div>
+          <div class="clinic-info-line"><strong>Tel:</strong> <%= clinic_mobile %></div>
+          <div class="clinic-info-line"><strong>Email:</strong> <%= clinic_email %></div>
+        </div>
+      </div>
+      
+      <div class="footer"></div>
+    </div>
+  </body>
+</html>

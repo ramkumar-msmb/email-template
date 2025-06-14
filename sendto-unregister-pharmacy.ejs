@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electronic Private Prescription</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+      }
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 2px;
+        padding: 20px;
+      }
+      .logo img {
+        max-width: 170px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+
+      .content {
+        font-size: 16px;
+        line-height: 26px;
+        color: #4a4a4a;
+      }
+      .footer {
+        background-color: #1b3f6d;
+        color: #fff;
+        text-align: center;
+        font-size: 12px;
+        padding: 10px;
+        margin-top: 20px;
+      }
+      .clinic-details {
+        border-top: 1px solid #ddd;
+        margin-top: 15px;
+        padding-top: 10px;
+      }
+
+      .clinic-details h4 {
+        margin-bottom: 8px;
+        color: #1b3f6d;
+      }
+
+      .clinic-info-line {
+        margin-bottom: 4px;
+        line-height: 1.4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <img src="https://public-consumables.s3.eu-west-2.amazonaws.com/sendscript-logo.png" alt="SendScript Logo" />
+      </div>
+    
+      
+      <div class="content">
+        <p>Dear <strong><%= pharmacyName %></strong>,</p>
+        <p>Please find below the electronic private prescription details from <strong><%= clinic.name %> </strong>. </p>
+        
+        <div><strong>Prescription ID:</strong> <%= prescriptionCode %></div>
+        <div><strong>Patient DOB:</strong> <%= patientDob %></div>
+        <div><strong>Patient Name:</strong> <%= patientName %></div>
+        <div><strong>Contact Number:</strong> <%= patientMobileNumber %></div>
+        
+        <!-- <h4>Patient Instructions:</h4>
+        <ul>
+          <li>Please present this Prescription ID to the responsible pharmacist at your preferred pharmacy.</li>
+          <li>To retrieve your prescription, provide the pharmacist with the Prescription ID and your date of birth.</li>
+          <li>Do not download or print the prescription. It will be processed electronically.</li>
+        </ul> -->
+        
+        <h4>Pharmacist Instructions:</h4>
+        <ul>
+          <li>Visit <a href="https://www.sendscript.com/dispense">www.sendscript.com/dispense</a></li>
+          <li>Enter the Prescription ID and patient's date of birth to access the prescription.</li>
+          <li>Dispense the prescription and download a copy for your records.</li>
+        </ul>
+        
+        <!-- <p>If you have any questions or need assistance, please do not hesitate to contact us.</p> -->
+        
+        <p>Warm regards,</p>
+        <div class="clinic-details">
+          <h4>Clinic Information</h4>
+          <div class="clinic-info-line"><strong>Name:</strong> <%= clinic.name %></div>
+          <div class="clinic-info-line"><strong>Address:</strong> <%= clinic.address_line_1 %><% if(clinic.address_line_2) { %>, <%= clinic.address_line_2 %><% } %></div>
+          <div class="clinic-info-line"><strong>City:</strong> <%= clinic.city %></div>
+          <div class="clinic-info-line"><strong>Postal Code:</strong> <%= clinic.postal_code %></div>
+          <% if(clinic.country) { %><div class="clinic-info-line"><strong>Country:</strong> <%= clinic.country %></div><% } %>
+          <div class="clinic-info-line"><strong>Tel:</strong> <%= clinic.contact_number %></div>
+          <div class="clinic-info-line"><strong>Email:</strong> <%= clinic.email %></div>
+        </div>
+      </div>
+      
+      <div class="footer"></div>
+    </div>
+  </body>
+</html>
