@@ -1,84 +1,654 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&amp;family=DM+Sans:wght@400;500;600;700&amp;family=Tiro+Bangla::wght@400;800&amp;family=Abhaya+Libre:wght@400;800&amp;display=swap"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <title>Patient Consent Form</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SendScript Email Template Preview - Mobile Responsive</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
-</head>
+      body {
+        font-family: DM Sans, BlinkMacSystemFont, Segoe UI, Helvetica Neue,
+          Arial, sans-serif !important;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 20px;
+      }
 
-<body>
-  <!-- Email wrapper for full-width background -->
-  <div class="email-wrapper">
-    <!-- Main email container -->
-    <div class="email-container">
-      
-      <!-- Header section with background image -->
-      <div class="header-section">
-        <div class="header-content">
-          <img src="https://d2x163e8fostr4.cloudfront.net/common/ss_logo.png" 
-               alt="SendScript Logo" 
-               class="logo-img">
-          <div class="tagline">
-            Seamless Integration For<br>
-            Better Healthcare Solutions
-          </div>
-        </div>
-      </div>
-      
-      <!-- Content section -->
-      <div class="content-section">
-        <div class="email-title">
-          Reset Your Sendscript Password
-        </div>
+      .form-container {
+        max-width: 595px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 28px 20px 56px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      /* Header Styles */
+      .form-header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 100%;
+        margin-bottom: 36px;
+      }
+
+      .form-title {
+        font-family: Tiro Bangla, serif !important;
+        color: #93763c;
+        font-size: 30px;
+        font-weight: 400;
+        line-height: 50.033px;
+        font-variant: all-small-caps;
+        margin-top: 36px;
+      }
+
+      .form-logo {
+        max-width: 114px;
+        width: 100%;
+        aspect-ratio: 1.65;
+        object-fit: contain;
+      }
+
+      /* Section Styles */
+      .section {
+        padding: 12px;
+        margin-top: 12px;
+        width: 100%;
+        border-radius: 8px;
+        background-color: #fafaf9;
+      }
+
+      .section-title {
+        margin-bottom: 16px;
+        color: #93763C;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 22px;
+      }
+
+      .section-content {
+        width: 100%;
+      }
+
+      /* Detail Row Styles */
+      .detail-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 12px;
+      }
+
+      .detail-row.multiline {
+        align-items: flex-start;
+      }
+
+      .detail-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .detail-label {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        min-width: 240px;
+        width: 280px;
+        color: #9A9A9A;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 22px; /* 220% */
+      }
+
+      .detail-value {
+        color: #444444;
+        font-size: 12px;
+        line-height: 1.5;
+        flex: 1;
+      }
+
+      .detail-value.bold {
+        font-weight: 600;
+        color: #0f172a;
+      }
+
+      /* Question Row Styles */
+      .question-row {
+        width: 100%;
+        padding-bottom: 12px;
+        border-bottom: 1px dashed #e5e5e5;
+        margin-bottom: 14px;
+      }
+
+      .question-row:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .question-content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        width: 100%;
+      }
+
+      .question-label {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        min-width: 240px;
+        flex: 1;
+        color: #0f172a;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.25;
+      }
+
+      .question-answer {
+        color: #0f172a;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.5;
+        white-space: nowrap;
+      }
+
+      .question-answer.flexible {
+        white-space: normal;
+      }
+
+      /* Text Area Styles */
+      .text-area {
+        gap: 10px;
+        padding: 14px 10px;
+        margin-top: 10px;
+        width: 100%;
+        font-size: 12px;
+        line-height: 1.75;
+        background-color: white;
+        border-radius: 6px;
+        color: #52525b;
+      }
+
+      /* Payment Details Styles */
+      .payment-header {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .payment-badge {
+        gap: 10px;
+        padding: 6px 10px;
+        white-space: nowrap;
+        border-radius: 4px;
+        border: 1px solid #93763C;
+        background-color: #fafaf9;
+        color: #0f172a;
+        min-height: 19px;
+        color: #00152B;
+        display: flex;
+        align-items: center;
+        height: 19px;
+        font-size: 9px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 22px; /* 244.444% */
+        margin-bottom: 16px;
+      }
+
+      /* Consent Section Styles */
+      .consent-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 16px;
+        width: 100%;
+        font-size: 12px;
+        line-height: 1.33;
+        text-align: justify;
+        text-transform: capitalize;
+        color: #262626;
+      }
+
+      .consent-paragraph {
+        margin-bottom: 20px;
+      }
+
+      .consent-paragraph:last-child {
+        margin-bottom: 0;
+      }
+
+      /* Signature Section Styles */
+      .signature-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: center;
+        padding: 12px;
+        margin-top: 16px;
+        width: 100%;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1;
+        white-space: nowrap;
+        border-radius: 8px;
+        background-color: #fafaf9;
+        color: #0f172a;
+      }
+
+      .signature-label {
+        width: 63px;
+      }
+
+      .signature-box {
+        height: 45px;
+        width: 121px;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+        background-color: white;
+      }
+
+      /* Final Details Styles */
+      .final-detail-row {
+        width: 100%;
+        padding-bottom: 12px;
+        border-bottom: 1px dashed #e5e5e5;
+        margin-bottom: 14px;
+      }
+
+      .final-detail-row:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .final-detail-content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      .final-detail-content.center {
+        align-items: center;
+      }
+
+      .final-detail-label {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.25;
+        min-width: 240px;
+        width: 440px;
+      }
+
+      .final-detail-value {
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.5;
+        color: #0f172a;
+      }
+
+      .final-detail-value.nowrap {
+        white-space: nowrap;
+      }
+
+      .additional-question {
+        margin-top: 14px;
+        width: 100%;
+        font-size: 12px;
+        line-height: 1.75;
+      }
+
+      .additional-question-label {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        width: 100%;
+        font-weight: 500;
+        color: #0f172a;
+        margin-bottom: 10px;
+      }
+
+      .additional-question-text {
+        gap: 10px;
+        padding: 14px 10px;
+        background-color: white;
+        border-radius: 6px;
+        color: #52525b;
+      }
+
+      @media print {
+        body {
+          background-color: white;
+          padding: 0;
+        }
         
-        <div class="email-content">
-          <p class="email-text">Dear Dr. John Smith,</p>
-          <p class="email-text">We received a request to reset your Sendscript account password.</p>
-          <p class="email-text">Please use the following Verification Code to proceed:</p>
-          
-          <!-- Verification code with individual digits -->
-          <div class="verification-container">
-            <div class="verification-code">
-              <div class="code-digit">1</div>
-              <div class="code-digit">2</div>
-              <div class="code-digit">3</div>
-              <div class="code-digit">4</div>
-              <div class="code-digit">5</div>
-              <div class="code-digit">6</div>
+        .form-container {
+          box-shadow: none;
+          max-width: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="form-container">
+      <!-- Form Header -->
+      <header class="form-header">
+        <h1 class="form-title">Patient Consent Form</h1>
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/3a23db1bcc169a16f10ef9c3493ac7fc576f0c8b?placeholderIfAbsent=true&apiKey=5e118d5aeb84492eab1be677fe41dfe9" 
+             alt="Medical facility logo" class="form-logo" />
+      </header>
+
+      <div class="form-sections">
+        <!-- Patient Details Section -->
+        <section class="section">
+          <h2 class="section-title">Patient Details</h2>
+          <div class="section-content">
+            <div class="detail-row">
+              <div class="detail-label">Full Name</div>
+              <div class="detail-value">Ms. Ann Davis</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Date Of Birth</div>
+              <div class="detail-value">22/06/1989</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Gender</div>
+              <div class="detail-value">Female</div>
+            </div>
+            <div class="detail-row multiline">
+              <div class="detail-label">London Address</div>
+              <div class="detail-value">4517 Washington Ave. Manchester,<br>39495</div>
+            </div>
+            <div class="detail-row multiline">
+              <div class="detail-label">Overseas or Other UK Permanent Address<br>(if different from above)</div>
+              <div class="detail-value">4517 Washington Ave. Manchester,<br>39495</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Home Tel</div>
+              <div class="detail-value">123456789</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Work Tel</div>
+              <div class="detail-value">23356899</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Mobile No</div>
+              <div class="detail-value">+44 54865656</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Email</div>
+              <div class="detail-value">oliver@gmail.com</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Occupation</div>
+              <div class="detail-value">Software Developer</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">How did you know about the practice?</div>
+              <div class="detail-value">From Website</div>
             </div>
           </div>
-          
-          <p class="email-text">This code is valid for the next 10 minutes. If you did not request a password reset, please ignore this message.</p>
-        </div>
-        
-        <div class="email-content regards_section">
-          <p class="email-text regards_text">Regards,<br>The SendScript Team</p>
-        </div>
-      </div>
-      
-      <!-- Footer section -->
-      <div class="footer-section">
-        <p class="footer-text">116 Harley Street, London, W1G 7JL</p>
-        <div class="footer-links">
-          <p class="footer-text">support@sendscript.com</p>
-          <p class="footer-text">+44 20 7486 1546</p>
-        </div>
-        <div class="footer-links">
-          <p class="footer-text">© 2025 SendScript, Inc. All Rights Reserved.</p>
-          <p class="footer-text">Privacy Policy</p>
-          <p class="footer-text">Terms and Conditions</p>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-</body>
+        </section>
 
+        <!-- Previous NHS Section -->
+        <section class="section">
+          <h2 class="section-title">Previous NHS</h2>
+          <div class="section-content">
+            <div class="detail-row">
+              <div class="detail-label">Tel</div>
+              <div class="detail-value">123456789</div>
+            </div>
+            <div class="detail-row multiline">
+              <div class="detail-label">Address</div>
+              <div class="detail-value">4517 Washington Ave. Manchester,<br>39495</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Payment Details Section -->
+        <section class="section">
+          <div class="payment-header">
+            <h2 class="section-title">Payment Details</h2>
+            <div class="payment-badge">Insured</div>
+          </div>
+          <div class="section-content">
+            <div class="detail-row">
+              <div class="detail-label">Insurance Name</div>
+              <div class="detail-value">Life Insurance</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Membership Number</div>
+              <div class="detail-value">123456789</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Pre-authorization/Claim No</div>
+              <div class="detail-value">33567489900</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Past Medical History Section -->
+        <section class="section">
+          <h2 class="section-title">Past Medical History</h2>
+          <div class="section-content">
+            <div class="question-row">
+              <div class="question-content">
+                <div class="question-label">Do you have any significant past medical history?</div>
+                <div class="question-answer">Yes</div>
+              </div>
+              <div class="text-area">
+                I was diagnosed with hypertension in 2018 and underwent appendectomy in 2020. I also have a history of seasonal allergies.
+              </div>
+            </div>
+            <div class="question-row">
+              <div class="question-content">
+                <div class="question-label">Have you had any operations or been admitted to hospital?</div>
+                <div class="question-answer">No</div>
+              </div>
+            </div>
+            <div class="question-row">
+              <div class="question-content">
+                <div class="question-label">Are there any other clinicians involved in your care?</div>
+                <div class="question-answer">No</div>
+              </div>
+            </div>
+            <div class="question-row">
+              <div class="question-content">
+                <div class="question-label">Have you had any recent investigations? (e.g. blood tests, scans)</div>
+                <div class="question-answer">Yes</div>
+              </div>
+              <div class="text-area">
+                I was diagnosed with hypertension in 2018 and underwent appendectomy in 2020. I also have a history of seasonal allergies.
+              </div>
+            </div>
+            <div class="question-row">
+              <div class="question-content">
+                <div class="question-label">Have you had any recent investigations? (e.g. blood tests, scans)</div>
+                <div class="question-answer">Yes</div>
+              </div>
+              <div class="text-area">
+                I was diagnosed with hypertension in 2018 and underwent appendectomy in 2020. I also have a history of seasonal allergies.
+              </div>
+            </div>
+            <div class="additional-question">
+              <div class="additional-question-label">
+                Please let us know if you would like any other doctor/consultant notified of this and/or any future<br>
+                <span style="line-height: 16px">consultations</span>
+              </div>
+              <div class="additional-question-text">
+                I was diagnosed with hypertension in 2018 and underwent appendectomy in 2020. I also have a history of seasonal allergies.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Life Style Section -->
+        <section class="section">
+          <h2 class="section-title">Life Style</h2>
+          <div class="section-content">
+            <div class="question-row">
+              <div class="question-content">
+                <div class="question-label">Do you exercise?</div>
+                <div class="question-answer">No</div>
+              </div>
+            </div>
+            <div class="question-row">
+              <div class="question-content">
+                <div class="question-label">Diet</div>
+                <div class="question-answer flexible">Meat</div>
+              </div>
+              <div class="text-area">
+                I was diagnosed with hypertension in 2018 and underwent appendectomy in 2020. I also have a history of seasonal allergies.
+              </div>
+            </div>
+            <div class="question-row">
+              <div class="question-content">
+                <div class="question-label">Do You Smoke?</div>
+                <div class="question-answer flexible">Yes, 2 Packets Per Day</div>
+              </div>
+            </div>
+            <div class="question-row">
+              <div class="question-content">
+                <div class="question-label">Do you drink alcohol?</div>
+                <div class="question-answer">No</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- For Female Patients Section -->
+        <section class="section">
+          <h2 class="section-title">For Female Patients</h2>
+          <div class="section-content">
+            <div class="question-row">
+              <div class="question-content">
+                <div class="question-label">Do you have any problems with your periods?</div>
+                <div class="question-answer">Yes</div>
+              </div>
+              <div class="text-area">
+                I was diagnosed with hypertension in 2018 and underwent appendectomy in 2020. I also have a history of seasonal allergies.
+              </div>
+            </div>
+            <div class="question-row">
+              <div class="question-content">
+                <div class="question-label">Could you be pregnant?</div>
+                <div class="question-answer">Yes</div>
+              </div>
+              <div class="text-area" style="line-height: 1.25;">
+                Last cervical smear date and Result: 18 Jan 2025 , something
+              </div>
+            </div>
+            <div class="question-row">
+              <div class="question-content">
+                <div class="question-label">Any breast problems, for example lumps?</div>
+                <div class="question-answer">No</div>
+              </div>
+            </div>
+            <div class="question-row">
+              <div class="question-content">
+                <div class="question-label">Have you had a mammogram (inc. date)?</div>
+                <div class="question-answer">No</div>
+              </div>
+            </div>
+            <div class="question-row">
+              <div class="question-content">
+                <div class="question-label">Are you require / use contraception?</div>
+                <div class="question-answer">No</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Chaperone Section -->
+        <section class="section">
+          <div class="section-content">
+            <div class="question-row">
+              <div class="question-content">
+                <div class="question-label">Do you require a chaperone for this consultation?</div>
+                <div class="question-answer">No</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Consent Section -->
+        <section class="section">
+          <h2 class="section-title">
+            A<span style="text-transform: lowercase;">GREEMENT, </span>
+            <span style="text-transform: uppercase;">D</span>
+            <span style="text-transform: lowercase;">ECLARATION </span>
+            <span style="text-transform: capitalize;">A</span>
+            <span style="text-transform: lowercase;">ND </span>
+            <span style="text-transform: capitalize;">C</span>
+            <span style="text-transform: lowercase;">ONSENT</span>
+          </h2>
+          <div class="consent-text">
+            <p class="consent-paragraph">
+              I confirm that I have read, understood, and accept the terms and conditions outlined above. I understand that I am personally responsible for any costs associated with my procedure if these costs are not covered by medical insurance, insurer or other third party such as a guarantor. I undertake to settle all personal expenses, cost of treatment at the time of my departure or upon request. I give permission to LEH or any other healthcare professional involved in my care, to access health information about me that is relevant to my treatment, which may be held by LEH, other health professionals or health organisations.
+            </p>
+            <p class="consent-paragraph">
+              I also confirm that the information I have provided in this registration form is a true reflection of my current health and past medical history.
+            </p>
+          </div>
+        </section>
+
+        <!-- Signature Section -->
+        <div class="signature-section">
+          <label class="signature-label">Signature</label>
+          <div class="signature-box"></div>
+        </div>
+
+        <!-- Final Details Section -->
+        <section class="section">
+          <div class="section-content">
+            <div class="final-detail-row">
+              <div class="final-detail-content center">
+                <div class="final-detail-label">
+                  <div>Name</div>
+                </div>
+                <div class="final-detail-value">Amelia Johnson</div>
+              </div>
+            </div>
+            <div class="final-detail-row">
+              <div class="final-detail-content center">
+                <div class="final-detail-label">
+                  <div>Date</div>
+                </div>
+                <div class="final-detail-value nowrap">03/06/1015</div>
+              </div>
+            </div>
+            <div class="final-detail-row">
+              <div class="final-detail-content">
+                <div class="final-detail-label">
+                  <div>If you are not the patient, please state relationship to the patient</div>
+                </div>
+                <div class="final-detail-value">Mother</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </body>
 </html>
