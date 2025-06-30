@@ -20,7 +20,26 @@ function question(prompt) {
 
 // Template configurations with required fields
 const templateConfigs = {
+  // Account Management Templates
   1: {
+    name: 'Account Blocked by Super Admin',
+    method: 'sendAccountBlockedBySuperAdminEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter doctor email: ', required: true },
+      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true },
+      { name: 'reason', prompt: 'Enter reason for blocking (default: Policy violations): ', required: false, default: 'Policy violations' }
+    ]
+  },
+  2: {
+    name: 'Account Rejected by Super Admin',
+    method: 'sendAccountRejectedBySuperAdminEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter doctor email: ', required: true },
+      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true },
+      { name: 'reason', prompt: 'Enter rejection reason: ', required: true }
+    ]
+  },
+  3: {
     name: 'Doctor Account Created',
     method: 'sendDoctorAccountCreatedEmail',
     fields: [
@@ -29,7 +48,127 @@ const templateConfigs = {
       { name: 'loginUrl', prompt: 'Enter login URL: ', required: true }
     ]
   },
-  2: {
+  4: {
+    name: 'Doctor Account Creation',
+    method: 'sendDoctorAccountCreationEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter doctor email: ', required: true },
+      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true },
+      { name: 'verificationCode', prompt: 'Enter verification code: ', required: true }
+    ]
+  },
+  5: {
+    name: 'Doctor Super Admin Approval',
+    method: 'sendDoctorSuperAdminApprovalEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter doctor email: ', required: true },
+      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true },
+      { name: 'loginUrl', prompt: 'Enter login URL: ', required: true }
+    ]
+  },
+  6: {
+    name: 'Signup',
+    method: 'sendSignupEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter doctor email: ', required: true },
+      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true },
+      { name: 'otp', prompt: 'Enter OTP: ', required: true }
+    ]
+  },
+
+  // Clinic Management Templates
+  7: {
+    name: 'Clinic Join Request',
+    method: 'sendClinicJoinRequestEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter doctor email: ', required: true },
+      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true },
+      { name: 'clinicName', prompt: 'Enter clinic name: ', required: true }
+    ]
+  },
+  8: {
+    name: 'Clinic Registration',
+    method: 'sendClinicRegistrationEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter doctor email: ', required: true },
+      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true },
+      { name: 'clinicName', prompt: 'Enter clinic name: ', required: true }
+    ]
+  },
+  9: {
+    name: 'Clinic Registration Approved',
+    method: 'sendClinicRegistrationApprovedEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter doctor email: ', required: true },
+      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true }
+    ]
+  },
+  10: {
+    name: 'Clinic Registration Unsuccessful',
+    method: 'sendClinicRegistrationUnsuccessfulEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter doctor email: ', required: true },
+      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true },
+      { name: 'reason', prompt: 'Enter reason: ', required: true }
+    ]
+  },
+  11: {
+    name: 'Invite Doctor',
+    method: 'sendInviteDoctorEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter doctor email: ', required: true },
+      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true },
+      { name: 'invitationCode', prompt: 'Enter invitation code: ', required: true }
+    ]
+  },
+
+  // Email Verification Templates
+  12: {
+    name: 'Email Verification Account Creation',
+    method: 'sendEmailVerificationAccountCreationEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter user email: ', required: true },
+      { name: 'userName', prompt: 'Enter user name: ', required: true },
+      { name: 'verificationCode', prompt: 'Enter verification code: ', required: true }
+    ]
+  },
+  13: {
+    name: 'Email Verification Onboarding',
+    method: 'sendEmailVerificationOnboardingEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter user email: ', required: true },
+      { name: 'otp', prompt: 'Enter OTP: ', required: true }
+    ]
+  },
+  14: {
+    name: 'Update Email Address',
+    method: 'sendUpdateEmailAddressEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter user email: ', required: true },
+      { name: 'userName', prompt: 'Enter user name: ', required: true },
+      { name: 'verificationCode', prompt: 'Enter verification code: ', required: true }
+    ]
+  },
+  15: {
+    name: 'Forgot Password',
+    method: 'sendForgotPasswordEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter doctor email: ', required: true },
+      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true },
+      { name: 'otp', prompt: 'Enter reset OTP: ', required: true }
+    ]
+  },
+  16: {
+    name: 'Reinitiate Onfido Verification',
+    method: 'sendReinitiateOnfidoVerificationEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter doctor email: ', required: true },
+      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true }
+    ]
+  },
+
+  // Pharmacy Templates
+  17: {
     name: 'Pharmacy Verification',
     method: 'sendPharmacyVerificationEmail',
     fields: [
@@ -39,16 +178,69 @@ const templateConfigs = {
       { name: 'validity', prompt: 'Enter validity in minutes (default: 10): ', required: false, default: 10 }
     ]
   },
-  3: {
-    name: 'Forgot Password',
-    method: 'sendForgotPasswordEmail',
+  18: {
+    name: 'Pharmacy Owner Blocked',
+    method: 'sendPharmacyOwnerBlockedEmail',
     fields: [
-      { name: 'email', prompt: 'Enter doctor email: ', required: true },
-      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true },
-      { name: 'otp', prompt: 'Enter reset OTP: ', required: true }
+      { name: 'email', prompt: 'Enter pharmacy email: ', required: true },
+      { name: 'pharmacyOwnerName', prompt: 'Enter pharmacy owner name: ', required: true },
+      { name: 'reason', prompt: 'Enter blocking reason: ', required: true }
     ]
   },
-  4: {
+  19: {
+    name: 'Pharmacy Owner Registration Approved',
+    method: 'sendPharmacyOwnerRegistrationApprovedEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter pharmacy email: ', required: true },
+      { name: 'pharmacyOwnerName', prompt: 'Enter pharmacy owner name: ', required: true }
+    ]
+  },
+  20: {
+    name: 'Pharmacy Owner Registration Unsuccessful',
+    method: 'sendPharmacyOwnerRegistrationUnsuccessfulEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter pharmacy email: ', required: true },
+      { name: 'pharmacyOwnerName', prompt: 'Enter pharmacy owner name: ', required: true },
+      { name: 'reason', prompt: 'Enter reason: ', required: true }
+    ]
+  },
+
+  // Payment Templates
+  21: {
+    name: 'Payment Link',
+    method: 'sendPaymentLinkEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter recipient email: ', required: true },
+      { name: 'link', prompt: 'Enter payment link: ', required: true }
+    ]
+  },
+  22: {
+    name: 'Payment For Prescription',
+    method: 'sendPaymentForPrescriptionEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter patient email: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'pharmacyName', prompt: 'Enter pharmacy name: ', required: true },
+      { name: 'prescriptionId', prompt: 'Enter prescription ID: ', required: true },
+      { name: 'amount', prompt: 'Enter amount: ', required: true },
+      { name: 'securePaymentLink', prompt: 'Enter secure payment link: ', required: true }
+    ]
+  },
+
+  // Patient Data Template
+  23: {
+    name: 'Patient Data Access',
+    method: 'sendPatientDataAccessEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter patient email: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true },
+      { name: 'clinicName', prompt: 'Enter clinic name: ', required: true }
+    ]
+  },
+
+  // Send Token Template
+  24: {
     name: 'Send Token',
     method: 'sendTokenEmail',
     fields: [
@@ -65,7 +257,9 @@ const templateConfigs = {
       { name: 'clinicEmail', prompt: 'Enter clinic email: ', required: true }
     ]
   },
-  5: {
+
+  // Send to Unregister Pharmacy Template
+  25: {
     name: 'Send to Unregister Pharmacy',
     method: 'sendToUnregisterPharmacyEmail',
     fields: [
@@ -90,17 +284,64 @@ const templateConfigs = {
 async function showMenu() {
   console.log('\n📧 Individual Email Template Trigger\n');
   console.log('Available Templates:');
-  console.log('1. Doctor Account Created');
-  console.log('2. Pharmacy Verification');
-  console.log('3. Forgot Password');
-  console.log('4. Send Token');
-  console.log('5. Send to Unregister Pharmacy');
-  console.log('6. Prescription With Sign (uses sample data)');
-  console.log('7. Prescription Without Sign (uses sample data)');
-  console.log('8. Pharmacist With Sign (uses sample data)');
-  console.log('9. Invoice Generate (uses sample data)');
-  console.log('0. Exit');
-  console.log('\nNote: Templates 6-9 use predefined sample data for complex structures');
+  
+  // Account Management
+  console.log('\n🔐 Account Management:');
+  console.log('1.  Account Blocked by Super Admin');
+  console.log('2.  Account Rejected by Super Admin');
+  console.log('3.  Doctor Account Created');
+  console.log('4.  Doctor Account Creation');
+  console.log('5.  Doctor Super Admin Approval');
+  console.log('6.  Signup');
+  
+  // Clinic Management
+  console.log('\n🏥 Clinic Management:');
+  console.log('7.  Clinic Join Request');
+  console.log('8.  Clinic Registration');
+  console.log('9.  Clinic Registration Approved');
+  console.log('10. Clinic Registration Unsuccessful');
+  console.log('11. Invite Doctor');
+  
+  // Email Verification
+  console.log('\n📧 Email Verification:');
+  console.log('12. Email Verification Account Creation');
+  console.log('13. Email Verification Onboarding');
+  console.log('14. Update Email Address');
+  console.log('15. Forgot Password');
+  console.log('16. Reinitiate Onfido Verification');
+  
+  // Pharmacy
+  console.log('\n💊 Pharmacy:');
+  console.log('17. Pharmacy Verification');
+  console.log('18. Pharmacy Owner Blocked');
+  console.log('19. Pharmacy Owner Registration Approved');
+  console.log('20. Pharmacy Owner Registration Unsuccessful');
+  
+  // Payment
+  console.log('\n💳 Payment:');
+  console.log('21. Payment Link');
+  console.log('22. Payment For Prescription');
+  
+  // Other
+  console.log('\n📋 Other:');
+  console.log('23. Patient Data Access');
+  console.log('24. Send Token');
+  console.log('25. Send to Unregister Pharmacy');
+  
+  // Complex Templates (with sample data)
+  console.log('\n🔬 Complex Templates (uses sample data):');
+  console.log('26. Prescription With Sign');
+  console.log('27. Prescription Without Sign');
+  console.log('28. Pharmacist With Sign');
+  console.log('29. Invoice Generate');
+  console.log('30. Prescription From Pharmacy');
+  console.log('31. Pharmacy Via Prescription');
+  console.log('32. Invoice From Pharmacy');
+  console.log('33. Payment Confirmed');
+  console.log('34. LEH Email Template');
+  
+  console.log('\n0.  Exit');
+  console.log('\nNote: Templates 26-34 use predefined sample data for complex structures');
 }
 
 async function collectUserInput(template) {
@@ -132,108 +373,129 @@ async function sendEmail(templateChoice, userData) {
     
     let result;
     
-    switch (templateChoice) {
-      case '1':
-        result = await emailService.sendDoctorAccountCreatedEmail(
-          userData.email,
-          userData.doctorName,
-          userData.loginUrl
-        );
-        break;
-        
-      case '2':
-        result = await emailService.sendPharmacyVerificationEmail(
-          userData.email,
-          userData.otp,
-          userData.purpose,
-          parseInt(userData.validity)
-        );
-        break;
-        
-      case '3':
-        result = await emailService.sendForgotPasswordEmail(
-          userData.email,
-          userData.doctorName,
-          userData.otp
-        );
-        break;
-        
-      case '4':
-        result = await emailService.sendTokenEmail(
-          userData.email,
-          userData.patientName,
-          userData.doctorName,
-          userData.clinicName,
-          userData.prescriptionId,
-          {
-            address: userData.clinicAddress,
-            city: userData.clinicCity,
-            postal_code: userData.clinicPostalCode,
-            country: userData.clinicCountry,
-            mobile: userData.clinicMobile,
-            email: userData.clinicEmail
+    if (templateChoice >= '1' && templateChoice <= '25') {
+      const template = templateConfigs[templateChoice];
+      
+      // Handle different template parameter structures
+      switch (templateChoice) {
+        case '17': // Pharmacy Verification
+          result = await emailService.sendPharmacyVerificationEmail(
+            userData.email,
+            userData.otp,
+            userData.purpose,
+            parseInt(userData.validity)
+          );
+          break;
+          
+        case '22': // Payment For Prescription
+          result = await emailService.sendPaymentForPrescriptionEmail(
+            userData.email,
+            {
+              patient_name: userData.patientName,
+              pharmacy_name: userData.pharmacyName,
+              prescription_id: userData.prescriptionId,
+              amount: userData.amount,
+              secure_payment_link: userData.securePaymentLink
+            }
+          );
+          break;
+          
+        case '23': // Patient Data Access
+          result = await emailService.sendPatientDataAccessEmail(
+            userData.email,
+            {
+              patient_name: userData.patientName,
+              doctor_name: userData.doctorName,
+              clinic_name: userData.clinicName
+            }
+          );
+          break;
+          
+        case '24': // Send Token
+          result = await emailService.sendTokenEmail(
+            userData.email,
+            userData.patientName,
+            userData.doctorName,
+            userData.clinicName,
+            userData.prescriptionId,
+            {
+              address: userData.clinicAddress,
+              city: userData.clinicCity,
+              postal_code: userData.clinicPostalCode,
+              country: userData.clinicCountry,
+              mobile: userData.clinicMobile,
+              email: userData.clinicEmail
+            }
+          );
+          break;
+          
+        case '25': // Send to Unregister Pharmacy
+          result = await emailService.sendToUnregisterPharmacyEmail(
+            userData.email,
+            userData.pharmacyName,
+            userData.prescriptionCode,
+            {
+              dob: userData.patientDob,
+              name: userData.patientName,
+              mobile: userData.patientMobile
+            },
+            {
+              name: userData.clinicName,
+              address_line_1: userData.clinicAddress1,
+              address_line_2: userData.clinicAddress2,
+              city: userData.clinicCity,
+              postal_code: userData.clinicPostalCode,
+              country: userData.clinicCountry,
+              contact_number: userData.clinicContactNumber,
+              email: userData.clinicEmail
+            }
+          );
+          break;
+          
+        default:
+          // For simpler templates, call the method with the userData object spread
+          const method = emailService[template.method];
+          if (method) {
+            result = await method.call(emailService, userData.email, ...Object.values(userData).slice(1));
           }
-        );
-        break;
-        
-      case '5':
-        result = await emailService.sendToUnregisterPharmacyEmail(
-          userData.email,
-          userData.pharmacyName,
-          userData.prescriptionCode,
-          {
-            dob: userData.patientDob,
-            name: userData.patientName,
-            mobile: userData.patientMobile
-          },
-          {
-            name: userData.clinicName,
-            address_line_1: userData.clinicAddress1,
-            address_line_2: userData.clinicAddress2,
-            city: userData.clinicCity,
-            postal_code: userData.clinicPostalCode,
-            country: userData.clinicCountry,
-            contact_number: userData.clinicContactNumber,
-            email: userData.clinicEmail
-          }
-        );
-        break;
-        
-      case '6':
-        // Prescription with sign - using sample data
-        result = await emailService.sendPrescriptionWithSignEmail(
-          await question('Enter recipient email: '),
-          getSamplePrescriptionData()
-        );
-        break;
-        
-      case '7':
-        // Prescription without sign - using sample data
-        result = await emailService.sendPrescriptionWithoutSignEmail(
-          await question('Enter recipient email: '),
-          getSamplePrescriptionData()
-        );
-        break;
-        
-      case '8':
-        // Pharmacist with sign - using sample data
-        result = await emailService.sendPharmacistWithSignEmail(
-          await question('Enter pharmacist email: '),
-          getSamplePrescriptionData()
-        );
-        break;
-        
-      case '9':
-        // Invoice generate - using sample data
-        result = await emailService.sendInvoiceEmail(
-          await question('Enter patient email: '),
-          getSampleInvoiceData()
-        );
-        break;
-        
-      default:
-        console.log('❌ Invalid template choice');
-        return;
+          break;
+      }
+    } else {
+      // Handle complex templates with sample data
+      const email = await question('Enter recipient email: ');
+      
+      switch (templateChoice) {
+        case '26': // Prescription with sign
+          result = await emailService.sendPrescriptionWithSignEmail(email, getSamplePrescriptionData());
+          break;
+        case '27': // Prescription without sign
+          result = await emailService.sendPrescriptionWithoutSignEmail(email, getSamplePrescriptionData());
+          break;
+        case '28': // Pharmacist with sign
+          result = await emailService.sendPharmacistWithSignEmail(email, getSamplePrescriptionData());
+          break;
+        case '29': // Invoice generate
+          result = await emailService.sendInvoiceEmail(email, getSampleInvoiceData());
+          break;
+        case '30': // Prescription from pharmacy
+          result = await emailService.sendPrescriptionFromPharmacyEmail(email, getSamplePharmacyData());
+          break;
+        case '31': // Pharmacy via prescription
+          result = await emailService.sendPharmacyViaPrescriptionEmail(email, getSamplePrescriptionData());
+          break;
+        case '32': // Invoice from pharmacy
+          result = await emailService.sendInvoiceFromPharmacyEmail(email, getSampleInvoiceData());
+          break;
+        case '33': // Payment confirmed
+          result = await emailService.sendPaymentConfirmedEmail(email, getSamplePaymentData());
+          break;
+        case '34': // LEH Email Template
+          result = await emailService.sendLehEmailTemplateEmail(email, getSampleLehData());
+          break;
+        default:
+          console.log('❌ Invalid template choice');
+          return;
+      }
     }
     
     console.log(`\n✅ Email sent successfully!`);
@@ -360,6 +622,40 @@ function getSampleInvoiceData() {
   };
 }
 
+function getSamplePharmacyData() {
+  return {
+    patient_name: 'John Doe',
+    pharmacy_name: 'SendScript Pharmacy',
+    pharmacy_email: 'pharmacy@sendscript.com',
+    pharmacy_address_1: '456 Pharmacy Road',
+    pharmacy_address_2: 'Ground Floor',
+    city: 'London',
+    postal_code: 'SW2B 2BB',
+    country: 'United Kingdom',
+    pharmacy_contact_number: '+44 20 9876 5432',
+    prescription_url: 'https://sendscript.com/prescription/12345'
+  };
+}
+
+function getSamplePaymentData() {
+  return {
+    patient_name: 'John Doe',
+    pharmacy_name: 'SendScript Pharmacy',
+    amount: '25.50',
+    transaction_id: 'TXN' + Date.now(),
+    payment_date: new Date().toISOString().split('T')[0]
+  };
+}
+
+function getSampleLehData() {
+  return {
+    recipient_name: 'John Doe',
+    notice_title: 'Important Health Notice',
+    notice_content: 'This is a sample health notice from LEH.',
+    reference_number: 'LEH' + Date.now()
+  };
+}
+
 async function main() {
   console.log('🚀 Welcome to Individual Email Template Trigger!\n');
   
@@ -382,14 +678,16 @@ async function main() {
       break;
     }
     
-    if (choice >= '1' && choice <= '5') {
-      const template = templateConfigs[choice];
-      const userData = await collectUserInput(template);
-      await sendEmail(choice, userData);
-    } else if (choice >= '6' && choice <= '9') {
-      await sendEmail(choice, {});
+    if (choice >= '1' && choice <= '34') {
+      if (choice >= '1' && choice <= '25') {
+        const template = templateConfigs[choice];
+        const userData = await collectUserInput(template);
+        await sendEmail(choice, userData);
+      } else {
+        await sendEmail(choice, {});
+      }
     } else {
-      console.log('\n❌ Invalid choice. Please select 0-9.');
+      console.log('\n❌ Invalid choice. Please select 0-34.');
     }
     
     const continueChoice = await question('\nWould you like to send another email? (y/n): ');

@@ -545,7 +545,7 @@
                                             <td class="t40">
                                               <p class="t38"
                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                Dear [Pharmacy Name],</p>
+                                                Dear <%= pharmacyName %>,</p>
                                             </td>
                                           </tr>
                                         </table>
@@ -574,7 +574,7 @@
                                               <p class="t44"
                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
                                                 Please find below the electronic private prescription details from
-                                                [Doctor Name] .</p>
+                                                <%= doctorName %>.</p>
                                             </td>
                                           </tr>
                                         </table>
@@ -632,7 +632,7 @@
                                               style="overflow:hidden;background-color:#1B3F6D;padding:8px 8px 8px 8px;border-radius:6px 6px 6px 6px;">
                                               <p class="t56"
                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:600;font-style:normal;font-size:24px;text-decoration:none;text-transform:none;letter-spacing:4.4px;direction:ltr;color:#FFFFFF;text-align:center;mso-line-height-rule:exactly;">
-                                                PRE55960645</p>
+                                                <%= prescriptionCode %></p>
                                             </td>
                                           </tr>
                                         </table>
@@ -670,7 +670,7 @@
                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
                                                 <span class="t63"
                                                   style="margin:0;Margin:0;font-weight:500;mso-line-height-rule:exactly;">Patient
-                                                  DOB: </span>[Patient DOB]&nbsp;</p>
+                                                  DOB: </span><%= patientDob %>&nbsp;</p>
                                             </td>
                                           </tr>
                                         </table>
@@ -693,7 +693,7 @@
                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
                                                 <span class="t70"
                                                   style="margin:0;Margin:0;font-weight:500;mso-line-height-rule:exactly;">Patient
-                                                  Name: </span>[Patient Name]&nbsp;</p>
+                                                  Name: </span><%= patientName %>&nbsp;</p>
                                             </td>
                                           </tr>
                                         </table>
@@ -716,7 +716,7 @@
                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
                                                 <span class="t76"
                                                   style="margin:0;Margin:0;font-weight:500;mso-line-height-rule:exactly;">Contact
-                                                  Number: </span>[Contact Number]</p>
+                                                  Number: </span><%= patientMobileNumber %></p>
                                             </td>
                                           </tr>
                                         </table>
@@ -977,7 +977,7 @@
                                             <td class="t142">
                                               <p class="t140"
                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                Clinic Information Name: [Clinic Name]&nbsp;</p>
+                                                Clinic Information Name: <%= clinic.name %>&nbsp;</p>
                                             </td>
                                           </tr>
                                         </table>
@@ -998,7 +998,7 @@
                                             <td class="t147">
                                               <p class="t146"
                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                Address: [Address]&nbsp;</p>
+                                                Address: <%= clinic.address_line_1 %><% if(clinic.address_line_2) { %>, <%= clinic.address_line_2 %><% } %>&nbsp;</p>
                                             </td>
                                           </tr>
                                         </table>
@@ -1019,7 +1019,7 @@
                                             <td class="t152">
                                               <p class="t151"
                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                City: [City]&nbsp;</p>
+                                                City: <%= clinic.city %>&nbsp;</p>
                                             </td>
                                           </tr>
                                         </table>
@@ -1040,7 +1040,7 @@
                                             <td class="t157">
                                               <p class="t156"
                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                Postal Code: [Postal Code]&nbsp;</p>
+                                                Postal Code: <%= clinic.postal_code %>&nbsp;</p>
                                             </td>
                                           </tr>
                                         </table>
@@ -1061,7 +1061,7 @@
                                             <td class="t162">
                                               <p class="t161"
                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                Country: [Country]&nbsp;</p>
+                                                Country: <%= clinic.country %>&nbsp;</p>
                                             </td>
                                           </tr>
                                         </table>
@@ -1082,7 +1082,7 @@
                                             <td class="t167">
                                               <p class="t166"
                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                Tel: [Contact Number]&nbsp;</p>
+                                                Tel: <%= clinic.contact_number %>&nbsp;</p>
                                             </td>
                                           </tr>
                                         </table>
@@ -1103,7 +1103,7 @@
                                             <td class="t172">
                                               <p class="t171"
                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                Email: [Email]</p>
+                                                Email: <%= clinic.email %></p>
                                             </td>
                                           </tr>
                                         </table>
@@ -1353,5 +1353,4 @@
     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>
 </body>
-
 </html>

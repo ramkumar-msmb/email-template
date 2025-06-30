@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo {
+            max-width: 150px;
+        }
+        .payment-button {
+            display: block;
+            width: 200px;
+            background-color: #1b3f6d;
+            color: white;
+            text-align: center;
+            padding: 12px 20px;
+            margin: 25px auto;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://d2x163e8fostr4.cloudfront.net/common/WebLogo.svg" alt="Company Logo" class="logo">
+        <h2>Payment Request</h2>
+    </div>
+
+    <p>Please click the button below to complete your payment:</p>
+
+<a href="<%= link %>" target="_blank" rel="noopener noreferrer" class="payment-button">Pay Now</a>
+    <p>This payment link will expire in 48 hours.</p>
+
+    <div class="footer">
+        <p>If you didn't request this payment, please ignore this email.</p>
+    </div>
+</body>
+</html>

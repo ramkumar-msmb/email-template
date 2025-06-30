@@ -328,7 +328,7 @@
     <div class="pdf-container">
         <div class="header">
             <div class="header-left">
-                <img src="https://d2en3yjhr69gmk.cloudfront.net/common/WebLogo.svg" alt="SendScript">
+                <img src="https://d2x163e8fostr4.cloudfront.net/common/WebLogo.svg" alt="SendScript">
                 <div class="header-title">Private Prescription</div>
             </div>
 
@@ -378,8 +378,8 @@
                         </span>
                     </p>
 
-                    <p><strong>Contact Number:</strong> <span>
-                            <%= patient_details?.patient_mobile %>
+                    <p><strong>Mobile Number:</strong> <span>
+                        <%= patient_details?.patient_country_code %> <%= patient_details?.patient_mobile %>
                         </span></p>
                     <p><strong>Address:</strong>
                         <span>
@@ -396,7 +396,7 @@
 
             <!-- Appointment Details -->
             <div class="details-box">
-                <div class="details-heading">Appointment Details</div>
+                <div class="details-heading">Prescription Details</div>
                 <div class="appointment-details">
                     <p><strong>Prescription ID:</strong> <span>
                             <%= prescription_id %>
@@ -404,62 +404,47 @@
                     <p><strong>Date:</strong> <span>
                             <%= prescription_date %>
                         </span></p>
-                    <p><strong>Prescription Type:</strong> <span>
-                            <%= prescription_type %>
-                        </span></p>
                 </div>
             </div>
         </div>
 
 
-        <div class="prescription-table-container">
-            <table class="prescription-table">
-                <tr>
-                    <th>SL No</th>
-                    <th>Medicine</th>
-                    <th>Duration</th>
-                    <th>Method</th>
-                    <th>Quantity</th>
-                </tr>
-                <% for (let i=0; i < 5; i++) { %>
-                    <% if (prescription_items[i]) { %>
+        <% for (let chunkIndex = 0; chunkIndex < prescription_items.length; chunkIndex++) { %>
+            <div class="prescription-table-container">
+                <table class="prescription-table">
+                    <thead>
                         <tr>
-                            <td>
-                                <%= i + 1 %>
-                            </td>
-                            <td>
-                                <div class="medicine-details">
-                                    <span class="medicine-name truncate-text">
-                                        <%= prescription_items[i].name %>
-                                    </span>
-                                    <span class="medicine-instruction">- <%= prescription_items[i].dosage_note %></span>
-                                </div>
-                            </td>
-                            <td>
-                                <%= prescription_items[i].duration %>
-                                <%= prescription_items[i].duration_type %>
-                            </td>
-                            <td>
-                                <%= prescription_items[i].method %>
-                            </td>
-                            <td>
-                                <%= prescription_items[i].quantity %>
-                                <%= prescription_items[i].unit %>
-                            </td>
+                            <th>SL No</th>
+                            <th>Medicine</th>
+                            <th>Duration</th>
+                            <th>Method</th>
+                            <th>Quantity</th>
                         </tr>
-                        <% } else { %>
-
-                            <!--<tr>-->
-                            <!--    <td></td>-->
-                            <!--    <td>  </td>-->
-                            <!--    <td>  </td>-->
-                            <!--    <td>  </td>-->
-                            <!--    <td>  </td>-->
-                            <!--</tr>-->
-                    <% } %>
-                <% } %>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        <% const currentChunk = prescription_items[chunkIndex]; %>
+                        <% for (let i = 0; i < currentChunk.length; i++) { %>
+                            <tr>
+                                <td><%= currentChunk[i].slNo %></td>
+                                <td>
+                                    <div class="medicine-details">
+                                        <span class="medicine-name truncate-text"><%= currentChunk[i].name %></span>
+                                        <span class="medicine-instruction">- <%= currentChunk[i].dosage_note %></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <%= currentChunk[i].duration %> <%= currentChunk[i].duration_type %>
+                                </td>
+                                <td><%= currentChunk[i].method %></td>
+                                <td>
+                                    <%= currentChunk[i].quantity %> <%= currentChunk[i].unit %>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        <% } %>
 
 
         <div class="prescribed-by">
