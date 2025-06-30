@@ -45,8 +45,8 @@ const mailtrapConfig = {
   port: process.env.SMTP_PORT || 2525,
   secure: false,
   auth: {
-    user: process.env.SMTP_USER || '3da72511aa7730',
-    pass: process.env.SMTP_PASS || 'c3ad33357513bb'
+    user: process.env.SMTP_USER || '789288e866ee95',
+    pass: process.env.SMTP_PASS || '4b499241a7bf76'
   }
 };
 ```
