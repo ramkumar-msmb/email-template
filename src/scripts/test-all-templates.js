@@ -409,7 +409,7 @@ async function testAllTemplates() {
       {
         name: 'Invite Doctor',
         method: 'sendInviteDoctorEmail',
-        args: [sampleData.inviteDoctor.email, sampleData.inviteDoctor.doctorName, { invitation_code: sampleData.inviteDoctor.invitationCode }]
+        args: [sampleData.inviteDoctor.email, sampleData.inviteDoctor.doctorName, {invitee_name: sampleData.inviteDoctor.inviteeName, inviting_doctor_name: sampleData.inviteDoctor.invitingDoctorName, accept_invitation_button_link: sampleData.inviteDoctor.acceptInvitationLink}]
       },
 
       // Email Verification Templates

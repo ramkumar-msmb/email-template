@@ -117,8 +117,9 @@ const templateConfigs = {
     method: 'sendInviteDoctorEmail',
     fields: [
       { name: 'email', prompt: 'Enter doctor email: ', required: true },
-      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true },
-      { name: 'invitationCode', prompt: 'Enter invitation code: ', required: true }
+      { name: 'inviteeName', prompt: 'Enter invitee name: ', required: true },
+      { name: 'invitingDoctorName', prompt: 'Enter inviting doctor name: ', required: true },
+      { name: 'acceptInvitationLink', prompt: 'Enter accept invitation link: ', required: true }
     ]
   },
 
@@ -373,12 +374,12 @@ async function sendEmail(templateChoice, userData) {
     
     let result;
     
-    if (templateChoice >= '1' && templateChoice <= '25') {
+    if (templateChoice >= 1 && templateChoice <= 25) {
       const template = templateConfigs[templateChoice];
       
       // Handle different template parameter structures
       switch (templateChoice) {
-        case '17': // Pharmacy Verification
+        case 17: // Pharmacy Verification
           result = await emailService.sendPharmacyVerificationEmail(
             userData.email,
             userData.otp,
@@ -387,7 +388,7 @@ async function sendEmail(templateChoice, userData) {
           );
           break;
           
-        case '22': // Payment For Prescription
+        case 22: // Payment For Prescription
           result = await emailService.sendPaymentForPrescriptionEmail(
             userData.email,
             {
@@ -400,7 +401,7 @@ async function sendEmail(templateChoice, userData) {
           );
           break;
           
-        case '23': // Patient Data Access
+        case 23: // Patient Data Access
           result = await emailService.sendPatientDataAccessEmail(
             userData.email,
             {
@@ -411,7 +412,7 @@ async function sendEmail(templateChoice, userData) {
           );
           break;
           
-        case '24': // Send Token
+        case 24: // Send Token
           result = await emailService.sendTokenEmail(
             userData.email,
             userData.patientName,
@@ -429,7 +430,7 @@ async function sendEmail(templateChoice, userData) {
           );
           break;
           
-        case '25': // Send to Unregister Pharmacy
+        case 25: // Send to Unregister Pharmacy
           result = await emailService.sendToUnregisterPharmacyEmail(
             userData.email,
             userData.pharmacyName,
@@ -452,6 +453,28 @@ async function sendEmail(templateChoice, userData) {
           );
           break;
           
+        case 11: // Invite Doctor
+          result = await emailService.sendInviteDoctorEmail(
+            userData.email,
+            userData.inviteeName,
+            {
+              invitee_name: userData.inviteeName,
+              inviting_doctor_name: userData.invitingDoctorName,
+              accept_invitation_link: userData.acceptInvitationLink,
+              accept_invitation_button_link: userData.acceptInvitationLink,
+              button_text: 'Accept Invitation'
+            }
+          );
+          break;
+          
+        case 4: // Doctor Account Creation
+          result = await emailService.sendDoctorAccountCreationEmail(
+            userData.email,
+            userData.doctorName,
+            userData.verificationCode
+          );
+          break;
+          
         default:
           // For simpler templates, call the method with the userData object spread
           const method = emailService[template.method];
@@ -465,31 +488,31 @@ async function sendEmail(templateChoice, userData) {
       const email = await question('Enter recipient email: ');
       
       switch (templateChoice) {
-        case '26': // Prescription with sign
+        case 26: // Prescription with sign
           result = await emailService.sendPrescriptionWithSignEmail(email, getSamplePrescriptionData());
           break;
-        case '27': // Prescription without sign
+        case 27: // Prescription without sign
           result = await emailService.sendPrescriptionWithoutSignEmail(email, getSamplePrescriptionData());
           break;
-        case '28': // Pharmacist with sign
+        case 28: // Pharmacist with sign
           result = await emailService.sendPharmacistWithSignEmail(email, getSamplePrescriptionData());
           break;
-        case '29': // Invoice generate
+        case 29: // Invoice generate
           result = await emailService.sendInvoiceEmail(email, getSampleInvoiceData());
           break;
-        case '30': // Prescription from pharmacy
+        case 30: // Prescription from pharmacy
           result = await emailService.sendPrescriptionFromPharmacyEmail(email, getSamplePharmacyData());
           break;
-        case '31': // Pharmacy via prescription
+        case 31: // Pharmacy via prescription
           result = await emailService.sendPharmacyViaPrescriptionEmail(email, getSamplePrescriptionData());
           break;
-        case '32': // Invoice from pharmacy
+        case 32: // Invoice from pharmacy
           result = await emailService.sendInvoiceFromPharmacyEmail(email, getSampleInvoiceData());
           break;
-        case '33': // Payment confirmed
+        case 33: // Payment confirmed
           result = await emailService.sendPaymentConfirmedEmail(email, getSamplePaymentData());
           break;
-        case '34': // LEH Email Template
+        case 34: // LEH Email Template
           result = await emailService.sendLehEmailTemplateEmail(email, getSampleLehData());
           break;
         default:
