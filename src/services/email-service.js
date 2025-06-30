@@ -127,7 +127,7 @@ class EmailService {
   async sendClinicRegistrationUnsuccessfulEmail(doctorEmail, doctorName, reason) {
     const templateData = {
       doctor_name: doctorName,
-      reason: reason
+      remarks: reason
     };
     return this.sendTemplateEmail('clinicRegistrationUnsuccessful', doctorEmail, templateData);
   }
