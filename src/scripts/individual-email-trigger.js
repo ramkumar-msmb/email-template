@@ -678,13 +678,14 @@ async function main() {
       break;
     }
     
-    if (choice >= '1' && choice <= '34') {
-      if (choice >= '1' && choice <= '25') {
-        const template = templateConfigs[choice];
+    const choiceNum = parseInt(choice);
+    if (choiceNum >= 1 && choiceNum <= 34) {
+      if (choiceNum >= 1 && choiceNum <= 25) {
+        const template = templateConfigs[choiceNum];
         const userData = await collectUserInput(template);
-        await sendEmail(choice, userData);
+        await sendEmail(choiceNum, userData);
       } else {
-        await sendEmail(choice, {});
+        await sendEmail(choiceNum, {});
       }
     } else {
       console.log('\n❌ Invalid choice. Please select 0-34.');

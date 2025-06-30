@@ -79,7 +79,7 @@ class EmailService {
   async sendDoctorAccountCreationEmail(doctorEmail, doctorName, verificationCode) {
     const templateData = {
       doctor_name: doctorName,
-      verification_code: verificationCode
+      otp: verificationCode
     };
     return this.sendTemplateEmail('doctorAccountCreation', doctorEmail, templateData);
   }
