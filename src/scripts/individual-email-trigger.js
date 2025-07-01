@@ -279,6 +279,17 @@ const templateConfigs = {
       { name: 'clinicContactNumber', prompt: 'Enter clinic contact number: ', required: true },
       { name: 'clinicEmail', prompt: 'Enter clinic email: ', required: true }
     ]
+  },
+  32: {
+    name: 'Invoice From Pharmacy',
+    method: 'sendInvoiceFromPharmacyEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter pharmacy email: ', required: true },
+      { name: 'pharmacyName', prompt: 'Enter pharmacy name: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'invoiceUrl', prompt: 'Enter invoice URL: ', required: true },
+      { name: 'pharmacyPhoneNumber', prompt: 'Enter pharmacy phone number: ', required: true }
+    ]
   }
 };
 
@@ -507,7 +518,7 @@ async function sendEmail(templateChoice, userData) {
           result = await emailService.sendPharmacyViaPrescriptionEmail(email, getSamplePrescriptionData());
           break;
         case 32: // Invoice from pharmacy
-          result = await emailService.sendInvoiceFromPharmacyEmail(email, getSampleInvoiceData());
+          result = await emailService.sendInvoiceFromPharmacyEmail(email, getSampleInvoiceFromPharmacyData());
           break;
         case 33: // Payment confirmed
           result = await emailService.sendPaymentConfirmedEmail(email, getSamplePaymentData());
@@ -529,7 +540,14 @@ async function sendEmail(templateChoice, userData) {
     console.error(`\n❌ Error sending email: ${error.message}`);
   }
 }
-
+function getSampleInvoiceFromPharmacyData() {
+  return {
+    pharmacy_name: 'SendScript Pharmacy',
+    patient_name: 'John Doe',
+    invoice_url: 'https://sendscript.com/invoice/12345',
+    pharmacy_phone_number: '+44 20 9876 5432',
+  };
+}
 function getSamplePrescriptionData() {
   return {
     prescription: {
@@ -641,7 +659,7 @@ function getSampleInvoiceData() {
       }
     ],
     total_price: 10.70,
-    delivery_charge: 2.00
+    delivery_charge: 2.00,
   };
 }
 
