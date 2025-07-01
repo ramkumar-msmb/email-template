@@ -559,9 +559,8 @@
                                                                                         <td class="t34">
                                                                                             <h1 class="t32"
                                                                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:28px;font-weight:600;font-style:normal;font-size:18px;text-decoration:none;text-transform:none;letter-spacing:-1.2px;direction:ltr;color:#222222;text-align:center;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                                                                Your Prescription from
-                                                                                                [Pharmacy Name] via
-                                                                                                Sendscript</h1>
+                                                                                                Payment Request From <%= pharmacy_name %>!
+                                                                                            </h1>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>
@@ -592,7 +591,7 @@
                                                                                         <td class="t40">
                                                                                             <p class="t38"
                                                                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                                                                Dear [Pharmacy Name],
+                                                                                                Dear <%= patient_name %>,
                                                                                             </p>
                                                                                         </td>
                                                                                     </tr>
@@ -624,10 +623,7 @@
                                                                                         <td class="t46">
                                                                                             <p class="t44"
                                                                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                                                                You have received a new
-                                                                                                prescription from
-                                                                                                [Pharmacy Name] through
-                                                                                                Sendscript.</p>
+                                                                                                You have received a payment request from the pharmacy to dispense your prescribed medication. Please find the pharmacy details below:</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>
@@ -684,7 +680,7 @@
                                                                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
                                                                                                 <span class="t56"
                                                                                                     style="margin:0;Margin:0;font-weight:500;mso-line-height-rule:exactly;">Name:
-                                                                                                </span>[<%= pharmacy_name %>&nbsp;</p>
+                                                                                                </span><%= pharmacy_name %>&nbsp;</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>
@@ -780,30 +776,6 @@
                                                             </tr>
                                                             <tr>
                                                                 <td align="center">
-                                                                    <table class="t85" role="presentation"
-                                                                        cellpadding="0" cellspacing="0"
-                                                                        style="Margin-left:auto;Margin-right:auto;">
-                                                                        <tr>
-                                                                            <td width="467" class="t84"
-                                                                                style="width:467px;">
-                                                                                <table class="t83" role="presentation"
-                                                                                    cellpadding="0" cellspacing="0"
-                                                                                    width="100%" style="width:100%;">
-                                                                                    <tr>
-                                                                                        <td class="t82">
-                                                                                            <p class="t80"
-                                                                                                style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:600;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                                                                Prescription Link</p>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td align="center">
                                                                     <table class="t90" role="presentation"
                                                                         cellpadding="0" cellspacing="0"
                                                                         style="Margin-left:auto;Margin-right:auto;">
@@ -817,8 +789,7 @@
                                                                                         <td class="t87">
                                                                                             <p class="t86"
                                                                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                                                                You can securely view
-                                                                                                your prescription here:
+                                                                                                To proceed, please click the button below to complete the payment:
                                                                                             </p>
                                                                                         </td>
                                                                                     </tr>
@@ -851,7 +822,7 @@
                                                                                             style="overflow:hidden;background-color:#1B3F6D;text-align:center;line-height:24px;mso-line-height-rule:exactly;mso-text-raise:3px;padding:8px 8px 8px 8px;border-radius:27px 27px 27px 27px;">
                                                                                             <a href="<%= prescription_url %>" target="_blank" class="t91"
                                                                                                 style="display:block;margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:24px;font-weight:600;font-style:normal;font-size:15px;text-decoration:none;direction:ltr;color:#E3F0FF;text-align:center;mso-line-height-rule:exactly;mso-text-raise:3px;">View
-                                                                                                Prescription</a></td>
+                                                                                                Pay Now</a></td>
                                                                                     </tr>
                                                                                 </table>
                                                                             </td>
@@ -881,10 +852,7 @@
                                                                                         <td class="t99">
                                                                                             <p class="t97"
                                                                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                                                                Please await our next
-                                                                                                email with payment
-                                                                                                details to proceed with
-                                                                                                the order.</p>
+                                                                                                If you have any questions or need assistance, feel free to reach out to us or contact the pharmacy directly.</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>
