@@ -154,6 +154,10 @@ const emailTemplates = {
     templatePath: path.join(__dirname, '../templates/payment-link.ejs'),
     subject: 'Payment Link - Complete Your Transaction'
   },
+  paymentRequestFromPharmacy: {
+    templatePath: path.join(__dirname, '../templates/payment-request-from-pharmacy.ejs'),
+    subject: 'Payment Request From Pharmacy - SendScript'
+  },
   
   // Invoice Templates
   invoiceGenerate: {

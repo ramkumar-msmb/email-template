@@ -227,6 +227,23 @@ const templateConfigs = {
       { name: 'securePaymentLink', prompt: 'Enter secure payment link: ', required: true }
     ]
   },
+  35: {
+    name: 'Payment Request From Pharmacy',
+    method: 'sendPaymentRequestFromPharmacyEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter patient email: ', required: true },
+      { name: 'prescription_url', prompt: 'Enter prescription URL: ', required: true },
+      { name: 'pharmacy_name', prompt: 'Enter pharmacy name: ', required: true },
+      { name: 'patient_name', prompt: 'Enter patient name: ', required: true },
+      { name: 'pharmacy_contact_number', prompt: 'Enter pharmacy contact number: ', required: true },
+      { name: 'pharmacy_address_1', prompt: 'Enter pharmacy address line 1: ', required: true },
+      { name: 'pharmacy_address_2', prompt: 'Enter pharmacy address line 2: ', required: false },
+      { name: 'city', prompt: 'Enter city: ', required: true },
+      { name: 'postal_code', prompt: 'Enter postal code: ', required: true },
+      { name: 'country', prompt: 'Enter country: ', required: true },
+      { name: 'pharmacy_email', prompt: 'Enter pharmacy email: ', required: true }
+    ]
+  },
 
   // Patient Data Template
   23: {
@@ -333,6 +350,7 @@ async function showMenu() {
   console.log('\n💳 Payment:');
   console.log('21. Payment Link');
   console.log('22. Payment For Prescription');
+  console.log('35. Payment Request From Pharmacy');
   
   // Other
   console.log('\n📋 Other:');
@@ -494,6 +512,23 @@ async function sendEmail(templateChoice, userData) {
           }
           break;
       }
+    } else if (templateChoice === 35) {
+      // Payment Request From Pharmacy
+      result = await emailService.sendPaymentRequestFromPharmacyEmail(
+        userData.email,
+        {
+          prescription_url: userData.prescription_url,
+          pharmacy_name: userData.pharmacy_name,
+          patient_name: userData.patient_name,
+          pharmacy_contact_number: userData.pharmacy_contact_number,
+          pharmacy_address_1: userData.pharmacy_address_1,
+          pharmacy_address_2: userData.pharmacy_address_2,
+          city: userData.city,
+          postal_code: userData.postal_code,
+          country: userData.country,
+          pharmacy_email: userData.pharmacy_email
+        }
+      );
     } else {
       // Handle complex templates with sample data
       const email = await question('Enter recipient email: ');
@@ -728,6 +763,10 @@ async function main() {
       } else {
         await sendEmail(choiceNum, {});
       }
+    } else if (choiceNum === 35) {
+      const template = templateConfigs[35];
+      const userData = await collectUserInput(template);
+      await sendEmail(35, userData);
     } else {
       console.log('\n❌ Invalid choice. Please select 0-34.');
     }

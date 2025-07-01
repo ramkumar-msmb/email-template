@@ -296,6 +296,10 @@ class EmailService {
     return this.sendTemplateEmail('paymentLink', recipientEmail, templateData);
   }
 
+  async sendPaymentRequestFromPharmacyEmail(recipientEmail, pharmacyData) {
+    return this.sendTemplateEmail('paymentRequestFromPharmacy', recipientEmail, pharmacyData);
+  }
+
   // Invoice Methods
   async sendInvoiceEmail(recipientEmail, invoiceData) {
     return this.sendTemplateEmail('invoiceGenerate', recipientEmail, invoiceData);
