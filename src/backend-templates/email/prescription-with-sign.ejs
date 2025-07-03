@@ -1,0 +1,504 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+
+        .pdf-container {
+            width: 21cm;
+            height: 29.7cm;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .header,
+        .footer-text {
+            background-color: #1B3F6D;
+            color: white;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header img {
+            width: 120px;
+            margin-bottom: 70px;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .clinic-details {
+            text-align: right;
+            line-height: 1.4;
+        }
+
+        .clinic-details p {
+            font-size: 12px;
+            margin: 2px 0;
+        }
+
+
+        .details-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            margin-top: 8px;
+            align-items: stretch;
+        }
+
+        .details-box {
+            width: 48%;
+            display: flex;
+            flex-direction: column;
+            font-size: 12px;
+        }
+
+        .patient-details,
+        .appointment-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 15px;
+            background-color: #F3F9FF;
+            border-radius: 5px;
+            flex-grow: 1;
+        }
+
+
+        .details-heading {
+            font-size: 13px;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: #242424;
+        }
+
+
+
+        .patient-details p,
+        .appointment-details p {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+
+        .patient-details strong,
+        .appointment-details strong,
+        .age {
+            min-width: 140px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+
+        .patient-details span,
+        .appointment-details span,
+        .age-value {
+            flex-grow: 1;
+            text-align: left;
+            color: #1B3F6D;
+        }
+
+
+        .dob-age {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .prescription-table-container {
+            max-height: 12cm;
+            padding: 0 20px;
+            min-height: 12cm;
+        }
+
+        .prescription-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .prescription-table th {
+            background-color: #1B3F6D;
+            color: white;
+            font-size: 12px;
+            padding: 8px;
+            text-align: left;
+            height: 40px;
+        }
+
+        .prescription-table td {
+            font-size: 12px;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            border-bottom: 1px solid #eee;
+            word-wrap: break-word;
+        }
+
+
+        .prescription-table th:nth-child(1),
+        .prescription-table td:nth-child(1) {
+            width: 8%;
+        }
+
+        .prescription-table th:nth-child(2),
+        .prescription-table td:nth-child(2) {
+            width: 48%;
+        }
+
+        .prescription-table th:nth-child(3),
+        .prescription-table td:nth-child(3) {
+            width: 14%;
+        }
+
+        .prescription-table th:nth-child(4),
+        .prescription-table td:nth-child(4) {
+            width: 14%;
+        }
+
+        .prescription-table th:nth-child(5),
+        .prescription-table td:nth-child(5) {
+            width: 10%;
+        }
+
+        .medicine-details {
+            display: flex;
+            flex-direction: column;
+            font-size: 10px;
+            max-height: 120px;
+        }
+
+        .medicine-instruction {
+            font-size: 10px;
+            color: #1B3F6D;
+            margin-top: 3px;
+        }
+
+        .prescribed-by {
+            padding: 20px;
+        }
+
+        .prescribed-by-title {
+            font-size: 13px;
+            font-weight: 400;
+            margin-bottom: 5px;
+            color: #242424;
+        }
+
+        .doctor-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .doctor-details table {
+            width: 100%;
+            font-size: 12px;
+            border-collapse: collapse;
+        }
+
+        .doctor-details table th,
+        .doctor-details table td {
+            background-color: #f3f9ff;
+            padding: 5px;
+            text-align: left;
+            vertical-align: top;
+            word-wrap: break-word;
+        }
+
+        .doctor-details table td {
+            color: #1B3F6D;
+        }
+
+        .doctor-details table th {
+            background-color: #f3f9ff;
+            width: 25%;
+        }
+
+        .qr-signature-container {
+            display: flex;
+            padding: 0 20px;
+        }
+
+        .qr-container {
+            width: 80px;
+            height: 80px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .qr-container img {
+            width: 100%;
+        }
+
+        .qr-container p {
+            margin-top: 3px;
+            font-size: 10.2px;
+        }
+
+        .signature-section {
+            font-size: 11px;
+            color: #333;
+        }
+
+        .signature-section p {
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+
+        .footer-text {
+            font-size: 11px;
+            text-align: justify;
+            padding: 15px 20px;
+            margin-top: 8px;
+        }
+
+        .footer-text p {
+            line-height: 1.5;
+        }
+
+
+
+        .prescription-table {
+            width: 100%;
+            border-collapse: collapse;
+            word-break: break-word;
+        }
+
+        .prescription-table th,
+        .prescription-table td {
+            font-size: 12px;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            border-bottom: 1px solid #eee;
+        }
+
+        .medicine-name {
+            display: block;
+            line-height: 1.4;
+            white-space: normal;
+            overflow: visible;
+            margin-bottom: 4px;
+            font-size: 12px;
+        }
+
+        .truncate-text {
+            max-height: none;
+            /* Allow text to expand fully */
+            overflow: visible;
+            word-break: break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pdf-container">
+        <div class="header">
+            <div class="header-left">
+                <img src="https://d2x163e8fostr4.cloudfront.net/common/WebLogo.svg" alt="SendScript">
+                <div class="header-title">Private Prescription</div>
+            </div>
+
+            <div class="clinic-details">
+                <p>
+                    <strong>
+                        <%= prescription.clinic_name %>
+                    </strong>
+                </p>
+                <p>
+                    <%= prescription.clinic_address_line_1 %>, <%= prescription.clinic_address_line_2 %>
+                </p>
+                <p>
+                    <%= prescription.clinic_city %>
+                </p>
+                <p>
+                    <%= prescription.clinic_postal_code %>
+                </p>
+                <p>Tel: <%= prescription.clinic_contact_number %>
+                </p>
+                <p>Email: <%= prescription.clinic_email %>
+                </p>
+            </div>
+        </div>
+
+        <div class="details-container">
+            <div class="details-box">
+                <div class="details-heading">Patient Details</div>
+                <div class="patient-details">
+                    <p><strong>Patient Name:</strong> <span>
+                            <%= patient_details?.patient_first_name %>
+                            <%= patient_details?.patient_sur_name %>
+                        </span></p>
+                    <p class="dob-age">
+                        <strong>Date Of Birth:</strong>
+                        <span>
+                            <%= new Date(new Date(patient_details?.patient_dob).setDate(new
+                                Date(patient_details?.patient_dob).getDate())).toLocaleDateString('en-GB')
+                                %>
+                                <span class="age" style="color: #000; font-weight: 500; margin-left: 10px;"> Age:
+                                </span>
+                                <span class="age-value">
+                                    <%= Math.floor((new Date() - new Date(patient_details?.patient_dob))
+                                        / (1000 * 60 * 60 * 24 * 365.25)) %>
+                                </span>
+
+                        </span>
+                    </p>
+
+                    <p><strong>Mobile Number:</strong> <span>
+                        <%= patient_details?.patient_country_code %> <%= patient_details?.patient_mobile %>
+                        </span></p>
+                    <p><strong>Address:</strong>
+                        <span>
+                            <%= patient_details?.patient_address_line_1 %>,
+                            <%= patient_details?.patient_address_line_2 %>,
+                            <%= patient_details?.patient_city %>,
+                            <%= patient_details?.patient_postal_code %>,
+                            <br>
+                            <%= patient_details?.patient_country %>
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Appointment Details -->
+            <div class="details-box">
+                <div class="details-heading">Prescription Details</div>
+                <div class="appointment-details">
+                    <p><strong>Prescription ID:</strong> <span>
+                            <%= prescription_id %>
+                        </span></p>
+                    <p><strong>Date:</strong> <span>
+                            <%= prescription_date %>
+                        </span></p>
+                </div>
+            </div>
+        </div>
+
+
+        <% for (let chunkIndex = 0; chunkIndex < prescription_items.length; chunkIndex++) { %>
+            <div class="prescription-table-container">
+                <table class="prescription-table">
+                    <thead>
+                        <tr>
+                            <th>SL No</th>
+                            <th>Medicine</th>
+                            <th>Duration</th>
+                            <th>Method</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% const currentChunk = prescription_items[chunkIndex]; %>
+                        <% for (let i = 0; i < currentChunk.length; i++) { %>
+                            <tr>
+                                <td><%= currentChunk[i].slNo %></td>
+                                <td>
+                                    <div class="medicine-details">
+                                        <span class="medicine-name truncate-text"><%= currentChunk[i].name %></span>
+                                        <span class="medicine-instruction">- <%= currentChunk[i].dosage_note %></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <%= currentChunk[i].duration %> <%= currentChunk[i].duration_type %>
+                                </td>
+                                <td><%= currentChunk[i].method %></td>
+                                <td>
+                                    <%= currentChunk[i].quantity %> <%= currentChunk[i].unit %>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        <% } %>
+
+
+        <div class="prescribed-by">
+            <div class="prescribed-by-title">Prescribed By</div>
+            <div class="doctor-details">
+                <table>
+                    <tr>
+                        <th>Name:</th>
+                        <th>Registration No:</th>
+                        <th>Qualifications:</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <%= prescription.doctor_title %>
+                            <%= prescription.doctor_first_name %>
+                            <%= prescription.doctor_sur_name %>
+                        </td>
+                        <td>GMC - <%= prescription.doctor_gmc_number %>
+                        </td>
+                        <td>
+                            <%= prescription.doctor_qualification.replace(/,/g, ', ' ) %>
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="qr-signature-container">
+            <div class="qr-container">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://sendscript.com/dispense"
+                    alt="QR Code">
+                <p>Scan to Dispense</p>
+            </div>
+            <div class="signature-section">
+                <p>This prescription has been signed using an advanced electronic signature</p>
+                <p><strong>E-signature: <%= prescription.doctor_signature %></strong>
+                </p>
+                <p><strong>Date and Time of signature:</strong>
+                    <%= prescription_created_at %>
+                </p>
+                <p>To verify (or) dispense the prescription visit: www.sendscript.com/dispense</p>
+            </div>
+        </div>
+
+        <div class="footer-text">
+            <p><strong>To the Pharmacist:</strong> SendScript is an online electronic prescription platform that
+                connects prescribers direct to pharmacies. All of our Doctors & Prescribers hold full clinical
+                registrations and are listed on their respective specialist registers. Medications are prescribed
+                following a comprehensive assessment either face to face and Remote Consultations. We are grateful to
+                you for accepting this prescription. Please do not hesitate to contact our support team if you have any
+                queries.</p>
+        </div>
+    </div>
+</body>
+
+</html>

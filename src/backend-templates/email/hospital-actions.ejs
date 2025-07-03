@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SendScript Email</title>
+    <style>
+      /* Existing CSS */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+      }
+      .invoice-container {
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      .logo {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .logo img {
+        max-width: 170px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      .header {
+        font-size: 22px;
+        font-weight: bold;
+        text-align: center;
+        color: #fff;
+        background-color: #1b3f6d;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .content {
+        font-size: 16px;
+        line-height: 26px;
+        color: #4a4a4a;
+        text-align: justify;
+      }
+      .otp-code {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        color: #1b3f6d;
+        margin: 20px 0;
+        padding: 15px;
+        background-color: #f6f9ff;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        display: inline-block;
+        width: 100%;
+        box-sizing: border-box;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        letter-spacing: 3px;
+      }
+      .footer {
+        background-color: #1b3f6d;
+        color: #fff;
+        text-align: center;
+        font-size: 12px;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      /* Modern enhancements */
+      .invoice-container:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease-in-out;
+      }
+      .otp-code {
+        animation: fadeIn 0.5s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .content p {
+        margin: 10px 0;
+      }
+      .content p:first-child {
+        margin-top: 0;
+      }
+      .content p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* Call-to-action button */
+      .cta-button {
+        display: block;
+        width: 80%;
+        margin: 20px auto;
+        padding: 12px;
+        background-color: #1b3f6d;
+        color: #fff;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background 0.3s ease-in-out;
+      }
+      .cta-button:hover {
+        background-color: #1b3f6d;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="invoice-container">
+      <div class="logo">
+        <img
+          src="https://public-consumables.s3.eu-west-2.amazonaws.com/sendscript-logo.png"
+          alt="SendScript Logo"
+        />
+      </div>
+
+      <div class="header">Hospital Action</div>
+
+      <div class="content">
+        <p>Dear <%= hospital_name %>,</p>
+        <p>Action: <%= status %></p>
+        <% if (remarks) { %>
+          <p>Remarks: <%= remarks %></p>
+        <% } %>
+      </div>      
+      <br>
+      <div class="content">
+          <p>Best regards,</p>
+          <p>The SendScript Team</p>
+      </div>
+
+      <div class="footer">
+      </div>
+    </div>
+  </body>
+</html>
