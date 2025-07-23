@@ -272,11 +272,19 @@
                     </p>
                     <p>
                         <strong>Address:</strong>
-                        <span><%= patient_details.patient_address_line_1 %>, <%= patient_details.patient_address_line_2 %>, <%= patient_details.patient_city %>, <%= patient_details.patient_country %>, <%= patient_details.patient_postal_code %></span>
+                        <span>
+                            <%= [
+                              patient_details?.patient_address_line_1,
+                              patient_details?.patient_address_line_2,
+                              patient_details?.patient_city,
+                              patient_details?.patient_country,
+                              patient_details?.patient_postal_code
+                            ].filter(Boolean).join(', ') %>
+                        </span>                          
                     </p>
                     <p>
-                        <strong>Mobile Number:</strong>
-                        <span><%= patient_details.patient_country_code %> <%= patient_details.patient_mobile %></span>
+                        <strong>Contact Number:</strong>
+                        <span><%= patient_details.patient_mobile %></span>
                     </p>
                 </div>
             </div>

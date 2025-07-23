@@ -747,14 +747,14 @@
                                                                                                 <span class="t68"
                                                                                                     style="margin:0;Margin:0;font-weight:500;mso-line-height-rule:exactly;">Address:
                                                                                                 </span>
-                                                                                                <%= pharmacy_address_1
-                                                                                                    %>, <%=
-                                                                                                        pharmacy_address_2
-                                                                                                        %>, <%= city %>,
-                                                                                                            <%= postal_code
-                                                                                                                %>, <%=
-                                                                                                                    country
-                                                                                                                    %>
+                                                                                                <%= [
+                                                                                                    pharmacy_address_1,
+                                                                                                    pharmacy_address_2,
+                                                                                                    city,
+                                                                                                    postal_code,
+                                                                                                    country
+                                                                                                    ].filter(Boolean).join(', ') 
+                                                                                                %>
                                                                                             </p>
                                                                                         </td>
                                                                                     </tr>
@@ -782,7 +782,8 @@
                                                                                                 <span class="t74"
                                                                                                     style="margin:0;Margin:0;font-weight:500;mso-line-height-rule:exactly;">Contact:
                                                                                                 </span>
-                                                                                                <%= pharmacy_contact_number %>
+                                                                                                <%= pharmacy_contact_number
+                                                                                                    %>
                                                                                             </p>
                                                                                         </td>
                                                                                     </tr>
@@ -840,7 +841,7 @@
                                                                         style="Margin-left:auto;Margin-right:auto;">
                                                                         <tr>
                                                                             <td width="185" class="t95"
-                                                                                style="width:185px;">
+                                                                                style="width:150px;">
                                                                                 <table class="t94" role="presentation"
                                                                                     cellpadding="0" cellspacing="0"
                                                                                     width="100%" style="width:100%;">
@@ -850,7 +851,7 @@
                                                                                             <a href="<%= prescription_url %>"
                                                                                                 target="_blank"
                                                                                                 class="t91"
-                                                                                                style="display:block;margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:24px;font-weight:600;font-style:normal;font-size:15px;text-decoration:none;direction:ltr;color:#E3F0FF;text-align:center;mso-line-height-rule:exactly;mso-text-raise:3px;">View
+                                                                                                style="display:block;margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:24px;font-weight:600;font-style:normal;font-size:15px;text-decoration:none;direction:ltr;color:#E3F0FF;text-align:center;mso-line-height-rule:exactly;mso-text-raise:3px;">
                                                                                                 Pay Now</a>
                                                                                         </td>
                                                                                     </tr>
@@ -918,41 +919,7 @@
                                                                                         <td class="t105">
                                                                                             <p class="t103"
                                                                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                                                                Warm regards,&nbsp;</p>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                            <!--[if !mso]>-->
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="t110"
-                                                                        style="mso-line-height-rule:exactly;font-size:1px;display:none;">
-                                                                        &nbsp;&nbsp;</div>
-                                                                </td>
-                                                            </tr>
-                                                            <!--<![endif]-->
-                                                            <tr>
-                                                                <td align="center">
-                                                                    <table class="t114" role="presentation"
-                                                                        cellpadding="0" cellspacing="0"
-                                                                        style="Margin-left:auto;Margin-right:auto;">
-                                                                        <tr>
-                                                                            <td width="464" class="t113"
-                                                                                style="width:464px;">
-                                                                                <table class="t112" role="presentation"
-                                                                                    cellpadding="0" cellspacing="0"
-                                                                                    width="100%" style="width:100%;">
-                                                                                    <tr>
-                                                                                        <td class="t111">
-                                                                                            <p class="t109"
-                                                                                                style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                                                                The Sendscript Team</p>
-                                                                                        </td>
+                                                                                                Warm Regards, <br />The Sendscript Team <br> support@sendscript.com </p>                                                                                        </td>
                                                                                     </tr>
                                                                                 </table>
                                                                             </td>
@@ -965,234 +932,6 @@
                                                                     <div class="t160"
                                                                         style="mso-line-height-rule:exactly;mso-line-height-alt:15px;line-height:15px;font-size:1px;display:block;">
                                                                         &nbsp;&nbsp;</div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td align=center>
-                                                                    <table class=t151 role=presentation cellpadding=0
-                                                                        cellspacing=0
-                                                                        style="Margin-left:auto;Margin-right:auto;">
-                                                                        <tr>
-                                                                            <td width=462 class=t150
-                                                                                style="width:640px;">
-                                                                                <table class=t149 role=presentation
-                                                                                    cellpadding=0 cellspacing=0
-                                                                                    width=100% style="width:100%;">
-                                                                                    <tr>
-                                                                                        <td class=t148
-                                                                                            style="border-top:1px solid #1B3F6D;">
-                                                                                            <div class=t147
-                                                                                                style="width:100%;text-align:center;">
-                                                                                                <div class=t146
-                                                                                                    style="display:inline-block;">
-                                                                                                    <table class=t145
-                                                                                                        role=presentation
-                                                                                                        cellpadding=0
-                                                                                                        cellspacing=0
-                                                                                                        align=center
-                                                                                                        valign=middle>
-                                                                                                        <tr>
-                                                                                                            <td>
-                                                                                                                <div class=t75
-                                                                                                                    style="mso-line-height-rule:exactly;mso-line-height-alt:21px;line-height:21px;font-size:1px;display:block;">
-                                                                                                                    &nbsp;&nbsp;
-                                                                                                                </div>
-                                                                                                            </td>
-                                                                                                        </tr>
-                                                                                                        <tr class=t144>
-                                                                                                            <td>
-                                                                                                            </td>
-                                                                                                            <td class=t139
-                                                                                                                width=137
-                                                                                                                valign=middle>
-                                                                                                                <table
-                                                                                                                    role=presentation
-                                                                                                                    width=100%
-                                                                                                                    cellpadding=0
-                                                                                                                    cellspacing=0
-                                                                                                                    class=t138
-                                                                                                                    style="width:100%;">
-                                                                                                                    <tr>
-                                                                                                                        <td class=t137
-                                                                                                                            style="overflow:hidden;border-radius:8px 8px 8px 8px;">
-                                                                                                                            <p class=t136
-                                                                                                                                style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:18px;font-weight:500;font-style:normal;font-size:10px;text-decoration:none;text-transform:none;direction:ltr;color:#777777;text-align:center;mso-line-height-rule:exactly;mso-text-raise:2px;">
-                                                                                                                                support@sendscript.com
-                                                                                                                            </p>
-                                                                                                                        </td>
-                                                                                                                    </tr>
-                                                                                                                </table>
-                                                                                                            </td>
-                                                                                                            <td class=t143
-                                                                                                                width=98
-                                                                                                                valign=middle>
-                                                                                                                <table
-                                                                                                                    role=presentation
-                                                                                                                    width=100%
-                                                                                                                    cellpadding=0
-                                                                                                                    cellspacing=0
-                                                                                                                    class=t142
-                                                                                                                    style="width:100%;">
-                                                                                                                    <tr>
-                                                                                                                        <td class=t141
-                                                                                                                            style="overflow:hidden;border-radius:8px 8px 8px 8px;">
-                                                                                                                            <p class=t140
-                                                                                                                                style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:18px;font-weight:500;font-style:normal;font-size:10px;text-decoration:none;text-transform:none;direction:ltr;color:#777777;text-align:center;mso-line-height-rule:exactly;mso-text-raise:2px;">
-                                                                                                                                +442081545588
-                                                                                                                            </p>
-                                                                                                                        </td>
-                                                                                                                    </tr>
-                                                                                                                </table>
-                                                                                                            </td>
-                                                                                                            <td>
-                                                                                                            </td>
-                                                                                                        </tr>
-                                                                                                    </table>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                            <!--[if !mso]>-->
-                                                            <tr>
-                                                                <td>
-                                                                    <div class=t153
-                                                                        style="mso-line-height-rule:exactly;font-size:1px;display:none;">
-                                                                        &nbsp;&nbsp;
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <!--<![endif]-->
-
-                                                            <tr>
-                                                                <td align=center>
-                                                                    <table class=t173 role=presentation cellpadding=0
-                                                                        cellspacing=0
-                                                                        style="Margin-left:auto;Margin-right:auto;">
-                                                                        <tr>
-                                                                            <td width=462 class=t172
-                                                                                style="width:640px;">
-                                                                                <table class=t171 role=presentation
-                                                                                    cellpadding=0 cellspacing=0
-                                                                                    width=100% style="width:100%;">
-                                                                                    <tr>
-                                                                                        <td class=t170
-                                                                                            style="overflow:hidden;border-radius:16px 16px 16px 16px;">
-                                                                                            <div class=t169
-                                                                                                style="width:100%;text-align:center;">
-                                                                                                <div class=t168
-                                                                                                    style="display:inline-block;">
-                                                                                                    <table class=t167
-                                                                                                        role=presentation
-                                                                                                        cellpadding=0
-                                                                                                        cellspacing=0
-                                                                                                        align=center
-                                                                                                        valign=middle>
-                                                                                                        <tr class=t166>
-                                                                                                            <td>
-                                                                                                            </td>
-                                                                                                            <td class=t161
-                                                                                                                width=90
-                                                                                                                valign=middle>
-                                                                                                                <table
-                                                                                                                    role=presentation
-                                                                                                                    width=100%
-                                                                                                                    cellpadding=0
-                                                                                                                    cellspacing=0
-                                                                                                                    class=t160
-                                                                                                                    style="width:100%;">
-                                                                                                                    <tr>
-                                                                                                                        <td class=t159
-                                                                                                                            style="overflow:hidden;border-radius:8px 8px 8px 8px;">
-                                                                                                                            <a href="https://sendscript.com/privacy-policy"
-                                                                                                                                target="_blank"
-                                                                                                                                class=t158
-                                                                                                                                style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:18px;font-weight:500;font-style:normal;font-size:10px;text-decoration:none;text-transform:none;direction:ltr;color:#777777;text-align:center;mso-line-height-rule:exactly;mso-text-raise:2px;">
-                                                                                                                                Privacy
-                                                                                                                                Policy
-                                                                                                                            </a>
-                                                                                                                        </td>
-                                                                                                                    </tr>
-                                                                                                                </table>
-                                                                                                            </td>
-                                                                                                            <td class=t165
-                                                                                                                width=125
-                                                                                                                valign=middle>
-                                                                                                                <table
-                                                                                                                    role=presentation
-                                                                                                                    width=100%
-                                                                                                                    cellpadding=0
-                                                                                                                    cellspacing=0
-                                                                                                                    class=t164
-                                                                                                                    style="width:100%;">
-                                                                                                                    <tr>
-                                                                                                                        <td class=t163
-                                                                                                                            style="overflow:hidden;border-radius:8px 8px 8px 8px;">
-                                                                                                                            <a href="https://sendscript.com/terms-and-conditions"
-                                                                                                                                target="_blank"
-                                                                                                                                class=t162
-                                                                                                                                style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:18px;font-weight:500;font-style:normal;font-size:10px;text-decoration:none;text-transform:none;direction:ltr;color:#777777;text-align:center;mso-line-height-rule:exactly;mso-text-raise:2px;">
-                                                                                                                                Terms
-                                                                                                                                and
-                                                                                                                                Conditions
-                                                                                                                            </a>
-                                                                                                                        </td>
-                                                                                                                    </tr>
-                                                                                                                </table>
-                                                                                                            </td>
-                                                                                                            <td>
-                                                                                                            </td>
-                                                                                                        </tr>
-                                                                                                    </table>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td align=center>
-                                                                    <table class=t157 role=presentation cellpadding=0
-                                                                        cellspacing=0
-                                                                        style="Margin-left:auto;Margin-right:auto;">
-                                                                        <tr>
-                                                                            <td width=363 class=t156
-                                                                                style="width:363px;">
-                                                                                <table class=t155 role=presentation
-                                                                                    cellpadding=0 cellspacing=0
-                                                                                    width=100% style="width:100%;">
-                                                                                    <tr>
-                                                                                        <td class=t154
-                                                                                            style="overflow:hidden;border-radius:8px 8px 8px 8px;">
-                                                                                            <p class=t152
-                                                                                                style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:18px;font-weight:500;font-style:normal;font-size:10px;text-decoration:none;text-transform:none;direction:ltr;color:#777777;text-align:center;mso-line-height-rule:exactly;mso-text-raise:2px;">
-                                                                                                sendscript
-                                                                                                <span
-                                                                                                    style="font-family: 'Poppins', sans-serif; font-size: 10px; font-weight: 500; line-height: 18px; text-decoration: none; text-transform: none; direction: ltr; color: #777777; text-align: center; mso-line-height-rule: exactly; mso-text-raise: 2px;">&#174;</span>
-                                                                                                is
-                                                                                                a
-                                                                                                registered
-                                                                                                trademark
-                                                                                                of
-                                                                                                Msmb
-                                                                                                Healthcare
-                                                                                                Limited.
-                                                                                            </p>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
                                                                 </td>
                                                             </tr>
                                                         </table>

@@ -386,10 +386,12 @@
                         </span></p>
                     <p><strong>Address:</strong>
                         <span>
-                            <%= patient_details?.patient_address_line_1 %>, 
-                            <%= patient_details?.patient_address_line_2 %>,
-                            <%= patient_details?.patient_city %>, 
-                            <%= patient_details?.patient_postal_code %>,
+                            <%= [
+                                patient_details?.patient_address_line_1,
+                                patient_details?.patient_address_line_2,
+                                patient_details?.patient_city,
+                                patient_details?.patient_postal_code
+                            ].filter(Boolean).join(', ') %>
                             <br>
                             <%= patient_details?.patient_country %>
                         </span>
