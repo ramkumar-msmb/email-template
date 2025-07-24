@@ -327,10 +327,11 @@ const sampleData = {
 
   // LEH data
   lehData: {
-    recipient_name: 'John Doe',
-    notice_title: 'Important Health Notice',
-    notice_content: 'This is a sample health notice from LEH.',
-    reference_number: 'LEH123456'
+    recipient_name: 'Ms. Amelia Johnson',
+    consent_form_url: 'https://forms.londonelitehealth.com/patient-registration/12345',
+    notice_title: 'Patient Registration Form',
+    notice_content: 'Please complete your patient registration form.',
+    reference_number: 'PNT456738'
   }
 };
 
