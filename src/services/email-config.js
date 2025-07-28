@@ -8,8 +8,8 @@ const mailtrapConfig = {
   port: process.env.SMTP_PORT || 2525,
   secure: false, // true for 465, false for other ports
   auth: {
-    user: process.env.SMTP_USER || '911923f9a66799',
-    pass: process.env.SMTP_PASS || '860ba0cd5bc107'
+    user: process.env.SMTP_USER || '83da06acfabf2d',
+    pass: process.env.SMTP_PASS || '49656ff6bcda21'
   },
   tls: {
     rejectUnauthorized: false
@@ -70,6 +70,10 @@ const emailTemplates = {
     templatePath: path.join(__dirname, '../templates/invite-doctor.ejs'),
     subject: 'Invitation to Join SendScript Clinic'
   },
+  paInvites: {
+    templatePath: path.join(__dirname, '../templates/pa-invites.ejs'),
+    subject: 'Invitation to Join SendScript'
+  },
   
   // Email Verification Templates
   emailVerificationAccountCreation: {
@@ -109,6 +113,10 @@ const emailTemplates = {
   pharmacyOwnerRegistrationUnsuccessful: {
     templatePath: path.join(__dirname, '../templates/pharmacy-owner-registration-unsuccessful.ejs'),
     subject: 'Pharmacy Registration Update Required'
+  },
+  pharmacyOwnerInvitesPharmacist: {
+    templatePath: path.join(__dirname, '../templates/pharmacy-owner-invites-pharamcist.ejs'),
+    subject: 'Invitation to Join Pharmacy on SendScript'
   },
   pharmacyViaPrescription: {
     templatePath: path.join(__dirname, '../templates/pharmacy-via-prescription.ejs'),

@@ -140,6 +140,10 @@ class EmailService {
     return this.sendTemplateEmail('inviteDoctor', doctorEmail, templateData);
   }
 
+  async sendPaInvitesEmail(recipientEmail, invitationData) {
+    return this.sendTemplateEmail('paInvites', recipientEmail, invitationData);
+  }
+
   // Email Verification Methods
   async sendEmailVerificationAccountCreationEmail(userEmail, userName, verificationCode) {
     const templateData = {
@@ -210,6 +214,10 @@ class EmailService {
       reason: reason
     };
     return this.sendTemplateEmail('pharmacyOwnerRegistrationUnsuccessful', pharmacyEmail, templateData);
+  }
+
+  async sendPharmacyOwnerInvitesPharmacistEmail(recipientEmail, invitationData) {
+    return this.sendTemplateEmail('pharmacyOwnerInvitesPharmacist', recipientEmail, invitationData);
   }
 
   async sendPharmacyViaPrescriptionEmail(pharmacyEmail, prescriptionData) {

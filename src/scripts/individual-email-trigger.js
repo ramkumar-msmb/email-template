@@ -307,6 +307,29 @@ const templateConfigs = {
       { name: 'invoiceUrl', prompt: 'Enter invoice URL: ', required: true },
       { name: 'pharmacyPhoneNumber', prompt: 'Enter pharmacy phone number: ', required: true }
     ]
+  },
+  36: {
+    name: 'PA Invites',
+    method: 'sendPaInvitesEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter recipient email: ', required: true },
+      { name: 'inviteeName', prompt: 'Enter invitee name: ', required: true },
+      { name: 'invitingDoctorName', prompt: 'Enter inviting doctor name: ', required: true },
+      { name: 'acceptInvitationButtonLink', prompt: 'Enter accept invitation link: ', required: true },
+      { name: 'buttonText', prompt: 'Enter button text (default: Accept Invitation): ', required: false, default: 'Accept Invitation' }
+    ]
+  },
+  37: {
+    name: 'Pharmacy Owner Invites Pharmacist',
+    method: 'sendPharmacyOwnerInvitesPharmacistEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter recipient email: ', required: true },
+      { name: 'pharmacyName', prompt: 'Enter pharmacy name: ', required: true },
+      { name: 'inviteeName', prompt: 'Enter invitee name: ', required: true },
+      { name: 'invitingDoctorName', prompt: 'Enter inviting doctor name: ', required: true },
+      { name: 'acceptInvitationButtonLink', prompt: 'Enter accept invitation link: ', required: true },
+      { name: 'buttonText', prompt: 'Enter button text (default: Accept Invitation): ', required: false, default: 'Accept Invitation' }
+    ]
   }
 };
 
@@ -358,6 +381,11 @@ async function showMenu() {
   console.log('24. Send Token');
   console.log('25. Send to Unregister Pharmacy');
   
+  // Invitation Templates
+  console.log('\n📧 Invitation Templates:');
+  console.log('36. PA Invites');
+  console.log('37. Pharmacy Owner Invites Pharmacist');
+  
   // Complex Templates (with sample data)
   console.log('\n🔬 Complex Templates (uses sample data):');
   console.log('26. Prescription With Sign');
@@ -403,7 +431,7 @@ async function sendEmail(templateChoice, userData) {
     
     let result;
     
-    if (templateChoice >= 1 && templateChoice <= 25) {
+    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37) {
       const template = templateConfigs[templateChoice];
       
       // Handle different template parameter structures
@@ -501,6 +529,32 @@ async function sendEmail(templateChoice, userData) {
             userData.email,
             userData.doctorName,
             userData.verificationCode
+          );
+          break;
+          
+        case 36: // PA Invites
+          result = await emailService.sendPaInvitesEmail(
+            userData.email,
+            {
+              invitee_name: userData.inviteeName,
+              inviting_doctor_name: userData.invitingDoctorName,
+              accept_invitation_button_link: userData.acceptInvitationButtonLink,
+              button_text: userData.buttonText,
+              email: userData.email
+            }
+          );
+          break;
+          
+        case 37: // Pharmacy Owner Invites Pharmacist
+          result = await emailService.sendPharmacyOwnerInvitesPharmacistEmail(
+            userData.email,
+            {
+              pharmacy_name: userData.pharmacyName,
+              invitee_name: userData.inviteeName,
+              inviting_doctor_name: userData.invitingDoctorName,
+              accept_invitation_button_link: userData.acceptInvitationButtonLink,
+              button_text: userData.buttonText
+            }
           );
           break;
           
@@ -768,8 +822,12 @@ async function main() {
       const template = templateConfigs[35];
       const userData = await collectUserInput(template);
       await sendEmail(35, userData);
+    } else if (choiceNum === 36 || choiceNum === 37) {
+      const template = templateConfigs[choiceNum];
+      const userData = await collectUserInput(template);
+      await sendEmail(choiceNum, userData);
     } else {
-      console.log('\n❌ Invalid choice. Please select 0-34.');
+      console.log('\n❌ Invalid choice. Please select 0-37.');
     }
     
     const continueChoice = await question('\nWould you like to send another email? (y/n): ');
