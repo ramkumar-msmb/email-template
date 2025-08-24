@@ -8,8 +8,8 @@ const mailtrapConfig = {
   port: process.env.SMTP_PORT || 2525,
   secure: false, // true for 465, false for other ports
   auth: {
-    user: process.env.SMTP_USER || '83da06acfabf2d',
-    pass: process.env.SMTP_PASS || '49656ff6bcda21'
+    user: process.env.SMTP_USER || 'a9198e6a720098',
+    pass: process.env.SMTP_PASS || '983611c60875ab'
   },
   tls: {
     rejectUnauthorized: false
@@ -187,6 +187,28 @@ const emailTemplates = {
   lehEmailTemplate: {
     templatePath: path.join(__dirname, '../templates/leh-email-template.ejs'),
     subject: 'Important Notice from LEH - SendScript'
+  },
+
+  // Booking & Scan Templates
+  bookingConfirmationWithInvoice: {
+    templatePath: path.join(__dirname, '../backend-templates/email/booking_confirmation_with_invoice.ejs'),
+    subject: 'Booking Confirmed – Scan Appointment & Invoice'
+  },
+  bookingInvoiceResend: {
+    templatePath: path.join(__dirname, '../backend-templates/email/booking_invoice_resend.ejs'),
+    subject: 'Invoice Copy – Scan Booking'
+  },
+  bookingRescheduled: {
+    templatePath: path.join(__dirname, '../backend-templates/email/booking_rescheduled.ejs'),
+    subject: 'Scan Rescheduled – New Appointment Details'
+  },
+  paymentLinkResend: {
+    templatePath: path.join(__dirname, '../backend-templates/email/payment_link_resend.ejs'),
+    subject: 'Payment Pending – Complete Your Scan Booking'
+  },
+  scanSlotReserved: {
+    templatePath: path.join(__dirname, '../backend-templates/email/scan_slot_reserved.ejs'),
+    subject: 'Scan Slot Reserved – Complete Payment to Confirm'
   }
 };
 

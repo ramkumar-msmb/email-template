@@ -330,6 +330,87 @@ const templateConfigs = {
       { name: 'acceptInvitationButtonLink', prompt: 'Enter accept invitation link: ', required: true },
       { name: 'buttonText', prompt: 'Enter button text (default: Accept Invitation): ', required: false, default: 'Accept Invitation' }
     ]
+  },
+
+  // Booking & Scan Templates
+  38: {
+    name: 'Booking Confirmation With Invoice',
+    method: 'sendBookingConfirmationWithInvoiceEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter patient email: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'scanName', prompt: 'Enter scan name: ', required: true },
+      { name: 'bookingDate', prompt: 'Enter booking date (YYYY-MM-DD): ', required: true },
+      { name: 'bookingTime', prompt: 'Enter booking time (HH:MM): ', required: true },
+      { name: 'centerName', prompt: 'Enter center name: ', required: true },
+      { name: 'centerAddress', prompt: 'Enter center address: ', required: true },
+      { name: 'paymentStatus', prompt: 'Enter payment status (default: Confirmed): ', required: false, default: 'Confirmed' },
+      { name: 'bookingId', prompt: 'Enter booking ID: ', required: true },
+      { name: 'invoiceNumber', prompt: 'Enter invoice number: ', required: true }
+    ]
+  },
+  39: {
+    name: 'Booking Invoice Resend',
+    method: 'sendBookingInvoiceResendEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter patient email: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'scanName', prompt: 'Enter scan name: ', required: true },
+      { name: 'invoiceNumber', prompt: 'Enter invoice number: ', required: true },
+      { name: 'bookingDate', prompt: 'Enter booking date (YYYY-MM-DD): ', required: true },
+      { name: 'bookingTime', prompt: 'Enter booking time (HH:MM): ', required: true },
+      { name: 'amountPaid', prompt: 'Enter amount paid: ', required: true },
+      { name: 'bookingId', prompt: 'Enter booking ID: ', required: true }
+    ]
+  },
+  40: {
+    name: 'Booking Rescheduled',
+    method: 'sendBookingRescheduledEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter patient email: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'scanName', prompt: 'Enter scan name: ', required: true },
+      { name: 'newDate', prompt: 'Enter new booking date (YYYY-MM-DD): ', required: true },
+      { name: 'newTime', prompt: 'Enter new booking time (HH:MM): ', required: true },
+      { name: 'centerName', prompt: 'Enter center name: ', required: true },
+      { name: 'centerAddress', prompt: 'Enter center address: ', required: true },
+      { name: 'bookingId', prompt: 'Enter booking ID: ', required: true },
+      { name: 'oldDate', prompt: 'Enter old booking date (YYYY-MM-DD): ', required: false },
+      { name: 'oldTime', prompt: 'Enter old booking time (HH:MM): ', required: false }
+    ]
+  },
+  41: {
+    name: 'Payment Link Resend',
+    method: 'sendPaymentLinkResendEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter patient email: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'scanName', prompt: 'Enter scan name: ', required: true },
+      { name: 'bookingDate', prompt: 'Enter booking date (YYYY-MM-DD): ', required: true },
+      { name: 'bookingTime', prompt: 'Enter booking time (HH:MM): ', required: true },
+      { name: 'paymentLink', prompt: 'Enter payment link: ', required: true },
+      { name: 'bookingAmount', prompt: 'Enter booking amount: ', required: true },
+      { name: 'bookingId', prompt: 'Enter booking ID: ', required: true },
+      { name: 'centerName', prompt: 'Enter center name: ', required: true },
+      { name: 'centerAddress', prompt: 'Enter center address: ', required: true }
+    ]
+  },
+  42: {
+    name: 'Scan Slot Reserved',
+    method: 'sendScanSlotReservedEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter patient email: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'scanName', prompt: 'Enter scan name: ', required: true },
+      { name: 'bookingDate', prompt: 'Enter booking date (YYYY-MM-DD): ', required: true },
+      { name: 'bookingTime', prompt: 'Enter booking time (HH:MM): ', required: true },
+      { name: 'centerName', prompt: 'Enter center name: ', required: true },
+      { name: 'centerAddress', prompt: 'Enter center address: ', required: true },
+      { name: 'completePaymentUrl', prompt: 'Enter complete payment URL: ', required: true },
+      { name: 'bookingAmount', prompt: 'Enter booking amount: ', required: true },
+      { name: 'bookingId', prompt: 'Enter booking ID: ', required: true },
+      { name: 'reservationExpires', prompt: 'Enter reservation expiry time: ', required: false }
+    ]
   }
 };
 
@@ -386,6 +467,14 @@ async function showMenu() {
   console.log('36. PA Invites');
   console.log('37. Pharmacy Owner Invites Pharmacist');
   
+  // Booking & Scan Templates
+  console.log('\n🏥 Booking & Scan Templates:');
+  console.log('38. Booking Confirmation With Invoice');
+  console.log('39. Booking Invoice Resend');
+  console.log('40. Booking Rescheduled');
+  console.log('41. Payment Link Resend');
+  console.log('42. Scan Slot Reserved');
+  
   // Complex Templates (with sample data)
   console.log('\n🔬 Complex Templates (uses sample data):');
   console.log('26. Prescription With Sign');
@@ -431,7 +520,7 @@ async function sendEmail(templateChoice, userData) {
     
     let result;
     
-    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37) {
+    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37 || (templateChoice >= 38 && templateChoice <= 42)) {
       const template = templateConfigs[templateChoice];
       
       // Handle different template parameter structures
@@ -554,6 +643,90 @@ async function sendEmail(templateChoice, userData) {
               inviting_doctor_name: userData.invitingDoctorName,
               accept_invitation_button_link: userData.acceptInvitationButtonLink,
               button_text: userData.buttonText
+            }
+          );
+          break;
+          
+        case 38: // Booking Confirmation With Invoice
+          result = await emailService.sendBookingConfirmationWithInvoiceEmail(
+            userData.email,
+            {
+              patient_name: userData.patientName,
+              scan_name: userData.scanName,
+              booking_date: userData.bookingDate,
+              booking_time: userData.bookingTime,
+              center_name: userData.centerName,
+              center_address: userData.centerAddress,
+              payment_status: userData.paymentStatus,
+              booking_id: userData.bookingId,
+              invoice_number: userData.invoiceNumber
+            }
+          );
+          break;
+          
+        case 39: // Booking Invoice Resend
+          result = await emailService.sendBookingInvoiceResendEmail(
+            userData.email,
+            {
+              patient_name: userData.patientName,
+              scan_name: userData.scanName,
+              invoice_number: userData.invoiceNumber,
+              booking_date: userData.bookingDate,
+              booking_time: userData.bookingTime,
+              amount_paid: userData.amountPaid,
+              booking_id: userData.bookingId
+            }
+          );
+          break;
+          
+        case 40: // Booking Rescheduled
+          result = await emailService.sendBookingRescheduledEmail(
+            userData.email,
+            {
+              patient_name: userData.patientName,
+              scan_name: userData.scanName,
+              new_date: userData.newDate,
+              new_time: userData.newTime,
+              center_name: userData.centerName,
+              center_address: userData.centerAddress,
+              booking_id: userData.bookingId,
+              old_date: userData.oldDate,
+              old_time: userData.oldTime
+            }
+          );
+          break;
+          
+        case 41: // Payment Link Resend
+          result = await emailService.sendPaymentLinkResendEmail(
+            userData.email,
+            {
+              patient_name: userData.patientName,
+              scan_name: userData.scanName,
+              booking_date: userData.bookingDate,
+              booking_time: userData.bookingTime,
+              payment_link: userData.paymentLink,
+              booking_amount: userData.bookingAmount,
+              booking_id: userData.bookingId,
+              center_name: userData.centerName,
+              center_address: userData.centerAddress
+            }
+          );
+          break;
+          
+        case 42: // Scan Slot Reserved
+          result = await emailService.sendScanSlotReservedEmail(
+            userData.email,
+            {
+              patient_name: userData.patientName,
+              scan_name: userData.scanName,
+              booking_date: userData.bookingDate,
+              booking_time: userData.bookingTime,
+              center_name: userData.centerName,
+              center_address: userData.centerAddress,
+              complete_payment_url: userData.completePaymentUrl,
+              booking_amount: userData.bookingAmount,
+              booking_id: userData.bookingId,
+              reservation_expires: userData.reservationExpires
             }
           );
           break;
@@ -822,12 +995,12 @@ async function main() {
       const template = templateConfigs[35];
       const userData = await collectUserInput(template);
       await sendEmail(35, userData);
-    } else if (choiceNum === 36 || choiceNum === 37) {
+    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 42)) {
       const template = templateConfigs[choiceNum];
       const userData = await collectUserInput(template);
       await sendEmail(choiceNum, userData);
     } else {
-      console.log('\n❌ Invalid choice. Please select 0-37.');
+      console.log('\n❌ Invalid choice. Please select 0-42.');
     }
     
     const continueChoice = await question('\nWould you like to send another email? (y/n): ');

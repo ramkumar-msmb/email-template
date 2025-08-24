@@ -332,6 +332,81 @@ class EmailService {
     return this.sendTemplateEmail('lehEmailTemplate', recipientEmail, lehData);
   }
 
+  // Booking & Scan Methods
+  async sendBookingConfirmationWithInvoiceEmail(patientEmail, bookingData) {
+    const templateData = {
+      patient_name: bookingData.patient_name,
+      scan_name: bookingData.scan_name,
+      booking_date: bookingData.booking_date,
+      booking_time: bookingData.booking_time,
+      center_name: bookingData.center_name,
+      center_address: bookingData.center_address,
+      payment_status: bookingData.payment_status || 'Confirmed',
+      booking_id: bookingData.booking_id,
+      invoice_number: bookingData.invoice_number
+    };
+    return this.sendTemplateEmail('bookingConfirmationWithInvoice', patientEmail, templateData);
+  }
+
+  async sendBookingInvoiceResendEmail(patientEmail, invoiceData) {
+    const templateData = {
+      patient_name: invoiceData.patient_name,
+      scan_name: invoiceData.scan_name,
+      invoice_number: invoiceData.invoice_number,
+      booking_date: invoiceData.booking_date,
+      booking_time: invoiceData.booking_time,
+      amount_paid: invoiceData.amount_paid,
+      booking_id: invoiceData.booking_id
+    };
+    return this.sendTemplateEmail('bookingInvoiceResend', patientEmail, templateData);
+  }
+
+  async sendBookingRescheduledEmail(patientEmail, rescheduleData) {
+    const templateData = {
+      patient_name: rescheduleData.patient_name,
+      scan_name: rescheduleData.scan_name,
+      new_date: rescheduleData.new_date,
+      new_time: rescheduleData.new_time,
+      center_name: rescheduleData.center_name,
+      center_address: rescheduleData.center_address,
+      booking_id: rescheduleData.booking_id,
+      old_date: rescheduleData.old_date,
+      old_time: rescheduleData.old_time
+    };
+    return this.sendTemplateEmail('bookingRescheduled', patientEmail, templateData);
+  }
+
+  async sendPaymentLinkResendEmail(patientEmail, paymentData) {
+    const templateData = {
+      patient_name: paymentData.patient_name,
+      scan_name: paymentData.scan_name,
+      booking_date: paymentData.booking_date,
+      booking_time: paymentData.booking_time,
+      payment_link: paymentData.payment_link,
+      booking_amount: paymentData.booking_amount,
+      booking_id: paymentData.booking_id,
+      center_name: paymentData.center_name,
+      center_address: paymentData.center_address
+    };
+    return this.sendTemplateEmail('paymentLinkResend', patientEmail, templateData);
+  }
+
+  async sendScanSlotReservedEmail(patientEmail, reservationData) {
+    const templateData = {
+      patient_name: reservationData.patient_name,
+      scan_name: reservationData.scan_name,
+      booking_date: reservationData.booking_date,
+      booking_time: reservationData.booking_time,
+      center_name: reservationData.center_name,
+      center_address: reservationData.center_address,
+      complete_payment_url: reservationData.complete_payment_url,
+      booking_amount: reservationData.booking_amount,
+      booking_id: reservationData.booking_id,
+      reservation_expires: reservationData.reservation_expires
+    };
+    return this.sendTemplateEmail('scanSlotReserved', patientEmail, templateData);
+  }
+
   // Test connection
   async testConnection() {
     try {

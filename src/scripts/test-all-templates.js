@@ -332,6 +332,81 @@ const sampleData = {
     notice_title: 'Patient Registration Form',
     notice_content: 'Please complete your patient registration form.',
     reference_number: 'PNT456738'
+  },
+
+  // Booking & Scan Templates
+  bookingConfirmationWithInvoice: {
+    email: 'patient@example.com',
+    bookingData: {
+      patient_name: 'John Doe',
+      scan_name: 'MRI Brain Scan',
+      booking_date: '2024-02-15',
+      booking_time: '14:30',
+      center_name: 'SendScript Medical Centre',
+      center_address: '123 Healthcare Street, London, SW1A 1AA',
+      payment_status: 'Confirmed',
+      booking_id: 'BK123456',
+      invoice_number: 'INV789012'
+    }
+  },
+
+  bookingInvoiceResend: {
+    email: 'patient@example.com',
+    invoiceData: {
+      patient_name: 'John Doe',
+      scan_name: 'MRI Brain Scan',
+      invoice_number: 'INV789012',
+      booking_date: '2024-02-15',
+      booking_time: '14:30',
+      amount_paid: '£250.00',
+      booking_id: 'BK123456'
+    }
+  },
+
+  bookingRescheduled: {
+    email: 'patient@example.com',
+    rescheduleData: {
+      patient_name: 'John Doe',
+      scan_name: 'MRI Brain Scan',
+      new_date: '2024-02-20',
+      new_time: '10:00',
+      center_name: 'SendScript Medical Centre',
+      center_address: '123 Healthcare Street, London, SW1A 1AA',
+      booking_id: 'BK123456',
+      old_date: '2024-02-15',
+      old_time: '14:30'
+    }
+  },
+
+  paymentLinkResend: {
+    email: 'patient@example.com',
+    paymentData: {
+      patient_name: 'John Doe',
+      scan_name: 'MRI Brain Scan',
+      booking_date: '2024-02-15',
+      booking_time: '14:30',
+      payment_link: 'https://payments.sendscript.com/pay/BK123456',
+      booking_amount: '£250.00',
+      booking_id: 'BK123456',
+      center_name: 'SendScript Medical Centre',
+      center_address: '123 Healthcare Street, London, SW1A 1AA'
+    }
+  },
+
+  scanSlotReserved: {
+    email: 'patient@example.com',
+    reservationData: {
+      patient_name: 'John Doe',
+      scan_name: 'MRI Brain Scan',
+      booking_date: '2024-02-15',
+      booking_time: '14:30',
+      center_name: 'SendScript Medical Centre',
+      center_address: '123 Healthcare Street, London, SW1A 1AA',
+      complete_payment_url: 'https://payments.sendscript.com/complete/BK123456',
+      booking_amount: '£250.00',
+      booking_id: 'BK123456',
+      reservation_expires: '30 minutes'
+    }
   }
 };
 
@@ -598,8 +673,11 @@ async function testSpecificCategory(categoryName) {
       case 'invoice':
         await testInvoiceTemplates(emailService);
         break;
+      case 'booking':
+        await testBookingTemplates(emailService);
+        break;
       default:
-        console.log('❌ Unknown category. Available categories: account, clinic, email, pharmacy, payment, prescription, invoice');
+        console.log('❌ Unknown category. Available categories: account, clinic, email, pharmacy, payment, prescription, invoice, booking');
         return;
     }
 
@@ -631,6 +709,27 @@ async function testAccountTemplates(emailService) {
   }
 }
 
+async function testBookingTemplates(emailService) {
+  console.log('Testing Booking & Scan Templates...');
+  
+  const templates = [
+    { method: 'sendBookingConfirmationWithInvoiceEmail', args: [sampleData.bookingConfirmationWithInvoice.email, sampleData.bookingConfirmationWithInvoice.bookingData] },
+    { method: 'sendBookingInvoiceResendEmail', args: [sampleData.bookingInvoiceResend.email, sampleData.bookingInvoiceResend.invoiceData] },
+    { method: 'sendBookingRescheduledEmail', args: [sampleData.bookingRescheduled.email, sampleData.bookingRescheduled.rescheduleData] },
+    { method: 'sendPaymentLinkResendEmail', args: [sampleData.paymentLinkResend.email, sampleData.paymentLinkResend.paymentData] },
+    { method: 'sendScanSlotReservedEmail', args: [sampleData.scanSlotReserved.email, sampleData.scanSlotReserved.reservationData] }
+  ];
+
+  for (const template of templates) {
+    try {
+      await emailService[template.method](...template.args);
+      console.log(`✅ ${template.method} sent successfully!`);
+    } catch (error) {
+      console.error(`❌ ${template.method} failed:`, error.message);
+    }
+  }
+}
+
 // Check command line arguments
 const args = process.argv.slice(2);
 
@@ -649,7 +748,8 @@ if (args.length === 1) {
     console.log('  payment      - Payment related templates (3 templates)');
     console.log('  prescription - Prescription templates (5 templates)');
     console.log('  invoice      - Invoice templates (2 templates)');
-    console.log('\n📧 Total: 34 email templates available for testing');
+    console.log('  booking      - Booking & Scan templates (5 templates)');
+    console.log('\n📧 Total: 39 email templates available for testing');
     console.log('🌐 Test emails will be sent to Mailtrap for safe testing');
   } else {
     // Test specific category
@@ -671,4 +771,5 @@ if (args.length === 1) {
   console.log('  payment      - Payment related templates');
   console.log('  prescription - Prescription templates');
   console.log('  invoice      - Invoice templates');
+  console.log('  booking      - Booking & Scan templates');
 } 
