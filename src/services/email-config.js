@@ -209,6 +209,10 @@ const emailTemplates = {
   scanSlotReserved: {
     templatePath: path.join(__dirname, '../backend-templates/email/scan_slot_reserved.ejs'),
     subject: 'Scan Slot Reserved – Complete Payment to Confirm'
+  },
+  sendScanReportDoctor: {
+    templatePath: path.join(__dirname, '../backend-templates/email/send_scan_report_doctor.ejs'),
+    subject: 'Scan Report for Patient – Radiology Results'
   }
 };
 

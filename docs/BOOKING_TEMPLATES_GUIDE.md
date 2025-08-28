@@ -103,6 +103,23 @@ This guide covers the five new booking and scan-related email templates that hav
 }
 ```
 
+### 6. Send Scan Report to Doctor
+**Template ID**: `sendScanReportDoctor`
+**Purpose**: Sent to doctors when a scan report is ready for review
+**File**: `src/backend-templates/email/send_scan_report_doctor.ejs`
+
+**Required Data Fields**:
+```javascript
+{
+  patient_name: 'John Doe',
+  scan_name: 'MRI Brain Scan',
+  patient_age: '35',
+  patient_sex: 'M',
+  scan_date: '2024-02-15',
+  contact_number: '+44 20 1234 5678'    // Optional, defaults to support@sendscript.com
+}
+```
+
 ## Usage Examples
 
 ### Using EmailService Class
@@ -143,6 +160,19 @@ await emailService.sendPaymentLinkResendEmail(
     center_address: '123 Healthcare Street, London, SW1A 1AA'
   }
 );
+
+// Send scan report to doctor
+await emailService.sendScanReportDoctorEmail(
+  'doctor@example.com',
+  {
+    patient_name: 'John Doe',
+    scan_name: 'MRI Brain Scan',
+    patient_age: '35',
+    patient_sex: 'M',
+    scan_date: '2024-02-15',
+    contact_number: '+44 20 1234 5678'
+  }
+);
 ```
 
 ## Testing
@@ -157,17 +187,17 @@ node src/scripts/test-all-templates.js booking
 
 # Test individual templates interactively
 node src/scripts/individual-email-trigger.js
-# Select options 38-42 for booking templates
+# Select options 38-43 for booking templates
 ```
 
 ### Available Test Scripts
 
 1. **Individual Template Trigger**: `src/scripts/individual-email-trigger.js`
-   - Template options 38-42 for booking templates
+   - Template options 38-43 for booking templates
    - Interactive prompts for all required fields
 
 2. **Booking Templates Test**: `src/scripts/test-booking-templates.js`
-   - Tests all 5 booking templates with sample data
+   - Tests all 6 booking templates with sample data
    - Quick validation of template functionality
 
 3. **All Templates Test**: `src/scripts/test-all-templates.js`
@@ -213,6 +243,13 @@ node src/scripts/individual-email-trigger.js
 - Complete payment button
 - Booking details
 - Instructions for completion
+
+**Send Scan Report to Doctor**:
+- Patient details (name, age, sex)
+- Scan information (type, date)
+- Report attachment notification
+- Contact information
+- Professional medical communication
 
 ## Configuration
 

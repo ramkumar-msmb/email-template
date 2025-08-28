@@ -407,6 +407,18 @@ class EmailService {
     return this.sendTemplateEmail('scanSlotReserved', patientEmail, templateData);
   }
 
+  async sendScanReportDoctorEmail(doctorEmail, reportData) {
+    const templateData = {
+      patient_name: reportData.patient_name,
+      scan_name: reportData.scan_name,
+      patient_age: reportData.patient_age,
+      patient_sex: reportData.patient_sex,
+      scan_date: reportData.scan_date,
+      contact_number: reportData.contact_number || 'support@sendscript.com'
+    };
+    return this.sendTemplateEmail('sendScanReportDoctor', doctorEmail, templateData);
+  }
+
   // Test connection
   async testConnection() {
     try {

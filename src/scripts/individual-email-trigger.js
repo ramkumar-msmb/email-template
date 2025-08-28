@@ -411,6 +411,19 @@ const templateConfigs = {
       { name: 'bookingId', prompt: 'Enter booking ID: ', required: true },
       { name: 'reservationExpires', prompt: 'Enter reservation expiry time: ', required: false }
     ]
+  },
+  43: {
+    name: 'Send Scan Report to Doctor',
+    method: 'sendScanReportDoctorEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter doctor email: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'scanName', prompt: 'Enter scan name: ', required: true },
+      { name: 'patientAge', prompt: 'Enter patient age: ', required: true },
+      { name: 'patientSex', prompt: 'Enter patient sex (M/F): ', required: true },
+      { name: 'scanDate', prompt: 'Enter scan date (YYYY-MM-DD): ', required: true },
+      { name: 'contactNumber', prompt: 'Enter contact number (default: support@sendscript.com): ', required: false, default: 'support@sendscript.com' }
+    ]
   }
 };
 
@@ -474,6 +487,7 @@ async function showMenu() {
   console.log('40. Booking Rescheduled');
   console.log('41. Payment Link Resend');
   console.log('42. Scan Slot Reserved');
+  console.log('43. Send Scan Report to Doctor');
   
   // Complex Templates (with sample data)
   console.log('\n🔬 Complex Templates (uses sample data):');
@@ -520,7 +534,7 @@ async function sendEmail(templateChoice, userData) {
     
     let result;
     
-    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37 || (templateChoice >= 38 && templateChoice <= 42)) {
+    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37 || (templateChoice >= 38 && templateChoice <= 43)) {
       const template = templateConfigs[templateChoice];
       
       // Handle different template parameter structures
@@ -727,6 +741,20 @@ async function sendEmail(templateChoice, userData) {
               booking_amount: userData.bookingAmount,
               booking_id: userData.bookingId,
               reservation_expires: userData.reservationExpires
+            }
+          );
+          break;
+          
+        case 43: // Send Scan Report to Doctor
+          result = await emailService.sendScanReportDoctorEmail(
+            userData.email,
+            {
+              patient_name: userData.patientName,
+              scan_name: userData.scanName,
+              patient_age: userData.patientAge,
+              patient_sex: userData.patientSex,
+              scan_date: userData.scanDate,
+              contact_number: userData.contactNumber
             }
           );
           break;
@@ -995,12 +1023,12 @@ async function main() {
       const template = templateConfigs[35];
       const userData = await collectUserInput(template);
       await sendEmail(35, userData);
-    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 42)) {
+    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 43)) {
       const template = templateConfigs[choiceNum];
       const userData = await collectUserInput(template);
       await sendEmail(choiceNum, userData);
     } else {
-      console.log('\n❌ Invalid choice. Please select 0-42.');
+      console.log('\n❌ Invalid choice. Please select 0-43.');
     }
     
     const continueChoice = await question('\nWould you like to send another email? (y/n): ');

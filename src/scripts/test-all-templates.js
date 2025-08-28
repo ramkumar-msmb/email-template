@@ -407,6 +407,18 @@ const sampleData = {
       booking_id: 'BK123456',
       reservation_expires: '30 minutes'
     }
+  },
+
+  sendScanReportDoctor: {
+    email: 'doctor@example.com',
+    reportData: {
+      patient_name: 'John Doe',
+      scan_name: 'MRI Brain Scan',
+      patient_age: '35',
+      patient_sex: 'M',
+      scan_date: '2024-02-15',
+      contact_number: '+44 20 1234 5678'
+    }
   }
 };
 
@@ -717,7 +729,8 @@ async function testBookingTemplates(emailService) {
     { method: 'sendBookingInvoiceResendEmail', args: [sampleData.bookingInvoiceResend.email, sampleData.bookingInvoiceResend.invoiceData] },
     { method: 'sendBookingRescheduledEmail', args: [sampleData.bookingRescheduled.email, sampleData.bookingRescheduled.rescheduleData] },
     { method: 'sendPaymentLinkResendEmail', args: [sampleData.paymentLinkResend.email, sampleData.paymentLinkResend.paymentData] },
-    { method: 'sendScanSlotReservedEmail', args: [sampleData.scanSlotReserved.email, sampleData.scanSlotReserved.reservationData] }
+    { method: 'sendScanSlotReservedEmail', args: [sampleData.scanSlotReserved.email, sampleData.scanSlotReserved.reservationData] },
+    { method: 'sendScanReportDoctorEmail', args: [sampleData.sendScanReportDoctor.email, sampleData.sendScanReportDoctor.reportData] }
   ];
 
   for (const template of templates) {
@@ -748,8 +761,8 @@ if (args.length === 1) {
     console.log('  payment      - Payment related templates (3 templates)');
     console.log('  prescription - Prescription templates (5 templates)');
     console.log('  invoice      - Invoice templates (2 templates)');
-    console.log('  booking      - Booking & Scan templates (5 templates)');
-    console.log('\n📧 Total: 39 email templates available for testing');
+    console.log('  booking      - Booking & Scan templates (6 templates)');
+    console.log('\n📧 Total: 40 email templates available for testing');
     console.log('🌐 Test emails will be sent to Mailtrap for safe testing');
   } else {
     // Test specific category

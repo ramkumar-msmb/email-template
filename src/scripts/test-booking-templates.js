@@ -93,7 +93,19 @@ async function testBookingTemplates() {
     });
     console.log('✅ Scan Slot Reserved sent successfully!\n');
     
-    console.log('🎉 All booking template tests completed successfully!');
+    // 6. Test Send Scan Report to Doctor
+    console.log('📧 Testing Send Scan Report to Doctor...');
+    await emailService.sendScanReportDoctorEmail('doctor@example.com', {
+      patient_name: 'John Doe',
+      scan_name: 'MRI Brain Scan',
+      patient_age: '35',
+      patient_sex: 'M',
+      scan_date: '2024-02-15',
+      contact_number: '+44 20 1234 5678'
+    });
+    console.log('✅ Send Scan Report to Doctor sent successfully!\n');
+    
+    console.log('🎉 All 6 booking template tests completed successfully!');
     console.log('🌐 Check your Mailtrap inbox: https://mailtrap.io/inboxes');
     
   } catch (error) {
