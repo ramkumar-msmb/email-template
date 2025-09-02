@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .invoice-container {
+            height: 29.7cm;
+            width: 21cm;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            page-break-after: always;
+        }
+
+        .header {
+            background-color: #1b3f6d;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-left img {
+            width: 120px;
+            margin-bottom: 70px;
+        }
+
+        .header-left p {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .header-right {
+            text-align: right;
+            line-height: 1.7;
+        }
+
+        .header-right p {
+            font-size: 12px;
+            margin: 2px 0;
+        }
+
+        .header-right p:first-child {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .table-container {
+            margin: 10px;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 0.5px solid #CBE3E3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 0;
+        }
+        thead, table tr {
+            border: 0;
+        }
+
+        table th,
+        table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            font-weight: 300;
+            border: 0;
+        }
+        table th,
+        table td {
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        table th {
+            font-weight: bold;
+            background-color: #1b3f6d;
+            color: #fff;
+            text-align: center;
+        }
+
+        table td {
+            text-align: left;
+        }
+
+        table td:first-child {
+            text-align: center;
+        }
+        table th:first-child,
+        table th:nth-child(3) {
+            width: 100px;
+        }
+
+        .totals-container {
+            padding: 20px;
+            background-color: white;
+            flex-grow: 1;
+            line-height: 2.2;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .amount-calc {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .totals {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+            font-weight: bold;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+
+        .fixed-bottom {
+            position: relative;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .delivery-type {
+            background-color: #e8ecf0;
+            padding: 8px;
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        .footer {
+            background-color: #1b3f6d;
+            height: 23px;
+            color: #fff;
+            text-align: center;
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        .details-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            margin-top: 10px;
+        }
+
+        .details-box {
+            width: 48%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .patient-details, .invoice-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 15px;
+            background-color: #F3F9FF;
+            border-radius: 5px;
+            flex-grow: 1;
+            font-size: 12px;
+        }
+
+        .details-heading {
+            font-size: 13px;
+            font-weight: 400;
+            margin-bottom: 5px;
+            color: #242424;
+            padding-left: 10px;
+            padding-top: 5px;
+        }
+
+        .patient-details p, .invoice-details p {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 5px 0;
+        }
+
+        .patient-details strong, .invoice-details strong {
+            min-width: 140px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .patient-details span, .invoice-details span {
+            flex-grow: 1;
+            text-align: left;
+            color: #1B3F6D;
+        }
+
+        @media print {
+            .invoice-container {
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Page 1 -->
+    <div class="invoice-container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-left">
+                <img src="https://d2x163e8fostr4.cloudfront.net/common/WebLogo.svg" alt="SendScript">
+                <p>Invoice</p>
+            </div>
+            <div class="header-right">
+                <p>HealthFirst Pharmacy</p>
+                <p>123 High Street, Medical District, London, Greater London, United Kingdom</p>
+                <p>SW1A 1AA</p>
+                <p>Tel: +44 20 7946 0958</p>
+                <p>Email: info@healthfirstpharmacy.co.uk</p>
+            </div>
+        </div>
+
+        <!-- Patient Details and Invoice Details -->
+        <div class="details-container">
+            <!-- Patient Details -->
+            <div class="details-box">
+                <div class="details-heading">Patient Details</div>
+                <div class="patient-details">
+                    <p>
+                        <strong>Full Name:</strong>
+                        <span>Mr. John Michael Smith</span>
+                    </p>
+                    <p>
+                        <strong>Date Of Birth:</strong>
+                        <span>15/03/1985</span>
+                        <span>
+                            <span class="age" style="color: #000; font-weight: 500; margin-left: 10px;"> Age: </span>
+                            <span class="age-value">38</span>
+                        </span>
+                    </p>
+                    <p>
+                        <strong>Address:</strong>
+                        <span>45 Oak Avenue, Manchester, England, M1 1AA</span>
+                    </p>
+                    <p>
+                        <strong>Contact Number:</strong>
+                        <span>+44 7700 900123</span>
+                    </p>
+                </div>
+            </div>
+        
+            <!-- Invoice Details -->
+            <div class="details-box">
+                <div class="details-heading">Invoice Details</div>
+                <div class="invoice-details">
+                    <p>
+                        <strong>Invoice Number:</strong>
+                        <span>INV-2024-001234</span>
+                    </p>
+                    <p>
+                        <strong>Invoice Date:</strong>
+                        <span>20/12/2024</span>
+                    </p>
+                    <p>
+                        <strong>Invoice Date:</strong>
+                        <span>20/12/2024</span>
+                    </p>
+                    <p>
+                        <strong>Invoice Date:</strong>
+                        <span>20/12/2024</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TABLE -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>SL No</th>
+                        <th>Scan</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Scan 1</td>
+                        <td>£ 4.50</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Scan 2</td>
+                        <td>£ 6.80</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Scan 3</td>
+                        <td>£ 12.50</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Scan 4</td>
+                        <td>£ 3.20</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Scan 5</td>
+                        <td>£ 8.90</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Scan 6</td>
+                        <td>£ 15.75</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Scan 7</td>
+                        <td>£ 4.25</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Scan 8</td>
+                        <td>£ 9.60</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Scan 9</td>
+                        <td>£ 7.30</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Scan 10</td>
+                        <td>£ 11.20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TOTALS SECTION -->
+        <div class="totals-container">
+            <div class="amount-calc">
+                <div>Gross Amount</div>
+                <div>£ 83.00</div>
+            </div>
+            <div class="amount-calc">
+                <div>Delivery Charge</div>
+                <div>£ 5.99</div>
+            </div>
+            <div class="amount-calc">
+                <div>Delivery Charge</div>
+                <div>£ 5.99</div>
+            </div>
+            <div class="totals">
+                <div>Net Amount</div>
+                <div>£ 88.99</div>
+            </div>
+        </div>
+
+        <div class="footer"></div>
+    </div>
+
+    
+</body>
+
+</html>
