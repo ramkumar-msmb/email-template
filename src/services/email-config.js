@@ -8,8 +8,8 @@ const mailtrapConfig = {
   port: process.env.SMTP_PORT || 2525,
   secure: false, // true for 465, false for other ports
   auth: {
-    user: process.env.SMTP_USER || 'a9198e6a720098',
-    pass: process.env.SMTP_PASS || '983611c60875ab'
+    user: process.env.SMTP_USER || '2509db9e894cc0',
+    pass: process.env.SMTP_PASS || 'f0bfff34799864'
   },
   tls: {
     rejectUnauthorized: false
