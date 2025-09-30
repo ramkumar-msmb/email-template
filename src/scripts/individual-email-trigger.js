@@ -424,6 +424,41 @@ const templateConfigs = {
       { name: 'scanDate', prompt: 'Enter scan date (YYYY-MM-DD): ', required: true },
       { name: 'contactNumber', prompt: 'Enter contact number (default: support@sendscript.com): ', required: false, default: 'support@sendscript.com' }
     ]
+  },
+  44: {
+    name: 'Pharmacy Email',
+    method: 'sendPharmacyEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter recipient email: ', required: true },
+      { name: 'pharmacyName', prompt: 'Enter pharmacy name: ', required: true },
+      { name: 'pharmacyEmail', prompt: 'Enter pharmacy email: ', required: true },
+      { name: 'pharmacyContactNumber', prompt: 'Enter pharmacy contact number: ', required: true },
+      { name: 'pharmacyAddressLine1', prompt: 'Enter pharmacy address line 1: ', required: true },
+      { name: 'pharmacyCity', prompt: 'Enter pharmacy city: ', required: true },
+      { name: 'pharmacyPostalCode', prompt: 'Enter pharmacy postal code: ', required: true },
+      { name: 'amount', prompt: 'Enter amount: ', required: true },
+      { name: 'totalAmount', prompt: 'Enter total amount: ', required: true }
+    ]
+  },
+  45: {
+    name: 'Payment Link 2',
+    method: 'sendPaymentLink2Email',
+    fields: [
+      { name: 'email', prompt: 'Enter recipient email: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'pharmacyName', prompt: 'Enter pharmacy name: ', required: true },
+      { name: 'pharmacyAddressLine1', prompt: 'Enter pharmacy address line 1: ', required: true },
+      { name: 'pharmacyAddressLine2', prompt: 'Enter pharmacy address line 2: ', required: false },
+      { name: 'pharmacyCity', prompt: 'Enter pharmacy city: ', required: true },
+      { name: 'pharmacyState', prompt: 'Enter pharmacy state: ', required: true },
+      { name: 'pharmacyPostalCode', prompt: 'Enter pharmacy postal code: ', required: true },
+      { name: 'pharmacyContact', prompt: 'Enter pharmacy contact: ', required: true },
+      { name: 'pharmacyEmail', prompt: 'Enter pharmacy email: ', required: true },
+      { name: 'link', prompt: 'Enter payment link: ', required: true },
+      { name: 'totalPrice', prompt: 'Enter total price: ', required: true },
+      { name: 'grossAmount', prompt: 'Enter gross amount: ', required: true },
+      { name: 'deliveryCharge', prompt: 'Enter delivery charge: ', required: true }
+    ]
   }
 };
 
@@ -489,6 +524,11 @@ async function showMenu() {
   console.log('42. Scan Slot Reserved');
   console.log('43. Send Scan Report to Doctor');
   
+  // Pharmacy Templates
+  console.log('\n💊 Pharmacy Templates:');
+  console.log('44. Pharmacy Email');
+  console.log('45. Payment Link 2');
+  
   // Complex Templates (with sample data)
   console.log('\n🔬 Complex Templates (uses sample data):');
   console.log('26. Prescription With Sign');
@@ -534,7 +574,7 @@ async function sendEmail(templateChoice, userData) {
     
     let result;
     
-    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37 || (templateChoice >= 38 && templateChoice <= 43)) {
+    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37 || (templateChoice >= 38 && templateChoice <= 45)) {
       const template = templateConfigs[templateChoice];
       
       // Handle different template parameter structures
@@ -755,6 +795,44 @@ async function sendEmail(templateChoice, userData) {
               patient_sex: userData.patientSex,
               scan_date: userData.scanDate,
               contact_number: userData.contactNumber
+            }
+          );
+          break;
+          
+        case 44: // Pharmacy Email
+          result = await emailService.sendPharmacyEmail(
+            userData.email,
+            {
+              pharmacy_name: userData.pharmacyName,
+              pharmacy_email: userData.pharmacyEmail,
+              pharmacy_contact_number: userData.pharmacyContactNumber,
+              pharmacy_address_line_1: userData.pharmacyAddressLine1,
+              pharmacy_city: userData.pharmacyCity,
+              pharmacy_postal_code: userData.pharmacyPostalCode,
+              amount: userData.amount,
+              total_amount: userData.totalAmount
+            }
+          );
+          break;
+          
+        case 45: // Payment Link 2
+          result = await emailService.sendPaymentLink2Email(
+            userData.email,
+            {
+              patient_name: userData.patientName,
+              pharmacy_name: userData.pharmacyName,
+              pharmacy_address_line_1: userData.pharmacyAddressLine1,
+              pharmacy_address_line_2: userData.pharmacyAddressLine2,
+              pharmacy_city: userData.pharmacyCity,
+              pharmacy_state: userData.pharmacyState,
+              pharmacy_postal_code: userData.pharmacyPostalCode,
+              pharmacy_contact: userData.pharmacyContact,
+              pharmacy_email: userData.pharmacyEmail,
+              link: userData.link,
+              total_price: userData.totalPrice,
+              gross_amount: userData.grossAmount,
+              delivery_charge: userData.deliveryCharge,
+              prescriptionItems: [] // This would need to be provided separately for complex data
             }
           );
           break;
@@ -988,6 +1066,49 @@ function getSampleLehData() {
   };
 }
 
+function getSamplePharmacyEmailData() {
+  return {
+    pharmacy_name: 'Wellcare Pharmacy',
+    pharmacy_email: 'wellcare@gmail.com',
+    pharmacy_contact_number: '0786 786 7654',
+    pharmacy_address_line_1: '116 Harley Street',
+    pharmacy_city: 'London',
+    pharmacy_postal_code: 'W1G 7JL',
+    amount: '120.00',
+    total_amount: '127.00'
+  };
+}
+
+function getSamplePaymentLink2Data() {
+  return {
+    patient_name: 'John Doe',
+    pharmacy_name: 'Wellcare Pharmacy',
+    pharmacy_address_line_1: '116 Harley Street',
+    pharmacy_address_line_2: 'Suite 100',
+    pharmacy_city: 'London',
+    pharmacy_state: 'England',
+    pharmacy_postal_code: 'W1G 7JL',
+    pharmacy_contact: '0786 786 7654',
+    pharmacy_email: 'wellcare@gmail.com',
+    link: 'https://payments.sendscript.com/pay/12345',
+    total_price: '127.00',
+    gross_amount: '120.00',
+    delivery_charge: '7.00',
+    prescriptionItems: [
+      {
+        name: 'Paracetamol 500mg Tablets',
+        quantity: '30',
+        price: '4.50'
+      },
+      {
+        name: 'Ibuprofen 400mg Capsules',
+        quantity: '20',
+        price: '6.80'
+      }
+    ]
+  };
+}
+
 async function main() {
   console.log('🚀 Welcome to Individual Email Template Trigger!\n');
   
@@ -1023,12 +1144,12 @@ async function main() {
       const template = templateConfigs[35];
       const userData = await collectUserInput(template);
       await sendEmail(35, userData);
-    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 43)) {
+    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 45)) {
       const template = templateConfigs[choiceNum];
       const userData = await collectUserInput(template);
       await sendEmail(choiceNum, userData);
     } else {
-      console.log('\n❌ Invalid choice. Please select 0-43.');
+      console.log('\n❌ Invalid choice. Please select 0-45.');
     }
     
     const continueChoice = await question('\nWould you like to send another email? (y/n): ');

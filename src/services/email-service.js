@@ -332,6 +332,14 @@ class EmailService {
     return this.sendTemplateEmail('lehEmailTemplate', recipientEmail, lehData);
   }
 
+  async sendPharmacyEmail(recipientEmail, pharmacyData) {
+    return this.sendTemplateEmail('pharmacyEmail', recipientEmail, pharmacyData);
+  }
+
+  async sendPaymentLink2Email(recipientEmail, paymentData) {
+    return this.sendTemplateEmail('paymentLink2', recipientEmail, paymentData);
+  }
+
   // Booking & Scan Methods
   async sendBookingConfirmationWithInvoiceEmail(patientEmail, bookingData) {
     const templateData = {

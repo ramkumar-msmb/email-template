@@ -8,8 +8,8 @@ const mailtrapConfig = {
   port: process.env.SMTP_PORT || 2525,
   secure: false, // true for 465, false for other ports
   auth: {
-    user: process.env.SMTP_USER || '2509db9e894cc0',
-    pass: process.env.SMTP_PASS || 'f0bfff34799864'
+    user: process.env.SMTP_USER || 'c93dcae3fffc6d',
+    pass: process.env.SMTP_PASS || '54d64a11434a1d'
   },
   tls: {
     rejectUnauthorized: false
@@ -187,6 +187,14 @@ const emailTemplates = {
   lehEmailTemplate: {
     templatePath: path.join(__dirname, '../templates/leh-email-template.ejs'),
     subject: 'Important Notice from LEH - SendScript'
+  },
+  pharmacyEmail: {
+    templatePath: path.join(__dirname, '../templates/pharmacy-email.ejs'),
+    subject: 'Payment Request from Pharmacy - SendScript'
+  },
+  paymentLink2: {
+    templatePath: path.join(__dirname, '../templates/payment-link2.ejs'),
+    subject: 'Payment Request - Complete Your Prescription Payment'
   },
 
   // Booking & Scan Templates
