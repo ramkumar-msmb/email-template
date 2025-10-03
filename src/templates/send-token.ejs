@@ -1109,24 +1109,13 @@
                                                                                 <p class=t123
                                                                                     style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
                                                                                     Clinic Information
-                                                                                    <br />Name: <%= clinic_name %>
-                                                                                        <br />Address: <%=
-                                                                                            clinic_address %>
-                                                                                            <br />City: <%= clinic_city
-                                                                                                %>
-                                                                                                <br />Postal
-                                                                                                Code: <%=
-                                                                                                    clinic_postal_code
-                                                                                                    %>
-                                                                                                    <br />Country:
-                                                                                                    <%= clinic_country
-                                                                                                        %>
-                                                                                                        <br />Tel:
-                                                                                                        <%= clinic_mobile
-                                                                                                            %>
-                                                                                                            <br />Email:
-                                                                                                            <%= clinic_email
-                                                                                                                %>
+                                                                                    <% if (clinic_name) { %><br />Name: <%= clinic_name %><% } %>
+                                                                                    <% if (clinic_address) { %><br />Address: <%= clinic_address %><% } %>
+                                                                                    <% if (clinic_city) { %><br />City: <%= clinic_city %><% } %>
+                                                                                    <% if (clinic_postal_code) { %><br />Postal Code: <%= clinic_postal_code %><% } %>
+                                                                                    <% if (clinic_country) { %><br />Country: <%= clinic_country %><% } %>
+                                                                                    <% if (clinic_mobile) { %><br />Tel: <%= clinic_mobile %><% } %>
+                                                                                    <% if (clinic_email) { %><br />Email: <%= clinic_email %><% } %>                                                                                    
                                                                                 </p>
                                                                             </td>
                                                                         </tr>
