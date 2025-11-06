@@ -438,6 +438,24 @@ class EmailService {
     return this.sendTemplateEmail('paymentLinkScan', patientEmail, templateData);
   }
 
+  async sendVideoConsultationEmail(patientEmail, consultationData) {
+    const templateData = {
+      patient_name: consultationData.patient_name,
+      link: consultationData.link,
+      date_time: consultationData.date_time || '[Date & Time]',
+      consultant_name: consultationData.consultant_name || '[Consultant Name]',
+      consultant_gmc: consultationData.consultant_gmc || '9293839',
+      clinic_name: consultationData.clinic_name,
+      clinic_address: consultationData.clinic_address,
+      clinic_city: consultationData.clinic_city,
+      clinic_postal_code: consultationData.clinic_postal_code,
+      clinic_country: consultationData.clinic_country,
+      clinic_mobile: consultationData.clinic_mobile,
+      clinic_email: consultationData.clinic_email
+    };
+    return this.sendTemplateEmail('videoConsultation', patientEmail, templateData);
+  }
+
   // Test connection
   async testConnection() {
     try {

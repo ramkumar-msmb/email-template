@@ -470,6 +470,25 @@ const templateConfigs = {
       { name: 'totalPrice', prompt: 'Enter total price: ', required: true },
       { name: 'grossAmount', prompt: 'Enter gross amount: ', required: true }
     ]
+  },
+  47: {
+    name: 'Video Consultation',
+    method: 'sendVideoConsultationEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter patient email: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'link', prompt: 'Enter consultation join link: ', required: true },
+      { name: 'dateTime', prompt: 'Enter date & time (e.g., "January 15, 2024 at 2:00 PM"): ', required: true },
+      { name: 'consultantName', prompt: 'Enter consultant name: ', required: true },
+      { name: 'consultantGmc', prompt: 'Enter consultant GMC number: ', required: true },
+      { name: 'clinicName', prompt: 'Enter clinic name: ', required: true },
+      { name: 'clinicAddress', prompt: 'Enter clinic address: ', required: true },
+      { name: 'clinicCity', prompt: 'Enter clinic city: ', required: true },
+      { name: 'clinicPostalCode', prompt: 'Enter clinic postal code: ', required: true },
+      { name: 'clinicCountry', prompt: 'Enter clinic country: ', required: true },
+      { name: 'clinicMobile', prompt: 'Enter clinic mobile: ', required: true },
+      { name: 'clinicEmail', prompt: 'Enter clinic email: ', required: true }
+    ]
   }
 };
 
@@ -541,6 +560,10 @@ async function showMenu() {
   console.log('45. Payment Link 2');
   console.log('46. Payment Link Scan');
   
+  // Consultation Templates
+  console.log('\n📹 Consultation Templates:');
+  console.log('47. Video Consultation');
+  
   // Complex Templates (with sample data)
   console.log('\n🔬 Complex Templates (uses sample data):');
   console.log('26. Prescription With Sign');
@@ -586,7 +609,7 @@ async function sendEmail(templateChoice, userData) {
     
     let result;
     
-    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37 || (templateChoice >= 38 && templateChoice <= 46)) {
+    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37 || (templateChoice >= 38 && templateChoice <= 47)) {
       const template = templateConfigs[templateChoice];
       
       // Handle different template parameter structures
@@ -887,6 +910,25 @@ async function sendEmail(templateChoice, userData) {
           pharmacy_email: userData.pharmacy_email
         }
       );
+    } else if (templateChoice === 47) {
+      // Video Consultation
+      result = await emailService.sendVideoConsultationEmail(
+        userData.email,
+        {
+          patient_name: userData.patientName,
+          link: userData.link,
+          date_time: userData.dateTime,
+          consultant_name: userData.consultantName,
+          consultant_gmc: userData.consultantGmc,
+          clinic_name: userData.clinicName,
+          clinic_address: userData.clinicAddress,
+          clinic_city: userData.clinicCity,
+          clinic_postal_code: userData.clinicPostalCode,
+          clinic_country: userData.clinicCountry,
+          clinic_mobile: userData.clinicMobile,
+          clinic_email: userData.clinicEmail
+        }
+      );
     } else {
       // Handle complex templates with sample data
       const email = await question('Enter recipient email: ');
@@ -1169,12 +1211,12 @@ async function main() {
       const template = templateConfigs[35];
       const userData = await collectUserInput(template);
       await sendEmail(35, userData);
-    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 46)) {
+    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 47)) {
       const template = templateConfigs[choiceNum];
       const userData = await collectUserInput(template);
       await sendEmail(choiceNum, userData);
     } else {
-      console.log('\n❌ Invalid choice. Please select 0-46.');
+      console.log('\n❌ Invalid choice. Please select 0-47.');
     }
     
     const continueChoice = await question('\nWould you like to send another email? (y/n): ');

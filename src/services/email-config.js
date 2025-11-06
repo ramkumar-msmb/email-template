@@ -225,6 +225,10 @@ const emailTemplates = {
   paymentLinkScan: {
     templatePath: path.join(__dirname, '../backend-templates/email/payment-link-scan.ejs'),
     subject: 'Payment Request – Complete Your Scan Booking'
+  },
+  videoConsultation: {
+    templatePath: path.join(__dirname, '../backend-templates/email/video-consulation.ejs'),
+    subject: 'Video Consultation Appointment Confirmed'
   }
 };
 
