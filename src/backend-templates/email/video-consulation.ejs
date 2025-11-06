@@ -977,7 +977,7 @@
                                                                                                                                                                                                                                         class="t197">
                                                                                                                                                                                                                                         <p class="t196"
                                                                                                                                                                                                                                             style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:18px;font-weight:500;font-style:normal;font-size:11px;text-decoration:none;text-transform:none;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;">
-                                                                                                                                                                                                                                            <%= date_time %>
+                                                                                                                                                                                                                                            <%= date_and_time %>
                                                                                                                                                                                                                                         </p>
                                                                                                                                                                                                                                     </td>
                                                                                                                                                                                                                                 </tr>
@@ -1160,7 +1160,7 @@
                                                                                                                                                                                                                                         class="t197">
                                                                                                                                                                                                                                         <p class="t196"
                                                                                                                                                                                                                                             style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:18px;font-weight:500;font-style:normal;font-size:11px;text-decoration:none;text-transform:none;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;">
-                                                                                                                                                                                                                                            <%= consultant_name %> GMC: <%= consultant_gmc %>
+                                                                                                                                                                                                                                            <%= consultant_name %> GMC: <%= gmc_number %>
                                                                                                                                                                                                                                         </p>
                                                                                                                                                                                                                                     </td>
                                                                                                                                                                                                                                 </tr>
@@ -1227,7 +1227,7 @@
                                                                                     <tr>
                                                                                         <td class="t53"
                                                                                             style="overflow:hidden;background-color:#032550;text-align:center;line-height:24px;mso-line-height-rule:exactly;mso-text-raise:3px;padding:8px 20px 8px 20px;border-radius:27px 27px 27px 27px;">
-                                                                                            <a href="<%= link %>"
+                                                                                            <a href="<%= meeting_link %>"
                                                                                                 target="_blank"
                                                                                                 class="t51"
                                                                                                 style="display:block;margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:24px;font-weight:600;font-style:normal;font-size:15px;text-decoration:none;direction:ltr;color:#E3F0FF;text-align:center;mso-line-height-rule:exactly;mso-text-raise:3px;">Join
@@ -1384,10 +1384,16 @@
                                                                                             <p class=t123
                                                                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
                                                                                                 Clinic Information
-                                                                                                <br />Name: [Clinic Name]
-                                                                                                <br />Address: [Address]
-                                                                                                <br />Phone Number: [Contact Number]
-                                                                                                <br />Email: [Email]
+                                                                                                <br />Name: <%= clinic_details.name %>
+                                                                                                <br />Address: <%= [
+                                                                                                clinic_details.address_line_1,
+                                                                                                clinic_details.address_line_2,
+                                                                                                clinic_details.city,
+                                                                                                clinic_details.country,
+                                                                                                clinic_details.postal_code
+                                                                                            ].filter(Boolean).join(', ') %>
+                                                                                                <br />Phone Number: <%= clinic_details.contact_number %>
+                                                                                                <br />Email: <%= clinic_details.email %>
                                                                                             </p>
                                                                                         </td>
                                                                                     </tr>
