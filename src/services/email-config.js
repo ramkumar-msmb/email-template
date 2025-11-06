@@ -8,8 +8,8 @@ const mailtrapConfig = {
   port: process.env.SMTP_PORT || 2525,
   secure: false, // true for 465, false for other ports
   auth: {
-    user: process.env.SMTP_USER || 'c93dcae3fffc6d',
-    pass: process.env.SMTP_PASS || '54d64a11434a1d'
+    user: process.env.SMTP_USER || '9d8b44d9995271',
+    pass: process.env.SMTP_PASS || 'c3edab1da29f6a'
   },
   tls: {
     rejectUnauthorized: false
@@ -221,6 +221,10 @@ const emailTemplates = {
   sendScanReportDoctor: {
     templatePath: path.join(__dirname, '../backend-templates/email/send_scan_report_doctor.ejs'),
     subject: 'Scan Report for Patient – Radiology Results'
+  },
+  paymentLinkScan: {
+    templatePath: path.join(__dirname, '../backend-templates/email/payment-link-scan.ejs'),
+    subject: 'Payment Request – Complete Your Scan Booking'
   }
 };
 

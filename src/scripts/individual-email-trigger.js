@@ -459,6 +459,17 @@ const templateConfigs = {
       { name: 'grossAmount', prompt: 'Enter gross amount: ', required: true },
       { name: 'deliveryCharge', prompt: 'Enter delivery charge: ', required: true }
     ]
+  },
+  46: {
+    name: 'Payment Link Scan',
+    method: 'sendPaymentLinkScanEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter patient email: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'link', prompt: 'Enter payment link: ', required: true },
+      { name: 'totalPrice', prompt: 'Enter total price: ', required: true },
+      { name: 'grossAmount', prompt: 'Enter gross amount: ', required: true }
+    ]
   }
 };
 
@@ -528,6 +539,7 @@ async function showMenu() {
   console.log('\n💊 Pharmacy Templates:');
   console.log('44. Pharmacy Email');
   console.log('45. Payment Link 2');
+  console.log('46. Payment Link Scan');
   
   // Complex Templates (with sample data)
   console.log('\n🔬 Complex Templates (uses sample data):');
@@ -574,7 +586,7 @@ async function sendEmail(templateChoice, userData) {
     
     let result;
     
-    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37 || (templateChoice >= 38 && templateChoice <= 45)) {
+    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37 || (templateChoice >= 38 && templateChoice <= 46)) {
       const template = templateConfigs[templateChoice];
       
       // Handle different template parameter structures
@@ -832,6 +844,19 @@ async function sendEmail(templateChoice, userData) {
               total_price: userData.totalPrice,
               gross_amount: userData.grossAmount,
               delivery_charge: userData.deliveryCharge,
+              prescriptionItems: [] // This would need to be provided separately for complex data
+            }
+          );
+          break;
+          
+        case 46: // Payment Link Scan
+          result = await emailService.sendPaymentLinkScanEmail(
+            userData.email,
+            {
+              patient_name: userData.patientName,
+              link: userData.link,
+              total_price: userData.totalPrice,
+              gross_amount: userData.grossAmount,
               prescriptionItems: [] // This would need to be provided separately for complex data
             }
           );
@@ -1144,12 +1169,12 @@ async function main() {
       const template = templateConfigs[35];
       const userData = await collectUserInput(template);
       await sendEmail(35, userData);
-    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 45)) {
+    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 46)) {
       const template = templateConfigs[choiceNum];
       const userData = await collectUserInput(template);
       await sendEmail(choiceNum, userData);
     } else {
-      console.log('\n❌ Invalid choice. Please select 0-45.');
+      console.log('\n❌ Invalid choice. Please select 0-46.');
     }
     
     const continueChoice = await question('\nWould you like to send another email? (y/n): ');

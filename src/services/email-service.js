@@ -427,6 +427,17 @@ class EmailService {
     return this.sendTemplateEmail('sendScanReportDoctor', doctorEmail, templateData);
   }
 
+  async sendPaymentLinkScanEmail(patientEmail, paymentData) {
+    const templateData = {
+      patient_name: paymentData.patient_name,
+      link: paymentData.link,
+      total_price: paymentData.total_price,
+      gross_amount: paymentData.gross_amount,
+      prescriptionItems: paymentData.prescriptionItems || []
+    };
+    return this.sendTemplateEmail('paymentLinkScan', patientEmail, templateData);
+  }
+
   // Test connection
   async testConnection() {
     try {
