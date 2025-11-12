@@ -415,6 +415,32 @@ class EmailService {
     return this.sendTemplateEmail('scanSlotReserved', patientEmail, templateData);
   }
 
+  async sendReferScanBookingEmail(
+    recipientEmail,
+    hospitalName,
+    bookingId,
+    patientName,
+    patientDob,
+    patientMobile,
+    clinicName,
+    clinicAddress,
+    clinicMobile,
+    clinicEmail
+  ) {
+    const templateData = {
+      hospital_name: hospitalName,
+      booking_id: bookingId,
+      patient_name: patientName,
+      patient_dob: patientDob,
+      patient_mobile: patientMobile,
+      clinic_name: clinicName,
+      clinic_address: clinicAddress,
+      clinic_mobile: clinicMobile,
+      clinic_email: clinicEmail
+    };
+    return this.sendTemplateEmail('referScanBooking', recipientEmail, templateData);
+  }
+
   async sendScanReportDoctorEmail(doctorEmail, reportData) {
     const templateData = {
       patient_name: reportData.patient_name,

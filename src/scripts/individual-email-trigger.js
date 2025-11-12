@@ -489,6 +489,22 @@ const templateConfigs = {
       { name: 'clinicMobile', prompt: 'Enter clinic mobile: ', required: true },
       { name: 'clinicEmail', prompt: 'Enter clinic email: ', required: true }
     ]
+  },
+  48: {
+    name: 'Refer Scan Booking',
+    method: 'sendReferScanBookingEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter hospital email: ', required: true },
+      { name: 'hospitalName', prompt: 'Enter hospital name: ', required: true },
+      { name: 'bookingId', prompt: 'Enter booking ID: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'patientDob', prompt: 'Enter patient DOB (YYYY-MM-DD): ', required: true },
+      { name: 'patientMobile', prompt: 'Enter patient mobile: ', required: true },
+      { name: 'clinicName', prompt: 'Enter clinic name: ', required: true },
+      { name: 'clinicAddress', prompt: 'Enter clinic address: ', required: true },
+      { name: 'clinicMobile', prompt: 'Enter clinic phone number: ', required: true },
+      { name: 'clinicEmail', prompt: 'Enter clinic email: ', required: true }
+    ]
   }
 };
 
@@ -563,6 +579,7 @@ async function showMenu() {
   // Consultation Templates
   console.log('\n📹 Consultation Templates:');
   console.log('47. Video Consultation');
+  console.log('48. Refer Scan Booking');
   
   // Complex Templates (with sample data)
   console.log('\n🔬 Complex Templates (uses sample data):');
@@ -609,7 +626,7 @@ async function sendEmail(templateChoice, userData) {
     
     let result;
     
-    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37 || (templateChoice >= 38 && templateChoice <= 47)) {
+    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37 || (templateChoice >= 38 && templateChoice <= 48)) {
       const template = templateConfigs[templateChoice];
       
       // Handle different template parameter structures
@@ -1211,7 +1228,7 @@ async function main() {
       const template = templateConfigs[35];
       const userData = await collectUserInput(template);
       await sendEmail(35, userData);
-    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 47)) {
+    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 48)) {
       const template = templateConfigs[choiceNum];
       const userData = await collectUserInput(template);
       await sendEmail(choiceNum, userData);
