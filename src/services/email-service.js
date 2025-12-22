@@ -535,6 +535,41 @@ class EmailService {
     return this.sendTemplateEmail('doctorConsultationBooking', patientEmail, templateData);
   }
 
+  async sendDoctorConsultationPaymentLinkEmail(patientEmail, paymentData) {
+    const templateData = {
+      // Patient Information
+      patient_name: paymentData.patient_name || '[Patient Name]',
+      patient_age: paymentData.patient_age || '48',
+      patient_email: paymentData.patient_email || 'james@gmail.com',
+      patient_phone: paymentData.patient_phone || '98765124312',
+      patient_address: paymentData.patient_address || 'London, Uk',
+      
+      // Appointment Information
+      appointment_type: paymentData.appointment_type || 'Visit Consultation - New Appointment',
+      appointment_date: paymentData.appointment_date || 'Friday, Nov 21,2025',
+      appointment_time: paymentData.appointment_time || '10:00 AM (30 mins)',
+      
+      // Doctor Information
+      doctor_name: paymentData.doctor_name || 'Dr. Sarah Johnson',
+      doctor_specialty: paymentData.doctor_specialty || 'General Physician',
+      doctor_phone: paymentData.doctor_phone || '98765124312',
+      doctor_email: paymentData.doctor_email || 'welcare@gmail.com',
+      doctor_hospital: paymentData.doctor_hospital || 'Well care Hospital',
+      
+      // Payment Information
+      payment_link: paymentData.payment_link || null,
+      consultation_fee: paymentData.consultation_fee || '£05:00',
+      total_amount: paymentData.total_amount || '£412.00',
+      
+      // Clinic Information
+      clinic_name: paymentData.clinic_name || '[Clinic Name]',
+      clinic_address: paymentData.clinic_address || '[Address]',
+      clinic_phone: paymentData.clinic_phone || '[Contact Number]',
+      clinic_email: paymentData.clinic_email || '[Email]'
+    };
+    return this.sendTemplateEmail('doctorConsultationPaymentLink', patientEmail, templateData);
+  }
+
   // Test connection
   async testConnection() {
     try {

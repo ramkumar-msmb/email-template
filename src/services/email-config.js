@@ -237,6 +237,10 @@ const emailTemplates = {
   doctorConsultationBooking: {
     templatePath: path.join(__dirname, '../backend-templates/email/doctor-consultation-booking.ejs'),
     subject: 'Home Visit Consultation Appointment Confirmed'
+  },
+  doctorConsultationPaymentLink: {
+    templatePath: path.join(__dirname, '../backend-templates/email/doctor-consultation-payment-link.ejs'),
+    subject: 'Complete Your Payment - Doctor Consultation'
   }
 };
 

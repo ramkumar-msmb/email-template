@@ -534,6 +534,33 @@ const templateConfigs = {
       { name: 'clinicPhone', prompt: 'Enter clinic phone: ', required: true },
       { name: 'clinicEmail', prompt: 'Enter clinic email: ', required: true }
     ]
+  },
+  50: {
+    name: 'Doctor Consultation Payment Link',
+    method: 'sendDoctorConsultationPaymentLinkEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter patient email: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'patientAge', prompt: 'Enter patient age: ', required: false },
+      { name: 'patientEmail', prompt: 'Enter patient email: ', required: true },
+      { name: 'patientPhone', prompt: 'Enter patient phone: ', required: true },
+      { name: 'patientAddress', prompt: 'Enter patient address: ', required: true },
+      { name: 'appointmentType', prompt: 'Enter appointment type (e.g., "Visit Consultation - New Appointment"): ', required: true },
+      { name: 'appointmentDate', prompt: 'Enter appointment date (e.g., "Friday, Nov 21,2025"): ', required: true },
+      { name: 'appointmentTime', prompt: 'Enter appointment time (e.g., "10:00 AM (30 mins)"): ', required: true },
+      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true },
+      { name: 'doctorSpecialty', prompt: 'Enter doctor specialty: ', required: true },
+      { name: 'doctorPhone', prompt: 'Enter doctor phone: ', required: true },
+      { name: 'doctorEmail', prompt: 'Enter doctor email: ', required: true },
+      { name: 'doctorHospital', prompt: 'Enter doctor hospital: ', required: true },
+      { name: 'paymentLink', prompt: 'Enter payment link URL: ', required: true },
+      { name: 'consultationFee', prompt: 'Enter consultation fee (e.g., "£05:00"): ', required: true },
+      { name: 'totalAmount', prompt: 'Enter total amount (e.g., "£412.00"): ', required: true },
+      { name: 'clinicName', prompt: 'Enter clinic name: ', required: true },
+      { name: 'clinicAddress', prompt: 'Enter clinic address: ', required: true },
+      { name: 'clinicPhone', prompt: 'Enter clinic phone: ', required: true },
+      { name: 'clinicEmail', prompt: 'Enter clinic email: ', required: true }
+    ]
   }
 };
 
@@ -610,6 +637,7 @@ async function showMenu() {
   console.log('47. Video Consultation');
   console.log('48. Refer Scan Booking');
   console.log('49. Doctor Consultation Booking');
+  console.log('50. Doctor Consultation Payment Link');
   
   // Complex Templates (with sample data)
   console.log('\n🔬 Complex Templates (uses sample data):');
@@ -1005,6 +1033,33 @@ async function sendEmail(templateChoice, userData) {
           clinic_email: userData.clinicEmail
         }
       );
+    } else if (templateChoice === 50) {
+      // Doctor Consultation Payment Link
+      result = await emailService.sendDoctorConsultationPaymentLinkEmail(
+        userData.email,
+        {
+          patient_name: userData.patientName,
+          patient_age: userData.patientAge,
+          patient_email: userData.patientEmail,
+          patient_phone: userData.patientPhone,
+          patient_address: userData.patientAddress,
+          appointment_type: userData.appointmentType,
+          appointment_date: userData.appointmentDate,
+          appointment_time: userData.appointmentTime,
+          doctor_name: userData.doctorName,
+          doctor_specialty: userData.doctorSpecialty,
+          doctor_phone: userData.doctorPhone,
+          doctor_email: userData.doctorEmail,
+          doctor_hospital: userData.doctorHospital,
+          payment_link: userData.paymentLink,
+          consultation_fee: userData.consultationFee,
+          total_amount: userData.totalAmount,
+          clinic_name: userData.clinicName,
+          clinic_address: userData.clinicAddress,
+          clinic_phone: userData.clinicPhone,
+          clinic_email: userData.clinicEmail
+        }
+      );
     } else {
       // Handle complex templates with sample data
       const email = await question('Enter recipient email: ');
@@ -1287,12 +1342,12 @@ async function main() {
       const template = templateConfigs[35];
       const userData = await collectUserInput(template);
       await sendEmail(35, userData);
-    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 49)) {
+    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 50)) {
       const template = templateConfigs[choiceNum];
       const userData = await collectUserInput(template);
       await sendEmail(choiceNum, userData);
     } else {
-      console.log('\n❌ Invalid choice. Please select 0-49.');
+      console.log('\n❌ Invalid choice. Please select 0-50.');
     }
     
     const continueChoice = await question('\nWould you like to send another email? (y/n): ');
