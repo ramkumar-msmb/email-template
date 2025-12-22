@@ -8,8 +8,8 @@ const mailtrapConfig = {
   port: process.env.SMTP_PORT || 2525,
   secure: false, // true for 465, false for other ports
   auth: {
-    user: process.env.SMTP_USER || '9d8b44d9995271',
-    pass: process.env.SMTP_PASS || 'c3edab1da29f6a'
+    user: process.env.SMTP_USER || '3e3c0af1f7e67a',
+    pass: process.env.SMTP_PASS || 'cdc6850b225f41'
   },
   tls: {
     rejectUnauthorized: false
@@ -233,6 +233,10 @@ const emailTemplates = {
   videoConsultation: {
     templatePath: path.join(__dirname, '../backend-templates/email/video-consulation.ejs'),
     subject: 'Video Consultation Appointment Confirmed'
+  },
+  doctorConsultationBooking: {
+    templatePath: path.join(__dirname, '../backend-templates/email/doctor-consultation-booking.ejs'),
+    subject: 'Home Visit Consultation Appointment Confirmed'
   }
 };
 

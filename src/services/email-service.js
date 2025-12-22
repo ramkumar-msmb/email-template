@@ -482,6 +482,59 @@ class EmailService {
     return this.sendTemplateEmail('videoConsultation', patientEmail, templateData);
   }
 
+  async sendDoctorConsultationBookingEmail(patientEmail, bookingData) {
+    const templateData = {
+      // Patient Information
+      patient_name: bookingData.patient_name || '[Patient Name]',
+      patient_age: bookingData.patient_age || '48',
+      patient_email: bookingData.patient_email || 'james@gmail.com',
+      patient_phone: bookingData.patient_phone || '98765124312',
+      patient_address: bookingData.patient_address || 'London, Uk',
+      
+      // Appointment Information
+      appointment_id: bookingData.appointment_id || 'CV13554776',
+      appointment_type: bookingData.appointment_type || 'Visit Consultation - New Appointment',
+      appointment_date: bookingData.appointment_date || 'Friday, Nov 21,2025',
+      appointment_time: bookingData.appointment_time || '10:00 AM (30 mins)',
+      appointment_duration: bookingData.appointment_duration || '30 mins',
+      
+      // Home Address Details
+      home_address_line1: bookingData.home_address_line1 || '82 The Broadway, Wimbledon',
+      home_address_line2: bookingData.home_address_line2 || '23 Lane, London',
+      home_address_line3: bookingData.home_address_line3 || 'United Kingdom, SW19 1RH',
+      home_landmark: bookingData.home_landmark || 'Near Central Park, Opposite City Mall',
+      
+      // Doctor Information
+      doctor_name: bookingData.doctor_name || 'Dr. Sarah Johnson',
+      doctor_specialty: bookingData.doctor_specialty || 'General Physician',
+      doctor_phone: bookingData.doctor_phone || '98765124312',
+      doctor_email: bookingData.doctor_email || 'welcare@gmail.com',
+      doctor_hospital: bookingData.doctor_hospital || 'Well care Hospital',
+      
+      // Video Consultation (if applicable)
+      video_consultation_link: bookingData.video_consultation_link || null,
+      doctor_call_phone: bookingData.doctor_call_phone || '445678857756',
+      
+      // Payment Information
+      consultation_fee: bookingData.consultation_fee || '£05:00',
+      total_amount: bookingData.total_amount || '£10.00',
+      payment_method: bookingData.payment_method || 'Credit Card',
+      payment_card_ending: bookingData.payment_card_ending || '**4567',
+      payment_date: bookingData.payment_date || 'Friday, Nov 20, 2025 at 11:00 AM',
+      
+      // Clinic Information
+      clinic_name: bookingData.clinic_name || '[Clinic Name]',
+      clinic_address: bookingData.clinic_address || '[Address]',
+      clinic_phone: bookingData.clinic_phone || '[Contact Number]',
+      clinic_email: bookingData.clinic_email || '[Email]',
+      
+      // Appointment Status
+      show_confirmed: bookingData.show_confirmed !== false, // Default to true
+      show_cancelled: bookingData.show_cancelled || false
+    };
+    return this.sendTemplateEmail('doctorConsultationBooking', patientEmail, templateData);
+  }
+
   // Test connection
   async testConnection() {
     try {

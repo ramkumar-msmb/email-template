@@ -505,6 +505,35 @@ const templateConfigs = {
       { name: 'clinicMobile', prompt: 'Enter clinic phone number: ', required: true },
       { name: 'clinicEmail', prompt: 'Enter clinic email: ', required: true }
     ]
+  },
+  49: {
+    name: 'Doctor Consultation Booking',
+    method: 'sendDoctorConsultationBookingEmail',
+    fields: [
+      { name: 'email', prompt: 'Enter patient email: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'appointmentId', prompt: 'Enter appointment ID: ', required: true },
+      { name: 'appointmentDate', prompt: 'Enter appointment date (e.g., "Friday, Nov 21,2025"): ', required: true },
+      { name: 'appointmentTime', prompt: 'Enter appointment time (e.g., "10:00 AM (30 mins)"): ', required: true },
+      { name: 'homeAddressLine1', prompt: 'Enter home address line 1: ', required: true },
+      { name: 'homeAddressLine2', prompt: 'Enter home address line 2: ', required: false },
+      { name: 'homeAddressLine3', prompt: 'Enter home address line 3: ', required: false },
+      { name: 'homeLandmark', prompt: 'Enter landmark: ', required: false },
+      { name: 'doctorName', prompt: 'Enter doctor name: ', required: true },
+      { name: 'doctorSpecialty', prompt: 'Enter doctor specialty: ', required: true },
+      { name: 'doctorPhone', prompt: 'Enter doctor phone: ', required: true },
+      { name: 'doctorEmail', prompt: 'Enter doctor email: ', required: true },
+      { name: 'doctorHospital', prompt: 'Enter doctor hospital: ', required: true },
+      { name: 'consultationFee', prompt: 'Enter consultation fee (e.g., "£05:00"): ', required: true },
+      { name: 'totalAmount', prompt: 'Enter total amount (e.g., "£10.00"): ', required: true },
+      { name: 'paymentMethod', prompt: 'Enter payment method: ', required: true },
+      { name: 'paymentCardEnding', prompt: 'Enter payment card ending (e.g., "**4567"): ', required: false },
+      { name: 'paymentDate', prompt: 'Enter payment date: ', required: false },
+      { name: 'clinicName', prompt: 'Enter clinic name: ', required: true },
+      { name: 'clinicAddress', prompt: 'Enter clinic address: ', required: true },
+      { name: 'clinicPhone', prompt: 'Enter clinic phone: ', required: true },
+      { name: 'clinicEmail', prompt: 'Enter clinic email: ', required: true }
+    ]
   }
 };
 
@@ -580,6 +609,7 @@ async function showMenu() {
   console.log('\n📹 Consultation Templates:');
   console.log('47. Video Consultation');
   console.log('48. Refer Scan Booking');
+  console.log('49. Doctor Consultation Booking');
   
   // Complex Templates (with sample data)
   console.log('\n🔬 Complex Templates (uses sample data):');
@@ -626,7 +656,7 @@ async function sendEmail(templateChoice, userData) {
     
     let result;
     
-    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37 || (templateChoice >= 38 && templateChoice <= 48)) {
+    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37 || (templateChoice >= 38 && templateChoice <= 49)) {
       const template = templateConfigs[templateChoice];
       
       // Handle different template parameter structures
@@ -946,6 +976,35 @@ async function sendEmail(templateChoice, userData) {
           clinic_email: userData.clinicEmail
         }
       );
+    } else if (templateChoice === 49) {
+      // Doctor Consultation Booking
+      result = await emailService.sendDoctorConsultationBookingEmail(
+        userData.email,
+        {
+          patient_name: userData.patientName,
+          appointment_id: userData.appointmentId,
+          appointment_date: userData.appointmentDate,
+          appointment_time: userData.appointmentTime,
+          home_address_line1: userData.homeAddressLine1,
+          home_address_line2: userData.homeAddressLine2,
+          home_address_line3: userData.homeAddressLine3,
+          home_landmark: userData.homeLandmark,
+          doctor_name: userData.doctorName,
+          doctor_specialty: userData.doctorSpecialty,
+          doctor_phone: userData.doctorPhone,
+          doctor_email: userData.doctorEmail,
+          doctor_hospital: userData.doctorHospital,
+          consultation_fee: userData.consultationFee,
+          total_amount: userData.totalAmount,
+          payment_method: userData.paymentMethod,
+          payment_card_ending: userData.paymentCardEnding,
+          payment_date: userData.paymentDate,
+          clinic_name: userData.clinicName,
+          clinic_address: userData.clinicAddress,
+          clinic_phone: userData.clinicPhone,
+          clinic_email: userData.clinicEmail
+        }
+      );
     } else {
       // Handle complex templates with sample data
       const email = await question('Enter recipient email: ');
@@ -1228,12 +1287,12 @@ async function main() {
       const template = templateConfigs[35];
       const userData = await collectUserInput(template);
       await sendEmail(35, userData);
-    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 48)) {
+    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 49)) {
       const template = templateConfigs[choiceNum];
       const userData = await collectUserInput(template);
       await sendEmail(choiceNum, userData);
     } else {
-      console.log('\n❌ Invalid choice. Please select 0-47.');
+      console.log('\n❌ Invalid choice. Please select 0-49.');
     }
     
     const continueChoice = await question('\nWould you like to send another email? (y/n): ');
