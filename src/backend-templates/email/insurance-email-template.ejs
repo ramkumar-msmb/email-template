@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            max-width: 150px;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <img src="https://d2pznqasld4zpy.cloudfront.net/common/WebLogo.svg" alt="Company Logo" class="logo">
+        <h2>Insurance Claim Request!</h2>
+    </div>
+
+    <p>Hello,</p>
+
+    <div>
+        <h2>Clinic Details: </h2>
+        <p>Clinic: <%= clinic_details.name %>
+        </p>
+        <p>Address: <%= clinic_details.address %>
+        </p>
+        <p>Contact: <%= clinic_details.contact %>
+        </p>
+        <p>Email: <%= clinic_details.email %>
+        </p>
+    </div>
+
+    <p>Please find the Insurance details below:</p>
+    <div>
+        <h2>Insurance Details: </h2>
+        <p>Insurance provider: <%= insurance_details.name %>
+        </p>
+        <p>Email: <%= insurance_details.email %>
+        </p>
+        <p>Policy Number: <%= insurance_details.policy_number %>
+        </p>
+        <p>Membership Number: <%= insurance_details.membership_number %>
+        </p>
+        <p>Coverage start date: <%= insurance_details.coverage_start_date %>
+        </p>
+        <p>Coverage end date: <%= insurance_details.coverage_end_date %>
+        </p>
+    </div>
+
+    <p>
+        Please find attached the invoice <%= invoice_code %> dated <%= invoice_date %> for 
+        the medical services provided to <%= patient_name %> at <%= clinic_details.name %>. 
+    </p>
+    <p>The attached document includes the itemized breakdown of services, charges, applicable taxes, and clinic details 
+        required for insurance claim processing.
+    </p>
+    <p>If you have any questions or need assistance, feel free to reach out to us or contact the hospital directly.</p>
+    <div class="footer">
+        <p>Warm regards,<br>The Sendscript Team</p>
+    </div>
+</body>
+
+</html>

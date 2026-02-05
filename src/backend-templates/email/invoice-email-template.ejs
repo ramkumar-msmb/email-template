@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo {
+            max-width: 150px;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <img src="https://d2pznqasld4zpy.cloudfront.net/common/WebLogo.svg" alt="Company Logo" class="logo">
+        <h2>Payment Request!</h2>
+    </div>
+
+    <p>Dear <%= patient_name %>,</p>
+
+    <div>
+        <h2>Clinic Details: </h2>
+        <p>Clinic: <%= clinic_details.name %></p>
+        <p>Address: <%= clinic_details.address %></p>
+        <p>Contact: <%= clinic_details.contact %></p>
+        <p>Email: <%= clinic_details.email %></p>
+    </div>
+
+    <p>
+        We've shared your invoice <%= invoice_code %> dated <%= invoice_date %> for the services provided at <%= clinic_details.name %>.
+        The invoice is attached for your reference, and you can make the payment easily using the Pay Now button below.
+    </p>
+    <% if (payment_status === 'UNPAID' && payment_link) { %>
+        <div>
+            <a href="<%= payment_link %>">
+            Pay Now € <%= total_amount %>
+            </a>
+        </div>
+    <% } %>
+    <p>If you have any questions or need assistance, feel free to reach out to us or contact the hospital directly.</p>
+    <div class="footer">
+        <p>Warm regards,<br>The Sendscript Team</p>
+    </div>
+</body>
+</html>
