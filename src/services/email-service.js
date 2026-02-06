@@ -570,6 +570,44 @@ class EmailService {
     return this.sendTemplateEmail('doctorConsultationPaymentLink', patientEmail, templateData);
   }
 
+  // Insurance and Invoice Methods
+  async sendInsuranceEmailTemplate(recipientEmail, insuranceData) {
+    const templateData = {
+      patient_name: insuranceData.patient_name,
+      invoice_code: insuranceData.invoice_code,
+      invoice_date: insuranceData.invoice_date,
+      clinic_details: {
+        name: insuranceData.clinic_name,
+        contact: insuranceData.clinic_contact || '0207 486 0701',
+        email: insuranceData.clinic_email || 'Info@londonelitehealth.com',
+        address: insuranceData.clinic_address || '116 Harley Street, London W1G 8JL'
+      },
+      insurance_details: {
+        company_name: insuranceData.insurance_company_name,
+        policy_number: insuranceData.insurance_policy_number,
+        member_id: insuranceData.insurance_member_id
+      }
+    };
+    return this.sendTemplateEmail('insuranceEmailTemplate', recipientEmail, templateData);
+  }
+
+  async sendInvoiceEmailTemplate(recipientEmail, invoiceData) {
+    const templateData = {
+      patient_name: invoiceData.patient_name,
+      invoice_code: invoiceData.invoice_code,
+      invoice_date: invoiceData.invoice_date,
+      payment_link: invoiceData.payment_link,
+      total_amount: invoiceData.total_amount,
+      clinic_details: {
+        name: invoiceData.clinic_name,
+        contact: invoiceData.clinic_contact || '0207 486 0701',
+        email: invoiceData.clinic_email || 'Info@londonelitehealth.com',
+        address: invoiceData.clinic_address || '116 Harley Street, London W1G 8JL'
+      }
+    };
+    return this.sendTemplateEmail('invoiceEmailTemplate', recipientEmail, templateData);
+  }
+
   // Test connection
   async testConnection() {
     try {

@@ -561,6 +561,41 @@ const templateConfigs = {
       { name: 'clinicPhone', prompt: 'Enter clinic phone: ', required: true },
       { name: 'clinicEmail', prompt: 'Enter clinic email: ', required: true }
     ]
+  },
+  
+  // Insurance and Invoice Templates
+  51: {
+    name: 'Insurance Email Template',
+    method: 'sendInsuranceEmailTemplate',
+    fields: [
+      { name: 'email', prompt: 'Enter recipient email: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'invoiceCode', prompt: 'Enter invoice code: ', required: true },
+      { name: 'invoiceDate', prompt: 'Enter invoice date (YYYY-MM-DD): ', required: true },
+      { name: 'clinicName', prompt: 'Enter clinic name: ', required: true },
+      { name: 'clinicContact', prompt: 'Enter clinic contact (default: 0207 486 0701): ', required: false, default: '0207 486 0701' },
+      { name: 'clinicEmail', prompt: 'Enter clinic email (default: Info@londonelitehealth.com): ', required: false, default: 'Info@londonelitehealth.com' },
+      { name: 'clinicAddress', prompt: 'Enter clinic address (default: 116 Harley Street, London W1G 8JL): ', required: false, default: '116 Harley Street, London W1G 8JL' },
+      { name: 'insuranceCompanyName', prompt: 'Enter insurance company name: ', required: true },
+      { name: 'insurancePolicyNumber', prompt: 'Enter insurance policy number: ', required: true },
+      { name: 'insuranceMemberId', prompt: 'Enter insurance member ID: ', required: true }
+    ]
+  },
+  52: {
+    name: 'Invoice Email Template',
+    method: 'sendInvoiceEmailTemplate',
+    fields: [
+      { name: 'email', prompt: 'Enter patient email: ', required: true },
+      { name: 'patientName', prompt: 'Enter patient name: ', required: true },
+      { name: 'invoiceCode', prompt: 'Enter invoice code: ', required: true },
+      { name: 'invoiceDate', prompt: 'Enter invoice date (YYYY-MM-DD): ', required: true },
+      { name: 'paymentLink', prompt: 'Enter payment link: ', required: true },
+      { name: 'totalAmount', prompt: 'Enter total amount: ', required: true },
+      { name: 'clinicName', prompt: 'Enter clinic name: ', required: true },
+      { name: 'clinicContact', prompt: 'Enter clinic contact (default: 0207 486 0701): ', required: false, default: '0207 486 0701' },
+      { name: 'clinicEmail', prompt: 'Enter clinic email (default: Info@londonelitehealth.com): ', required: false, default: 'Info@londonelitehealth.com' },
+      { name: 'clinicAddress', prompt: 'Enter clinic address (default: 116 Harley Street, London W1G 8JL): ', required: false, default: '116 Harley Street, London W1G 8JL' }
+    ]
   }
 };
 
@@ -639,6 +674,11 @@ async function showMenu() {
   console.log('49. Doctor Consultation Booking');
   console.log('50. Doctor Consultation Payment Link');
   
+  // Insurance and Invoice Templates
+  console.log('\n🏥 Insurance \u0026 Invoice Templates:');
+  console.log('51. Insurance Email Template');
+  console.log('52. Invoice Email Template');
+  
   // Complex Templates (with sample data)
   console.log('\n🔬 Complex Templates (uses sample data):');
   console.log('26. Prescription With Sign');
@@ -684,7 +724,7 @@ async function sendEmail(templateChoice, userData) {
     
     let result;
     
-    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37 || (templateChoice >= 38 && templateChoice <= 49)) {
+    if ((templateChoice >= 1 && templateChoice <= 25) || templateChoice === 36 || templateChoice === 37 || (templateChoice >= 38 && templateChoice <= 52)) {
       const template = templateConfigs[templateChoice];
       
       // Handle different template parameter structures
@@ -1060,43 +1100,76 @@ async function sendEmail(templateChoice, userData) {
           clinic_email: userData.clinicEmail
         }
       );
-    } else {
-      // Handle complex templates with sample data
-      const email = await question('Enter recipient email: ');
-      
-      switch (templateChoice) {
-        case 26: // Prescription with sign
-          result = await emailService.sendPrescriptionWithSignEmail(email, getSamplePrescriptionData());
-          break;
-        case 27: // Prescription without sign
-          result = await emailService.sendPrescriptionWithoutSignEmail(email, getSamplePrescriptionData());
-          break;
-        case 28: // Pharmacist with sign
-          result = await emailService.sendPharmacistWithSignEmail(email, getSamplePrescriptionData());
-          break;
-        case 29: // Invoice generate
-          result = await emailService.sendInvoiceEmail(email, getSampleInvoiceData());
-          break;
-        case 30: // Prescription from pharmacy
-          result = await emailService.sendPrescriptionFromPharmacyEmail(email, getSamplePharmacyData());
-          break;
-        case 31: // Pharmacy via prescription
-          result = await emailService.sendPharmacyViaPrescriptionEmail(email, getSamplePrescriptionData());
-          break;
-        case 32: // Invoice from pharmacy
-          result = await emailService.sendInvoiceFromPharmacyEmail(email, getSampleInvoiceFromPharmacyData());
-          break;
-        case 33: // Payment confirmed
-          result = await emailService.sendPaymentConfirmedEmail(email, getSamplePaymentData());
-          break;
-        case 34: // LEH Email Template
-          result = await emailService.sendLehEmailTemplateEmail(email, getSampleLehData());
-          break;
-        default:
-          console.log('❌ Invalid template choice');
-          return;
-      }
+    } else if (templateChoice === 51) {
+      // Insurance Email Template
+      result = await emailService.sendInsuranceEmailTemplate(
+        userData.email,
+        {
+          patient_name: userData.patientName,
+          invoice_code: userData.invoiceCode,
+          invoice_date: userData.invoiceDate,
+          clinic_name: userData.clinicName,
+          clinic_contact: userData.clinicContact,
+          clinic_email: userData.clinicEmail,
+          clinic_address: userData.clinicAddress,
+          insurance_company_name: userData.insuranceCompanyName,
+          insurance_policy_number: userData.insurancePolicyNumber,
+          insurance_member_id: userData.insuranceMemberId
+        }
+      );
+    } else if (templateChoice === 52) {
+      // Invoice Email Template
+      result = await emailService.sendInvoiceEmailTemplate(
+        userData.email,
+        {
+          patient_name: userData.patientName,
+          invoice_code: userData.invoiceCode,
+          invoice_date: userData.invoiceDate,
+          payment_link: userData.paymentLink,
+          total_amount: userData.totalAmount,
+          clinic_name: userData.clinicName,
+          clinic_contact: userData.clinicContact,
+          clinic_email: userData.clinicEmail,
+          clinic_address: userData.clinicAddress
+        }
+      );
+  } else {
+    // Handle complex templates with sample data
+    const email = await question('Enter recipient email: ');
+    
+    switch (templateChoice) {
+      case 26: // Prescription with sign
+        result = await emailService.sendPrescriptionWithSignEmail(email, getSamplePrescriptionData());
+        break;
+      case 27: // Prescription without sign
+        result = await emailService.sendPrescriptionWithoutSignEmail(email, getSamplePrescriptionData());
+        break;
+      case 28: // Pharmacist with sign
+        result = await emailService.sendPharmacistWithSignEmail(email, getSamplePrescriptionData());
+        break;
+      case 29: // Invoice generate
+        result = await emailService.sendInvoiceEmail(email, getSampleInvoiceData());
+        break;
+      case 30: // Prescription from pharmacy
+        result = await emailService.sendPrescriptionFromPharmacyEmail(email, getSamplePharmacyData());
+        break;
+      case 31: // Pharmacy via prescription
+        result = await emailService.sendPharmacyViaPrescriptionEmail(email, getSamplePrescriptionData());
+        break;
+      case 32: // Invoice from pharmacy
+        result = await emailService.sendInvoiceFromPharmacyEmail(email, getSampleInvoiceFromPharmacyData());
+        break;
+      case 33: // Payment confirmed
+        result = await emailService.sendPaymentConfirmedEmail(email, getSamplePaymentData());
+        break;
+      case 34: // LEH Email Template
+        result = await emailService.sendLehEmailTemplateEmail(email, getSampleLehData());
+        break;
+      default:
+        console.log('❌ Invalid template choice');
+        return;
     }
+  }
     
     console.log(`\n✅ Email sent successfully!`);
     console.log(`📧 Message ID: ${result.messageId}`);
@@ -1342,12 +1415,12 @@ async function main() {
       const template = templateConfigs[35];
       const userData = await collectUserInput(template);
       await sendEmail(35, userData);
-    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 50)) {
+    } else if (choiceNum === 36 || choiceNum === 37 || (choiceNum >= 38 && choiceNum <= 52)) {
       const template = templateConfigs[choiceNum];
       const userData = await collectUserInput(template);
       await sendEmail(choiceNum, userData);
     } else {
-      console.log('\n❌ Invalid choice. Please select 0-50.');
+      console.log('\n❌ Invalid choice. Please select 0-52.');
     }
     
     const continueChoice = await question('\nWould you like to send another email? (y/n): ');
