@@ -1,3 +1,5 @@
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,7 +56,7 @@
         .header-title {
             font-size: 16px;
             font-weight: 600;
-            margin-top: 8px;
+            margin-top: 10px;
         }
 
         .clinic-details {
@@ -63,16 +65,19 @@
         }
 
         .clinic-details p {
-            font-size: 12px;
+            font-size: 14px;
             margin: 2px 0;
         }
 
+        .clinic-details strong {
+            font-size: 16px;
+        }
 
         .details-container {
             display: flex;
             justify-content: space-between;
             padding: 15px 20px;
-            margin-top: 8px;
+            margin-top: 10px;
             align-items: stretch;
         }
 
@@ -140,7 +145,6 @@
         .prescription-table-container {
             max-height: 12cm;
             padding: 0 20px;
-            min-height: 12cm;
         }
 
         .prescription-table {
@@ -155,7 +159,6 @@
             font-size: 12px;
             padding: 8px;
             text-align: left;
-            height: 40px;
         }
 
         .prescription-table td {
@@ -208,12 +211,13 @@
 
         .prescribed-by {
             padding: 20px;
+            margin-top: 5px;
         }
 
         .prescribed-by-title {
             font-size: 13px;
             font-weight: 400;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
             color: #242424;
         }
 
@@ -264,7 +268,7 @@
         }
 
         .qr-container p {
-            margin-top: 3px;
+            margin-top: 10px;
             font-size: 10.2px;
         }
 
@@ -282,7 +286,7 @@
             font-size: 11px;
             text-align: justify;
             padding: 15px 20px;
-            margin-top: 8px;
+            margin-top: 20px;
         }
 
         .footer-text p {
@@ -335,21 +339,24 @@
             <div class="clinic-details">
                 <p>
                     <strong>
-                        <%= prescription.pharmacy_name %>
+                        <%= prescription?.pharmacy_name %>
                     </strong>
                 </p>
                 <p>
-                    <%= [prescription.pharmacy_address_line_1, prescription.pharmacy_address_line_2].filter(Boolean).join(', ') %>
+                    <%= prescription?.pharmacy_address_line_1 %>
                 </p>
                 <p>
-                    <%= prescription.pharmacy_city %>
+                    <%= prescription?.pharmacy_address_line_2 %>
                 </p>
                 <p>
-                    <%= prescription.pharmacy_postal_code %>
+                    <%= prescription?.pharmacy_city %>
                 </p>
-                <p>Tel: <%= prescription.pharmacy_contact_number %>
+                <p>
+                    <%= prescription?.pharmacy_postal_code %>
                 </p>
-                <p>Email: <%= prescription.pharmacy_email %>
+                <p>Tel: <%= prescription?.pharmacy_contact_number %>
+                </p>
+                <p>Email: <%= prescription?.pharmacy_email %>
                 </p>
             </div>
         </div>
@@ -366,17 +373,12 @@
                     <p class="dob-age">
                         <strong>Date Of Birth:</strong>
                         <span>
-                            <%= new Date(new Date(patient_details?.patient_dob).setDate(new
-                                Date(patient_details?.patient_dob).getDate())).toLocaleDateString('en-GB')
-                                %>
-                                <span class="age" style="color: #000; font-weight: 500; margin-left: 10px;"> Age:
-                                </span>
-                                <span class="age-value">
-                                    <!-- <%= Math.floor((new Date() - new Date(patient_details?.patient_dob))
-                                        / (1000 * 60 * 60 * 24 * 365.25)) %> -->
-                                    <%= patient_age %>
-                                </span>
-
+                            <%= new Date(new Date(patient_details?.patient_dob).setDate(new Date(patient_details?.patient_dob).getDate())).toLocaleDateString('en-GB') %>
+                            <span class="age" style="color: #000; font-weight: 500; margin-left: 10px;"> Age: </span>
+                            <span class="age-value">
+                                <!-- <%= Math.floor((new Date() - new Date(patient_details?.patient_dob)) / (1000 * 60 * 60 * 24 * 365.25)) %> -->
+                                <%= patient_age %>
+                            </span>
                         </span>
                     </p>
 
@@ -449,10 +451,8 @@
                 </table>
             </div>
         <% } %>
-
-
         <div class="prescribed-by">
-            <div class="prescribed-by-title">Prescribed By</div>
+            <div class="prescribed-by-title">Pharmacist Details</div>
             <div class="doctor-details">
                 <table>
                     <tr>
@@ -461,14 +461,11 @@
                     </tr>
                     <tr>
                         <td>
-                            <%= prescription.doctor_title %>
-                            <%= prescription.doctor_first_name %>
-                            <%= prescription.doctor_sur_name %>
+                            <%= prescription.pharmacist_first_name %>
+                            <%= prescription.pharmacist_sur_name %>
                         </td>
-                        <td><%= prescription.pharmacist_code %>
+                        <td>GPHC - <%= prescription.pharmacist_gphc %>
                         </td>
-                        </td>
-
                     </tr>
                 </table>
             </div>
@@ -482,7 +479,8 @@
             </div>
             <div class="signature-section">
                 <p>This prescription has been signed using an advanced electronic signature</p>
-                <p><strong>E-signature: <%= prescription.doctor_signature %></strong>
+                <p><strong>E-signature:</strong>
+                    <%= prescription.pharmacist_signature %>
                 </p>
                 <p><strong>Date and Time of signature:</strong>
                     <%= new Date(prescription_created_at).toLocaleString('en-GB', { 
@@ -494,7 +492,7 @@
                           hour12: true,
                           timeZone: 'UTC'   // 👈 prevents shifting to server timezone
                     }).replace('AM', 'am').replace('PM', 'pm') %>
-                </p>                  
+                </p>
                 <p>To verify (or) dispense the prescription visit: www.sendscript.com/dispense</p>
             </div>
         </div>

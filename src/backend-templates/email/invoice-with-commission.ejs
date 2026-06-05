@@ -109,6 +109,7 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 5px;
+            font-size: 14px;
         }
 
         .totals {
@@ -204,7 +205,7 @@
 
 <body>
     <% 
-    const items = prescription_items || [];
+    const items = scans || [];
     // Calculate total pages needed
     const itemsPerPage = 10;
     const totalPages = Math.ceil(items.length / itemsPerPage);
@@ -224,155 +225,121 @@
                 <p>Invoice</p>
             </div>
             <div class="header-right">
-                <p><%= pharmacy.name %></p>
+                <p><%= patient.site_name %></p>
                 <p>
                     <%= [
-                      pharmacy.address_line_1,
-                      pharmacy.address_line_2,
-                      pharmacy.address_line_3,
-                      pharmacy.city,
-                      pharmacy.county,
-                      pharmacy.country
+                      patient.site_address_line_1,
+                      patient.site_address_line_2,
+                      patient.site_address_line_3,
+                      patient.site_city,
+                      patient.site_county,
+                      patient.site_country
                     ].filter(Boolean).join(', ') %>
                 </p>
-                <p><%= pharmacy.postal_code %></p>
-                <p>Tel: <%= pharmacy.contact_number %></p>
-                <p>Email: <%= pharmacy.email %></p>
+                <p><%= patient.site_postal_code %></p>
+                <p>Tel: <%= patient.site_contact_number %></p>
+                <p>Email: <%= patient.site_email %></p>
             </div>
         </div>
 
-        <!-- Patient Details and Invoice Details -->
         <div class="details-container">
-            <!-- Patient Details -->
             <div class="details-box">
                 <div class="details-heading">Patient Details</div>
                 <div class="patient-details">
                     <p>
                         <strong>Full Name:</strong>
-                        <span><%= patient_details.patient_title %> <%= patient_details.patient_first_name %> <%= patient_details.patient_sur_name %></span>
+                        <span><%= patient.patient_name %></span>
                     </p>
                     <p>
                         <strong>Date Of Birth:</strong>
-                        <span><% 
-                            // Parse the ISO date string
-                            const dobOriginal = new Date(patient_details.patient_dob);
-                            
-                            // Create a new date object with the date incremented by 1
-                            const dob = new Date(dobOriginal);
-                            dob.setDate(dobOriginal.getDate());
-                            
-                            // Format as DD/MM/YYYY
-                            const day = String(dob.getDate()).padStart(2, '0');
-                            const month = String(dob.getMonth() + 1).padStart(2, '0'); // Month is 0-based
-                            const year = dob.getFullYear();
-                            
-                            const formattedDate = `${day}/${month}/${year}`;
-                          %>
-                          <%= formattedDate %></span>
-                        
                         <span>
-                            <span class="age" style="color: #000; font-weight: 500; margin-left: 10px;"> Age: </span>
-                            <span class="age-value">
-                                <!-- <%= Math.floor((new Date() - new Date(patient_details?.patient_dob)) / (1000 * 60 * 60 * 24 * 365.25)) %> -->
-                                <%= patient_age %>
-                            </span>
+                          <% 
+                            const dob = new Date(patient.dob);
+                            const formattedDate = `${String(dob.getDate()).padStart(2,'0')}/${String(dob.getMonth()+1).padStart(2,'0')}/${dob.getFullYear()}`;
+                          %>
+                          <%= formattedDate %>
+                        </span>
+                        <span>
+                            <span style="color:#000;font-weight:500;margin-left:10px;">Age:</span>
+                            <span><%= patient.patient_age %></span>
                         </span>
                     </p>
-                    <p>
+                    <p style="line-height: 16px;">
                         <strong>Address:</strong>
                         <span>
-                            <%= [
-                              patient_details?.patient_address_line_1,
-                              patient_details?.patient_address_line_2,
-                              patient_details?.patient_city,
-                              patient_details?.patient_country,
-                              patient_details?.patient_postal_code
-                            ].filter(Boolean).join(', ') %>
-                        </span>                          
-                    </p>
-                    <p>
+                          <%= (
+                            [patient?.address_line_1, patient?.address_line_2, patient?.city, patient?.country, patient?.postal_code]
+                              .filter(v => v && v.trim())
+                              .join(', ')
+                          ) || '-' %>
+                        </span>
+                      </p>
+                      
+                      <p>
                         <strong>Contact Number:</strong>
-                        <span><%= patient_details.patient_country_code %> <%= patient_details.patient_mobile %></span>
+                        <span><%= patient?.country_code %> <%= patient?.mobile?.trim() || '-' %></span>
                     </p>
                 </div>
             </div>
-        
-            <!-- Invoice Details -->
+
             <div class="details-box">
                 <div class="details-heading">Invoice Details</div>
                 <div class="invoice-details">
                     <p>
                         <strong>Invoice Number:</strong>
-                        <span><%= invoice_id %></span>
+                        <span><%= invoice_number %></span>
                     </p>
                     <p>
                         <strong>Invoice Date:</strong>
-                        <span><% 
-                            // Parse the ISO date string
-                            const dobOriginal_invoice = new Date(invoice_date);
-                            
-                            // Create a new date object with the date incremented by 1
-                            const dob_invoice = new Date(dobOriginal_invoice);
-                            dob_invoice.setDate(dobOriginal_invoice.getDate());
-                            
-                            // Format as DD/MM/YYYY
-                            const day_invoice = String(dob_invoice.getDate()).padStart(2, '0');
-                            const month_invoice = String(dob_invoice.getMonth() + 1).padStart(2, '0'); // Month is 0-based
-                            const year_invoice = dob_invoice.getFullYear();
-                            
-                            const formattedDate_invoice = `${day_invoice}/${month_invoice}/${year_invoice}`;
+                        <span>
+                          <% 
+                            const invDate = new Date(invoice_date);
+                            const formattedInvDate = `${String(invDate.getDate()).padStart(2,'0')}/${String(invDate.getMonth()+1).padStart(2,'0')}/${invDate.getFullYear()}`;
                           %>
-                        <%= formattedDate_invoice %></span>
+                          <%= formattedInvDate %>
+                        </span>
                     </p>
                 </div>
             </div>
         </div>
-        
 
-        <!-- TABLE -->
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
                         <th>SL No</th>
-                        <th>Medicine</th>
-                        <th>Quantity</th>
-                        <th>Total Amount</th>
+                        <th>Scan</th>
+                        <th>Total Amounts</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% for (let i = 0; i < pageItems.length; i++) { 
                         const item = pageItems[i];
-                        const itemNumber = startIndex + i + 1; // Global item number
+                        const itemNumber = startIndex + i + 1;
                     %>
                     <tr>
                         <td><%= itemNumber %></td>
-                        <td><%= item.name %></td>
-                        <td>
-                            <%= item.quantity %>
-                            <%= item.unit %>
-                        </td>
-                        <td>£ <%= item.price %></td>
+                        <td><%= item.scan_name %><%= item.body_part ? ' - ' + item.body_part : '' %></td>
+                        <td style="text-align: right; align-items: right;">£ <%= item.out_patient_price %></td>
                     </tr>
                     <% } %>
                 </tbody>
             </table>
         </div>
 
-        <!-- TOTALS SECTION - Only show on the last page -->
         <% if (isLastPage) { %>
         <div class="totals-container">
             <div class="amount-calc">
                 <div>Gross Amount</div>
-                <div>£ <%= (total_price - (delivery_charge || 0)).toFixed(2) %></div>
+                <div>£ <%= Number(grossAmount).toFixed(2) %></div>
             </div>
             <div class="amount-calc">
-                <div>Delivery Charge</div>
-                <div>£ <%= (delivery_charge || 0).toFixed(2) %></div>
+                <div>Discount</div>
+                <div>( - ) £ <%= Number(commissionValue || 0).toFixed(2) %></div>
             </div>
             <div class="totals">
                 <div>Net Amount</div>
-                <div>£ <%= Number(total_price || 0).toFixed(2) %></div>
+                <div>£ <%= Number(netAmount || 0).toFixed(2) %></div>
             </div>
         </div>
         <% } else { %>

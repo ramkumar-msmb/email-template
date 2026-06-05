@@ -76,7 +76,9 @@
             border-collapse: collapse;
             border: 0;
         }
-        thead, table tr {
+
+        thead,
+        table tr {
             border: 0;
         }
 
@@ -84,10 +86,9 @@
         table td {
             padding: 12px;
             border: 1px solid #ddd;
-            font-size: 14px;
-            font-weight: 300;
             border: 0;
         }
+
         table th,
         table td {
             padding: 12px;
@@ -99,7 +100,7 @@
             font-weight: bold;
             background-color: #1b3f6d;
             color: #fff;
-            text-align: center;
+            text-align: left;
         }
 
         table td {
@@ -107,8 +108,9 @@
         }
 
         table td:first-child {
-            text-align: center;
+            text-align: left;
         }
+
         table th:first-child,
         table th:nth-child(3) {
             width: 100px;
@@ -128,12 +130,13 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 5px;
+            font-size: 12px;
         }
 
         .totals {
             display: flex;
             justify-content: space-between;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             border-top: 1px solid #ccc;
             padding-top: 10px;
@@ -174,7 +177,8 @@
             flex-direction: column;
         }
 
-        .patient-details, .invoice-details {
+        .patient-details,
+        .invoice-details {
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -194,20 +198,23 @@
             padding-top: 5px;
         }
 
-        .patient-details p, .invoice-details p {
+        .patient-details p,
+        .invoice-details p {
             display: flex;
             justify-content: space-between;
             gap: 10px;
             margin: 5px 0;
         }
 
-        .patient-details strong, .invoice-details strong {
+        .patient-details strong,
+        .invoice-details strong {
             min-width: 140px;
             text-align: left;
             font-weight: 500;
         }
 
-        .patient-details span, .invoice-details span {
+        .patient-details span,
+        .invoice-details span {
             flex-grow: 1;
             text-align: left;
             color: #1B3F6D;
@@ -267,7 +274,7 @@
                     </p>
                 </div>
             </div>
-        
+
             <!-- Invoice Details -->
             <div class="details-box">
                 <div class="details-heading">Invoice Details</div>
@@ -291,7 +298,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- TABLE -->
         <div class="table-container">
             <table>
@@ -380,7 +387,7 @@
         <div class="footer"></div>
     </div>
 
-    
+
 </body>
 
 </html>

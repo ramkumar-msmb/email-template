@@ -12,7 +12,10 @@
             padding: 0;
             background-color: #f9f9f9;
         }
-
+        *{
+            margin: 0;
+            padding: 0;
+        }
         .invoice-container {
             height: 29.7cm;
             width: 21cm;
@@ -23,56 +26,57 @@
             flex-direction: column;
             page-break-after: always;
         }
-
-        .header {
-            background-color: #1b3f6d;
+        .header,
+        .footer-text {
+            /* background-color: #1B3F6D; */
             color: white;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
-
+        .header {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            padding: 10px;
+        }
         .header-left {
             display: flex;
             flex-direction: column;
         }
-
-        .header-left img {
+        .header img {
             width: 120px;
-            margin-bottom: 70px;
+            /* margin-bottom: 70px; */
         }
-
-        .header-left p {
+        .header-title {
             font-size: 16px;
             font-weight: 600;
-            margin-top: 10px;
         }
-
+        .clinic-details {
+            /* text-align: left; */
+            line-height: 1.4;
+        }
+        .clinic-details p {
+            color: black;
+            font-size: 12px;
+            margin: 2px 0;
+        }
         .header-right {
             text-align: right;
             line-height: 1.7;
         }
-
         .header-right p {
             font-size: 12px;
             margin: 2px 0;
         }
-
         .header-right p:first-child {
             font-size: 14px;
             font-weight: 600;
         }
-
         .table-container {
             margin: 10px;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
         }
-
         table th,
         table td {
             padding: 12px;
@@ -80,37 +84,31 @@
             font-size: 14px;
             font-weight: 300;
         }
-
         table th {
             font-weight: bold;
             background-color: #1b3f6d;
             color: #fff;
             text-align: center;
         }
-
         table td {
             text-align: left;
         }
-
         table td:first-child,
         table td:nth-child(3),
         table td:nth-child(4) {
             text-align: center;
         }
-
         .totals-container {
             padding: 20px;
             background-color: white;
             flex-grow: 1;
             line-height: 2.2;
         }
-
         .amount-calc {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 5px;
+            /* margin-bottom: 5px; */
         }
-
         .totals {
             display: flex;
             justify-content: space-between;
@@ -119,20 +117,17 @@
             border-top: 1px solid #ccc;
             padding-top: 10px;
         }
-
         .fixed-bottom {
             position: relative;
             margin-top: auto;
             width: 100%;
         }
-
         .delivery-type {
             background-color: #e8ecf0;
             padding: 8px;
             font-size: 12px;
             font-weight: 400;
         }
-
         .footer {
             background-color: #1b3f6d;
             height: 23px;
@@ -141,20 +136,16 @@
             font-size: 12px;
             line-height: 20px;
         }
-
         .details-container {
             display: flex;
             justify-content: space-between;
-            padding: 15px 20px;
-            margin-top: 10px;
+            padding: 5px 20px;
         }
-
         .details-box {
             width: 48%;
             display: flex;
             flex-direction: column;
         }
-
         .patient-details, .invoice-details {
             display: flex;
             flex-direction: column;
@@ -165,7 +156,6 @@
             flex-grow: 1;
             font-size: 12px;
         }
-
         .details-heading {
             font-size: 13px;
             font-weight: 400;
@@ -174,30 +164,31 @@
             padding-left: 10px;
             padding-top: 5px;
         }
-
         .patient-details p, .invoice-details p {
             display: flex;
             justify-content: space-between;
             gap: 10px;
             margin: 5px 0;
         }
-
         .patient-details strong, .invoice-details strong {
             min-width: 140px;
             text-align: left;
             font-weight: 500;
         }
-
         .patient-details span, .invoice-details span {
             flex-grow: 1;
             text-align: left;
             color: #1B3F6D;
         }
-
         @media print {
             .invoice-container {
                 page-break-after: always;
             }
+        }
+        .info-icon {
+            display: flex;
+            align-items: center;
+            padding-left: 16px;
         }
     </style>
 </head>
@@ -219,25 +210,10 @@
     <div class="invoice-container">
         <!-- HEADER -->
         <div class="header">
-            <div class="header-left">
-                <img src="https://d2pznqasld4zpy.cloudfront.net/common/WebLogo.svg" alt="SendScript">
+            <div>
+                <img style="height: 80px; margin-right: auto; width: 100%; display: flex; justify-content: end;" src="https://public-consumables.s3.eu-west-2.amazonaws.com/tlc.jpeg"
+                    alt="SendScript">
                 <p>Invoice</p>
-            </div>
-            <div class="header-right">
-                <p><%= pharmacy.name %></p>
-                <p>
-                    <%= [
-                      pharmacy.address_line_1,
-                      pharmacy.address_line_2,
-                      pharmacy.address_line_3,
-                      pharmacy.city,
-                      pharmacy.county,
-                      pharmacy.country
-                    ].filter(Boolean).join(', ') %>
-                </p>
-                <p><%= pharmacy.postal_code %></p>
-                <p>Tel: <%= pharmacy.contact_number %></p>
-                <p>Email: <%= pharmacy.email %></p>
             </div>
         </div>
 
@@ -352,7 +328,7 @@
                             <%= item.quantity %>
                             <%= item.unit %>
                         </td>
-                        <td>£ <%= item.price %></td>
+                        <td>£ <%= Number(item.price || 0).toFixed(2) %></td>
                     </tr>
                     <% } %>
                 </tbody>
@@ -378,8 +354,53 @@
         <% } else { %>
         <div class="totals-container"></div>
         <% } %>
-
-        <div class="footer"></div>
+        <div>
+            <div
+                style="display: flex; justify-content: end; font-size: 14px; margin-right: 3rem; color: #1B3F6D; font-family: 'Nunito', sans-serif">
+                <p>We go further | We work as one | We personalise care</p>
+            </div>
+            <div class="info-icon">
+                <svg style="
+                height: 25px;
+                width: 31px;
+                fill: #1B3F6D;
+            " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 332.43 264.75"><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path d="M332.43,131.25c-19.32-.07-38.64-.22-58-.16-5,0-8.34,4-8.76,9.7-1.83,24.77-9.45,47.74-23.9,67.81-15.92,22.11-36.55,38.62-62.69,47.85-31.24,11-62.5,11.2-93.35-.31A127.87,127.87,0,0,1,20.91,203.4c-17.76-28.08-24.25-58.53-19.3-91C6.93,77.37,24,48.8,52.27,27.16,70.75,13,91.56,5,114.64,1.49c27.6-4.24,53.47.74,78,12.61,23.5,11.37,41.94,28.84,55.18,51.55a128.88,128.88,0,0,1,14.66,36.92c.74,3.33.1,5.13-3.11,6-3.49,1-4.83-.85-5.49-3.93A116.52,116.52,0,0,0,233.8,60.45,123.17,123.17,0,0,0,177,16.88c-27.72-10.55-56-11.26-83.63-1.78C60.56,26.37,36,47.94,20.76,79.82a121.54,121.54,0,0,0,9.71,121.81,128.89,128.89,0,0,0,28.62,30.11,117.81,117.81,0,0,0,43.49,20.38c29.59,7.09,58.23,4.15,85.62-9,15.73-7.54,29-18.55,40.19-32a122.11,122.11,0,0,0,26.94-57.47c1.1-6,1.38-12.25,2.67-18.25,1.83-8.56,7-12.68,16-12.79,17.49-.2,35,0,52.49-.06,2,0,4-.24,5.95-.37Z"/><path d="M114.47,184.53c1.24-4.1,2.86-10,4.8-15.8,6.36-19,12.87-38,19.19-57.1.52-1.55.63-4-.26-5s-3.35-.67-4.94-.26c-5,1.28-9.83,3.16-14.86,4.2-1.43.3-4-1-4.78-2.37-1.2-2.1-.77-4.54,2.28-5.49,5.54-1.73,11-3.85,16.59-5.27,10.74-2.71,17.7,4.51,14.61,15.35-2.81,9.86-6.22,19.55-9.49,29.27-4.45,13.22-9.09,26.38-13.49,39.61-2,5.94-.75,10.32,3,12.36a12.13,12.13,0,0,0,15-2.67c6.71-7.34,13.52-14.61,20.22-22,2-2.17,4-3.05,6.37-.81,2.25,2.1,2.9,3.84.21,6.59-7.68-14.59,15.78-21.9,23.66-5.35,5.78-13.92,7.38-21.57,4.37C118.2,200.32,114.66,194.4,114.47,184.53Z"/><path d="M146.37,53c10,0,17.61,7.64,17.58,17.81,0,9.67-8,17.37-18.12,17.44-9.59.07-17.94-8.21-17.48-18C128.78,61.24,135,52.61,146.37,53Zm-.14,26.43a8.37,8.37,0,0,0,8.65-8.86c-.07-4.8-4.24-9.08-8.76-9a8.54,8.54,0,0,0-8.52,9C137.75,76,141.13,79.48,146.23,79.4Z"/></g></g></svg>
+                <div style="width: 100%;
+                background: #1B3F6D;
+                height: 0.8px;
+                position: relative;
+                top: -0.5px;
+                left: -1px;">
+                    </div>
+            </div>
+            <div style="color: black; font-size: 12px; padding: 1rem 3rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <div>
+                        <p>20 Devonshire Place, London, W1G 6BW</p>
+                        <p><strong style="color: #1B3F6D;">T</strong> +44 (0)20 7935 4444 | <strong
+                                style="color: #1B3F6D;">E</strong> info@thelondonclinic.co.uk</p>
+                        <p>thelondonclinic.co.uk</p>
+                    </div>
+                    <div style="font-size: 10px; text-align: right;">
+                        <p style="color: #1B3F6D;">Trustees of the London Clinic Limited</p>
+                        <p style="color: #1B3F6D;">
+                            Registered Charity Number <span style="color: black;">211135</span>
+                        </p>
+                        <p style="color: #1B3F6D;">
+                            Registered Company Number <span style="color: black;">307579</span>
+                        </p>
+                        <p style="color: #1B3F6D;">
+                            Registered Address: <span style="color: black;">20 Devonshire Place, London, W1G 6BW</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: center; height: 15px; gap: 10px; margin-bottom: 20px;">
+                <p style="font-size: 12px;">Powered By</p>
+                <img src="https://public-consumables.s3.eu-west-2.amazonaws.com/logo.png" alt="SendScript">
+            </div>
+        </div>
+    </div>
     </div>
     <% } %>
 </body>
