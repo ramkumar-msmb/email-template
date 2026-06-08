@@ -74,6 +74,8 @@ const mockDataMap = {
     'patient_details.patient_country_code': '+91',
     'patient_details.patient_country': 'United Kingdom',
     'patient_details.patient_postal_code': 'SW1A 1AA',
+    'patient_details.comment_to_pharmacy': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatu Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo sd',
+    'patient_details.comment_to_patient': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatu Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo sd',
 
     'patient_name': 'John Doe',
     'patient_age': '41',
@@ -158,10 +160,16 @@ const mockDataMap = {
     // ---------------------------------------------------------
     // Item Details
     // ---------------------------------------------------------
-    'item.name': 'Paracetamol 500mg',
+    'item.name': 'Rifadin 100 mg/ 5ml syrup 120 ml',
     'item.quantity': '2',
     'item.price': '£5.00',
     'item.total': '£10.00',
+    'item.unit': 'mg',
+    'item.duration': '200',
+    'item.duration_type': 'Days',
+    'item.dosage_note': '200 ml',
+    'item.slNo': '1',
+    'item.method': 'Intramuscular',
 
     // ---------------------------------------------------------
     // Clinical Info
