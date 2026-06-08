@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim Form — [claimNumber]
+                
+    </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+        /* ============================================================
+       CLAIM FORM — EJS / Puppeteer A4 Template
+       Page size  : 210mm × 297mm
+       Compatible : Node.js EJS · Puppeteer · wkhtmltopdf
+       ============================================================ */
+
+        /* ── @page ── */
+        @page {
+            size: A4;
+            margin: 11mm 13mm;
+        }
+
+        /* ── Reset ── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10pt;
+            color: #444444;
+            background: #ffffff;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* ────────────────────────────────────────────
+       LAYOUT UTILITIES
+       .page        Root wrapper
+       .section     Content block with no-break
+       .no-break    Prevent page break inside
+       .page-break  Force page break before
+    ──────────────────────────────────────────── */
+
+        .page {
+            width: 100%;
+            background: #ffffff;
+        }
+
+        .section {
+            margin-bottom: 14pt;
+            /* allow natural page breaks inside sections */
+        }
+
+        .no-break {
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .page-break {
+            page-break-before: always;
+            break-before: always;
+            display: block;
+            height: 0;
+        }
+
+        /* ────────────────────────────────────────────
+       TITLE BAR
+    ──────────────────────────────────────────── */
+
+
+        .cf-title {
+            font-size: 12pt;
+            font-weight: 700;
+            color: #222222;
+        }
+
+        .cf-ref {
+            font-size: 8pt;
+            color: #888888;
+        }
+
+        /* ────────────────────────────────────────────
+       HEADER / FOOTER BANNER IMAGE
+    ──────────────────────────────────────────── */
+
+        .cf-header,
+        .cf-footer {
+            width: 100%;
+            line-height: 0;
+            overflow: hidden;
+        }
+
+        .cf-header img,
+        .cf-footer img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Fallback gradient header when no image */
+        .cf-header-fallback {
+            background: linear-gradient(135deg, #1b3f6d 0%, #4f6e95 100%);
+            padding: 18pt 14pt;
+            text-align: center;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .cf-header-fallback-title {
+            font-size: 20pt;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 3pt;
+        }
+
+        .cf-header-fallback-sub {
+            font-size: 8.5pt;
+            color: #b0c8e8;
+            margin-top: 4pt;
+        }
+
+        .cf-footer-fallback {
+            background: #1b3f6d;
+            padding: 12pt 14pt;
+            text-align: center;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .cf-footer-fallback p {
+            font-size: 8pt;
+            color: #b0c8e8;
+        }
+
+        .cf-footer-fallback small {
+            font-size: 7pt;
+            color: #7a9ec0;
+            display: block;
+            margin-top: 3pt;
+        }
+
+        /* ────────────────────────────────────────────
+       FORM BODY
+    ──────────────────────────────────────────── */
+
+        .cf-body {
+            padding: 13pt 14pt;
+            display: block;
+        }
+
+        /* ────────────────────────────────────────────
+       SECTION HEADINGS
+    ──────────────────────────────────────────── */
+
+        .section-title {
+            font-size: 9pt;
+            font-weight: 700;
+            color: #1b3f6d;
+            padding-bottom: 5pt;
+            border-bottom: 1.5pt solid #4f6e95;
+            margin-bottom: 10pt;
+            display: table;
+            /* shrink underline to text width */
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* ────────────────────────────────────────────
+       FIELD GRID ROWS
+    ──────────────────────────────────────────── */
+
+        .field-row {
+            display: flex;
+            gap: 7pt;
+            margin-bottom: 8pt;
+            align-items: flex-end;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .field-col {
+            flex: 1 1 0;
+            display: flex;
+            flex-direction: column;
+            gap: 3.5pt;
+            min-width: 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        /* Fixed-width column variants */
+        .fc-xs {
+            flex: 0 0 42pt;
+        }
+
+        .fc-sm {
+            flex: 0 0 58pt;
+        }
+
+        .fc-md {
+            flex: 0 0 88pt;
+        }
+
+        .fc-lg {
+            flex: 0 0 110pt;
+        }
+
+        .fc-xl {
+            flex: 0 0 140pt;
+        }
+
+        .fc-2xl {
+            flex: 0 0 180pt;
+        }
+
+        /* ────────────────────────────────────────────
+       LABELS
+    ──────────────────────────────────────────── */
+
+        .field-label {
+            font-size: 7.5pt;
+            font-weight: 700;
+            color: #444444;
+            display: block;
+        }
+
+        .field-label-wrap {
+            white-space: normal;
+            line-height: 1.3;
+        }
+
+        .field-opt {
+            color: #999999;
+            font-weight: 400;
+        }
+
+        /* ────────────────────────────────────────────
+       FIELD VALUES (pill-shaped bordered boxes)
+    ──────────────────────────────────────────── */
+
+        .fv {
+            min-height: 19pt;
+            height: auto;
+            border: 0.75pt solid #dddddd;
+            border-radius: 10pt;
+            padding: 3pt 8pt;
+            background: #f5f5f5;
+            font-size: 8pt;
+            color: #444444;
+            display: flex;
+            align-items: center;
+            line-height: 1.3;
+            width: 100%;
+            word-break: break-word;
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* Blank / fillable variant */
+        .fv-blank {
+            background: #ffffff;
+        }
+
+        /* Placeholder text color */
+        .fv-ph {
+            color: #aaaaaa;
+        }
+
+        /* Space-between (for selects with chevron) */
+        .fv-sb {
+            justify-content: space-between;
+        }
+
+        /* Date field (icon + text) */
+        .fv-date {
+            gap: 5pt;
+        }
+
+        .fv-icon {
+            margin-right: 3pt;
+            font-size: 9pt;
+            color: #777;
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* Chevron glyph */
+        .chevron {
+            display: none;
+            /* chevrons hidden */
+        }
+
+        /* ────────────────────────────────────────────
+       PHONE INPUT
+    ──────────────────────────────────────────── */
+
+        .phone-row {
+            display: flex;
+            gap: 5pt;
+            width: 100%;
+        }
+
+        .phone-prefix {
+            flex: 0 0 55pt;
+            height: 19pt;
+            border: 0.75pt solid #dddddd;
+            border-radius: 20pt;
+            padding: 0 6pt;
+            background: #f5f5f5;
+            font-size: 7.5pt;
+            color: #444444;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 2pt;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .flag-icon {
+            display: inline-block;
+            width: 12pt;
+            height: 9pt;
+            flex-shrink: 0;
+            border-radius: 1px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .phone-number {
+            flex: 1;
+        }
+
+        /* ────────────────────────────────────────────
+       TEXTAREA FIELD
+    ──────────────────────────────────────────── */
+
+        .f-textarea {
+            min-height: 50pt;
+            border: 0.75pt solid #d9d9d9;
+            border-radius: 6pt;
+            padding: 6pt 8pt;
+            background: #ffffff;
+            font-size: 8pt;
+            color: #444444;
+            width: 100%;
+            line-height: 1.5;
+            font-family: Arial, Helvetica, sans-serif;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* ────────────────────────────────────────────
+       RADIO BUTTONS
+    ──────────────────────────────────────────── */
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7pt;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .radio-title {
+            font-size: 7.5pt;
+            font-weight: 700;
+            color: #444444;
+        }
+
+        .radio-options {
+            display: flex;
+            gap: 8pt;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .radio-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 4pt;
+            font-size: 8pt;
+            color: #444444;
+            white-space: nowrap;
+        }
+
+        /* Unselected circle */
+        .r-circle {
+            display: inline-block;
+            width: 10pt;
+            height: 10pt;
+            border-radius: 50%;
+            border: 1.25pt solid #d0d0d0;
+            background: #ffffff;
+            flex-shrink: 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* Selected state */
+        .r-circle-on {
+            border: 4pt solid #1b3f6d;
+            background: #ffffff;
+        }
+
+        /* ────────────────────────────────────────────
+       PAYMENT SECTION LAYOUT
+    ──────────────────────────────────────────── */
+
+        .payment-top {
+            display: flex;
+            gap: 18pt;
+            align-items: flex-start;
+            margin-bottom: 9pt;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .payment-left {
+            flex: 0 0 155pt;
+        }
+
+        .payment-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 9pt;
+        }
+
+        /* ────────────────────────────────────────────
+       TABLE (Claim Details)
+    ──────────────────────────────────────────── */
+
+        .cf-table-wrap {
+            width: 100%;
+            border: 0.5pt solid #dddddd;
+            border-radius: 4pt;
+            overflow: visible;
+            margin-bottom: 7pt;
+            page-break-inside: auto;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .cf-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            font-size: 8pt;
+        }
+
+        /* thead repeats on page break */
+        .cf-table thead {
+            display: table-header-group;
+        }
+
+        .cf-table thead th {
+            background: #edf2f7;
+            border: 0.5pt solid #dddddd;
+            padding: 5pt 6pt;
+            font-size: 7.5pt;
+            font-weight: 700;
+            color: #1b3f6d;
+            text-align: left;
+            vertical-align: top;
+            line-height: 1.3;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .cf-table tbody tr {
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .cf-table tbody td {
+            border: 0.5pt solid #dddddd;
+            padding: 5pt 6pt;
+            font-size: 8pt;
+            color: #555555;
+            vertical-align: middle;
+            height: 22pt;
+        }
+
+        .cf-table tfoot td {
+            border: 0.5pt solid #dddddd;
+            background: #daeeff;
+            padding: 5pt 6pt;
+            font-size: 8pt;
+            font-weight: 700;
+            color: #333333;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* ────────────────────────────────────────────
+       QUESTION ROWS (Yes / No fields)
+    ──────────────────────────────────────────── */
+
+        .q-row {
+            display: flex;
+            align-items: center;
+            gap: 10pt;
+            margin-bottom: 7pt;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .q-text {
+            font-size: 8pt;
+            font-weight: 600;
+            color: #444444;
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* ────────────────────────────────────────────
+       SIGNATURE SECTION
+    ──────────────────────────────────────────── */
+
+        .sig-row {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 14pt;
+            margin-bottom: 8pt;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .sig-block {
+            display: flex;
+            flex-direction: column;
+            gap: 8pt;
+        }
+
+        /* Signature line with label below */
+        .sig-line {
+            border-bottom: 0.75pt solid #999999;
+            padding-bottom: 24pt;
+            text-align: center;
+            font-size: 7.5pt;
+            color: #555555;
+            width: 100%;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .sig-date-row {
+            display: flex;
+            align-items: center;
+            gap: 7pt;
+        }
+
+        .sig-date-label {
+            font-size: 7.5pt;
+            font-weight: 700;
+            color: #444444;
+            white-space: nowrap;
+        }
+
+        /* Official stamp placeholder */
+        .stamp-box {
+            width: 140pt;
+            height: 78pt;
+            border: 1.5pt solid #afc9ea;
+            border-radius: 4pt;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8pt;
+            font-size: 8pt;
+            font-weight: 700;
+            color: #afc9ea;
+            text-align: center;
+            flex-shrink: 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* ────────────────────────────────────────────
+       NOTE & DISCLAIMER TEXT
+    ──────────────────────────────────────────── */
+
+        .cf-note {
+            font-size: 7pt;
+            font-style: italic;
+            color: #4f6e95;
+            line-height: 1.55;
+            margin-top: 5pt;
+        }
+
+        .cf-note-neutral {
+            color: #555555;
+        }
+
+        .cf-sub-note {
+            font-size: 7.5pt;
+            font-style: italic;
+            font-weight: 700;
+            color: #4f6e95;
+            line-height: 1.4;
+            margin-bottom: 6pt;
+            margin-top: 4pt;
+        }
+
+        .cf-decl {
+            font-size: 8pt;
+            color: #444444;
+            line-height: 1.7;
+        }
+
+        .cf-decl p {
+            margin-bottom: 5pt;
+        }
+
+        .cf-decl strong {
+            font-weight: 700;
+        }
+
+        /* ────────────────────────────────────────────
+       PRINT MEDIA
+    ──────────────────────────────────────────── */
+
+        @media print {
+
+            html,
+            body {
+                background: #ffffff;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .page {
+                width: 100%;
+                margin: 0;
+            }
+
+            /* sections flow naturally — no forced jumps */
+            .section {
+                page-break-inside: auto;
+            }
+
+            /* label+field atoms stay together */
+            .no-break,
+            .field-row,
+            .field-col,
+            .q-row,
+            .radio-group,
+            .sig-row,
+            .payment-top {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .page-break {
+                page-break-before: always;
+                break-before: always;
+            }
+
+            .cf-table tbody tr {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            /* Force colour backgrounds to print */
+            .cf-header-fallback,
+            .cf-footer-fallback,
+            .cf-table thead th,
+            .cf-table tfoot td,
+            .fv,
+            .phone-prefix,
+            .flag-icon,
+            .r-circle,
+            .r-circle-on,
+            .stamp-box {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+
+
+
+        <!-- ============================================================
+       HEADER BANNER
+       Provide headerImageUrl as a base64 data-URI or absolute URL
+       for Puppeteer rendering.
+       ============================================================ -->
+        <div class="cf-header">
+            <img src="Mock Data"
+                alt="Claim Form Header">
+        </div>
+
+        <!-- ============================================================
+       FORM BODY
+       ============================================================ -->
+        <div class="cf-body">
+            
+
+            <!-- ══════════════════════════════════════════════════════════
+         SECTION 1 — POLICY HOLDER DETAILS
+         ══════════════════════════════════════════════════════════ -->
+            <div class="section" id="s1-policy-holder">
+                <div class="section-title">1.&nbsp;Policy Holder Details</div>
+
+                <!-- Policy No · Title · First Name · Last Name · DOB -->
+                <div class="field-row no-break">
+                    <div class="field-col fc-xl">
+                        <span class="field-label">Policy No</span>
+                        <div class="fv">
+                            Mock Data
+                        </div>
+                    </div>
+                    <div class="field-col fc-sm">
+                        <span class="field-label">Title</span>
+                        <div class="fv fv-sb">
+                            <span>
+                                Mock Data
+                            </span>
+                            <span class="chevron">&#9660;</span>
+                        </div>
+                    </div>
+                    <div class="field-col">
+                        <span class="field-label">First Name</span>
+                        <div class="fv">
+                            Mock Data
+                        </div>
+                    </div>
+                    <div class="field-col">
+                        <span class="field-label">Last Name</span>
+                        <div class="fv">
+                            Mock Data
+                        </div>
+                    </div>
+                    <div class="field-col fc-lg">
+                        <span class="field-label">Date of Birth</span>
+                        <div class="fv fv-date">
+                            <span class="fv-icon"><i class="fa-regular fa-calendar-days"></i></span>
+                            <span>
+                                Mock Data
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile · Email -->
+                <div class="field-row no-break">
+                    <div class="field-col fc-2xl">
+                        <span class="field-label">Mobile Number</span>
+                        <div class="phone-row">
+                            <div class="phone-prefix">
+                                <span class="flag-icon fi Mock Data"></span>
+                                <span>Mock Data</span>
+                                <span class="chevron">&#9660;</span>
+                            </div>
+                            <div class="fv phone-number">
+                                Mock Data
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-col">
+                        <span class="field-label">Email Address</span>
+                        <div class="fv">
+                            Mock Data
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address Line 1 · Address Line 2 -->
+                <div class="field-row no-break">
+                    <div class="field-col">
+                        <span class="field-label">Address Line 1</span>
+                        <div class="fv">
+                            Mock Data
+                        </div>
+                    </div>
+                    <div class="field-col">
+                        <span class="field-label">Address Line 2&nbsp;<span class="field-opt">(Optional)</span></span>
+                        <div class="fv">
+                            Mock Data
+                        </div>
+                    </div>
+                </div>
+
+                <!-- City · Postal Code · Country -->
+                <div class="field-row no-break" style="margin-bottom:0;">
+                    <div class="field-col">
+                        <span class="field-label">City</span>
+                        <div class="fv">
+                            Mock Data
+                        </div>
+                    </div>
+                    <div class="field-col">
+                        <span class="field-label">Postal Code</span>
+                        <div class="fv">
+                            Mock Data
+                        </div>
+                    </div>
+                    <div class="field-col">
+                        <span class="field-label">Country</span>
+                        <div class="fv fv-sb">
+                            <span>
+                                Mock Data
+                            </span>
+                            <span class="chevron">&#9660;</span>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /s1 -->
+
+            <!-- ══════════════════════════════════════════════════════════
+         SECTION 2 — PATIENT'S DETAILS
+         ══════════════════════════════════════════════════════════ -->
+            <div class="section" id="s2-patient">
+                <div class="section-title">2.&nbsp;Patient's Details</div>
+
+                <!-- Title · First Name · Last Name · DOB · Gender -->
+                <div class="field-row no-break">
+                    <div class="field-col fc-sm">
+                        <span class="field-label">Title</span>
+                        <div class="fv fv-sb">
+                            <span>
+                                Mock Data
+                            </span>
+                            <span class="chevron">&#9660;</span>
+                        </div>
+                    </div>
+                    <div class="field-col">
+                        <span class="field-label">First Name</span>
+                        <div class="fv">
+                            Mock Data
+                        </div>
+                    </div>
+                    <div class="field-col">
+                        <span class="field-label">Last Name</span>
+                        <div class="fv">
+                            Mock Data
+                        </div>
+                    </div>
+                    <div class="field-col fc-lg">
+                        <span class="field-label">Date of Birth</span>
+                        <div class="fv fv-date">
+                            <span class="fv-icon"><i class="fa-regular fa-calendar-days"></i></span>
+                            <span>
+                                Mock Data
+                            </span>
+                        </div>
+                    </div>
+                    <div class="field-col fc-md">
+                        <span class="field-label">Gender</span>
+                        <div class="fv fv-sb">
+                            <span>
+                                Mock Data
+                            </span>
+                            <span class="chevron">&#9660;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address Line 1 · Address Line 2 -->
+                <div class="field-row no-break">
+                    <div class="field-col">
+                        <span class="field-label">Address Line 1</span>
+                        <div class="fv">
+                            Mock Data
+                        </div>
+                    </div>
+                    <div class="field-col">
+                        <span class="field-label">Address Line 2&nbsp;<span class="field-opt">(Optional)</span></span>
+                        <div class="fv">
+                            Mock Data
+                        </div>
+                    </div>
+                </div>
+
+                <!-- City · Postal Code · Country -->
+                <div class="field-row no-break" style="margin-bottom:0;">
+                    <div class="field-col">
+                        <span class="field-label">City</span>
+                        <div class="fv">
+                            Mock Data
+                        </div>
+                    </div>
+                    <div class="field-col">
+                        <span class="field-label">Postal Code</span>
+                        <div class="fv">
+                            Mock Data
+                        </div>
+                    </div>
+                    <div class="field-col">
+                        <span class="field-label">Country</span>
+                        <div class="fv fv-sb">
+                            <span>
+                                Mock Data
+                            </span>
+                            <span class="chevron">&#9660;</span>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /s2 -->
+
+            <!-- ══════════════════════════════════════════════════════════
+         SECTION 3 — PAYMENT DETAILS
+         ══════════════════════════════════════════════════════════ -->
+            <div class="section" id="s3-payment">
+                <div class="section-title">3.&nbsp;Payment Details</div>
+
+                <!-- Payment To + Preferred Method + Currency -->
+                <div class="payment-top">
+                    <div class="payment-left">
+                        <div class="radio-group">
+                            <span class="radio-title">Payment To</span>
+                            <div class="radio-options">
+                                <label class="radio-item">
+                                    <span
+                                        class="r-circle Mock Data"></span>
+                                    Medical Provider
+                                </label>
+                                <label class="radio-item">
+                                    <span
+                                        class="r-circle Mock Data"></span>
+                                    Policy Holder
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-right">
+                        <div class="radio-group">
+                            <span class="radio-title">Preferred payment method:</span>
+                            <div class="radio-options">
+                                <label class="radio-item">
+                                    <span
+                                        class="r-circle Mock Data"></span>
+                                    Bank Transfer
+                                </label>
+                                <label class="radio-item">
+                                    <span
+                                        class="r-circle Mock Data"></span>
+                                    Check
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="field-label field-label-wrap">Please specify the currency you would like to be
+                                reimbursed in</span>
+                            <div class="fv fv-sb" style="margin-top:3pt;">
+                                <span>
+                                    Mock Data
+                                </span>
+                                <span class="chevron">&#9660;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bank Details -->
+                <div>
+                    <div class="field-row">
+                        <div class="field-col">
+                            <span class="field-label field-label-wrap">Name of bank account holder as shown on your bank
+                                statement</span>
+                            <div class="fv fv-blank">
+                                Mock Data
+                            </div>
+                        </div>
+                        <div class="field-col">
+                            <span class="field-label">Account Number</span>
+                            <div class="fv fv-blank">
+                                Mock Data
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <div class="field-col">
+                            <span class="field-label">IBAN (where required)****</span>
+                            <div class="fv fv-blank">
+                                Mock Data
+                            </div>
+                        </div>
+                        <div class="field-col">
+                            <span class="field-label">Sort/branch code</span>
+                            <div class="fv fv-blank">
+                                Mock Data
+                            </div>
+                        </div>
+                        <div class="field-col">
+                            <span class="field-label">BIC/Swift code****</span>
+                            <div class="fv fv-blank">
+                                Mock Data
+                            </div>
+                        </div>
+                        <div class="field-col">
+                            <span class="field-label">Name of bank</span>
+                            <div class="fv fv-blank">
+                                Mock Data
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:7pt;">
+                        <span class="field-label">Bank Address</span>
+                        <div class="f-textarea" style="margin-top:3.5pt;">
+                            Mock Data
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <div class="field-col">
+                            <span class="field-label field-label-wrap">If you are aware of any additional information
+                                required to process international transactions within your country (e.g. Agency Code,
+                                Tax ID), please list below</span>
+                            <div class="fv fv-blank">
+                                Mock Data
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field-row" style="margin-bottom:0;">
+                        <div class="field-col">
+                            <span class="field-label">Swift code of intermediary bank (where applicable)</span>
+                            <div class="fv fv-blank">
+                                Mock Data
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="cf-note">
+                    * If you have not already paid the medical provider.&nbsp;&nbsp;
+                    ** For bank transfer, please provide bank details.&nbsp;&nbsp;
+                    *** Cheques payable to the policyholder will be sent to the correspondence address provided in
+                    section 1.&nbsp;&nbsp;
+                    **** If your bank is within the EU, or your country requires an IBAN (e.g. Qatar, Saudi Arabia,
+                    Angola, Tunisia, Turkey), please supply both your IBAN and BIC/Swift code.
+                </p>
+            </div><!-- /s3 -->
+
+            <!-- ══════════════════════════════════════════════════════════
+         SECTION 4 — CLAIM DETAILS (TABLE)
+         ══════════════════════════════════════════════════════════ -->
+            <div class="section" id="s4-claim-details">
+                <div class="section-title">4.&nbsp;Claim Details</div>
+
+                <div class="cf-table-wrap">
+                    <table class="cf-table">
+                        <thead>
+                            <tr>
+                                <th style="width:22%;">Description of expense / treatment</th>
+                                <th style="width:23%;">Diagnosis / medical condition</th>
+                                <th style="width:17%;">Provider's name</th>
+                                <th style="width:10%;">Amount Charged</th>
+                                <th style="width:9%;">Currency</th>
+                                <th style="width:19%;">Has this bill been charged / paid by you?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                                <tr>
+                                    <td>
+                                        Mock Data
+                                    </td>
+                                    <td>
+                                        Mock Data
+                                    </td>
+                                    <td>
+                                        Mock Data
+                                    </td>
+                                    <td>
+                                        Mock Data
+                                    </td>
+                                    <td>
+                                        Mock Data
+                                    </td>
+                                    <td>
+                                        <span class="radio-item">
+                                            <span
+                                                class="r-circle Mock Data"></span>&nbsp;Yes
+                                        </span>
+                                        &nbsp;&nbsp;
+                                        <span class="radio-item">
+                                            <span
+                                                class="r-circle Mock Data"></span>&nbsp;No
+                                        </span>
+                                    </td>
+                                </tr>
+                                
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3"><strong>Total Amount of Expenses</strong></td>
+                                <td><strong>
+                                        Mock Data
+                                    </strong></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <p class="cf-note cf-note-neutral" style="font-style:italic;">
+                    (Please note that the total displayed is only accurate when all invoices are issued in the same
+                    currency. If you are claiming costs in different currencies, please disregard the total amount
+                    displayed.)
+                </p>
+
+                <div class="q-row" style="margin-top:7pt;">
+                    <span class="q-text" style="flex:0 0 auto;margin-right:10pt;">In what country did the treatment take
+                        place?</span>
+                    <div class="fv fv-blank fv-sb" style="max-width:160pt;">
+                        <span>
+                            Mock Data
+                        </span>
+                        <span class="chevron">&#9660;</span>
+                    </div>
+                </div>
+
+                <p class="cf-note" style="margin-top:7pt;">
+                    If this claim is resulting from an accident or work-related illness/injury and you hold any other
+                    insurance policy (e.g. car insurance),
+                    or if you are filing a claim or lawsuit against a third party to recover costs incurred as a result
+                    of this accident/injury,
+                    please provide details in a separate document.
+                </p>
+            </div><!-- /s4 -->
+
+            <!-- ── Page break before medical sections ── -->
+            
+
+                <!-- ══════════════════════════════════════════════════════════
+         SECTION 5 — MEDICAL PROVIDER'S DETAILS
+         ══════════════════════════════════════════════════════════ -->
+                <div class="section" id="s5-medical-provider">
+                    <div class="section-title">5.&nbsp;Medical Provider's Details</div>
+
+                    <div class="field-row no-break">
+                        <div class="field-col">
+                            <span class="field-label">Name of doctor / specialist</span>
+                            <div class="fv">
+                                Dr. Sarah Smith
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field-row no-break">
+                        <div class="field-col">
+                            <span class="field-label">Qualifications / credentials</span>
+                            <div class="fv">
+                                Mock Data
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field-row no-break">
+                        <div class="field-col">
+                            <span class="field-label">Name Of Clinic</span>
+                            <div class="fv">
+                                HealthFirst Pharmacy
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field-row no-break">
+                        <div class="field-col fc-2xl">
+                            <span class="field-label">Mobile Number</span>
+                            <div class="phone-row">
+                                <div class="phone-prefix">
+                                    <span class="flag-icon fi Mock Data"></span>
+                                    <span>Mock Data</span>
+                                    <span class="chevron">&#9660;</span>
+                                </div>
+                                <div class="fv phone-number">
+                                    Mock Data
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field-col">
+                            <span class="field-label">Email Address</span>
+                            <div class="fv">
+                                Mock Data
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field-row no-break">
+                        <div class="field-col">
+                            <span class="field-label">Address Line 1</span>
+                            <div class="fv">
+                                Mock Data
+                            </div>
+                        </div>
+                        <div class="field-col">
+                            <span class="field-label">Address Line 2&nbsp;<span
+                                    class="field-opt">(Optional)</span></span>
+                            <div class="fv">
+                                Mock Data
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field-row no-break">
+                        <div class="field-col">
+                            <span class="field-label">City</span>
+                            <div class="fv">
+                                Mock Data
+                            </div>
+                        </div>
+                        <div class="field-col">
+                            <span class="field-label">Postal Code</span>
+                            <div class="fv">
+                                Mock Data
+                            </div>
+                        </div>
+                        <div class="field-col">
+                            <span class="field-label">Country</span>
+                            <div class="fv fv-sb">
+                                <span>
+                                    Mock Data
+                                </span>
+                                <span class="chevron">&#9660;</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="cf-sub-note">Applicable to physiotherapy/psychotherapy claims only — please provide full
+                        referral details:</p>
+
+                    <div class="field-row no-break" style="margin-bottom:0;">
+                        <div class="field-col">
+                            <span class="field-label">Name of referring physician</span>
+                            <div class="fv">
+                                Mock Data
+                            </div>
+                        </div>
+                        <div class="field-col fc-2xl">
+                            <span class="field-label">Mobile Number</span>
+                            <div class="phone-row">
+                                <div class="phone-prefix">
+                                    <span class="flag-icon fi Mock Data"></span>
+                                    <span>Mock Data</span>
+                                    <span class="chevron">&#9660;</span>
+                                </div>
+                                <div class="fv phone-number">
+                                    Mock Data
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field-col fc-lg">
+                            <span class="field-label">Date of Referral</span>
+                            <div class="fv fv-date">
+                                <span class="fv-icon"><i class="fa-regular fa-calendar-days"></i></span>
+                                <span>
+                                    Mock Data
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /s5 -->
+
+                <!-- ══════════════════════════════════════════════════════════
+         SECTION 6 — MEDICAL DETAILS
+         ══════════════════════════════════════════════════════════ -->
+                <div class="section" id="s6-medical-details">
+                    <div class="section-title">6.&nbsp;Medical Details</div>
+
+                    <!-- Type of condition -->
+                    <div class="radio-group no-break" style="margin-bottom:9pt;">
+                        <span class="radio-title">Indicate type of condition:</span>
+                        <div class="radio-options">
+                            <label class="radio-item">
+                                <span
+                                    class="r-circle Mock Data"></span>
+                                Acute
+                            </label>
+                            <label class="radio-item">
+                                <span
+                                    class="r-circle Mock Data"></span>
+                                Chronic
+                            </label>
+                            <label class="radio-item">
+                                <span
+                                    class="r-circle Mock Data"></span>
+                                Acute episode of chronic
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Symptom details textarea -->
+                    <div style="margin-bottom:9pt;">
+                        <span class="field-label field-label-wrap">
+                            Please provide full details of the symptoms/medical condition requiring treatment, including
+                            ICD9/10 code/DSM-IV
+                        </span>
+                        <div class="f-textarea" style="margin-top:3.5pt;">
+                            Mock Data
+                        </div>
+                    </div>
+
+                    <!-- Date: first present -->
+                    <div class="q-row">
+                        <span class="q-text" style="flex:0 0 290pt;">On what date did the patient first present these
+                            symptoms to you?</span>
+                        <div class="fv fv-blank fv-date" style="flex:0 0 100pt;">
+                            <span class="fv-icon"><i class="fa-regular fa-calendar-days"></i></span>
+                            <span>
+                                Mock Data
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Date: first onset -->
+                    <div class="q-row">
+                        <span class="q-text" style="flex:0 0 290pt;">On what date would the first onset of symptoms have
+                            been apparent to the patient?</span>
+                        <div class="fv fv-blank fv-date" style="flex:0 0 100pt;">
+                            <span class="fv-icon"><i class="fa-regular fa-calendar-days"></i></span>
+                            <span>
+                                Mock Data
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Previous condition -->
+                    <div class="q-row" style="flex-wrap:wrap;gap:7pt;margin-bottom:7pt;">
+                        <span class="q-text" style="flex:0 0 190pt;">Has the patient suffered from this condition
+                            previously?</span>
+                        <div class="radio-options" style="flex:0 0 auto;">
+                            <label class="radio-item">
+                                <span
+                                    class="r-circle Mock Data"></span>&nbsp;Yes
+                            </label>
+                            <label class="radio-item">
+                                <span
+                                    class="r-circle Mock Data"></span>&nbsp;No
+                            </label>
+                        </div>
+                        <span class="field-label" style="flex:0 0 auto;align-self:center;">If Yes, when?</span>
+                        <div class="fv fv-blank fv-date" style="flex:0 0 100pt;">
+                            <span class="fv-icon"><i class="fa-regular fa-calendar-days"></i></span>
+                            <span>
+                                Mock Data
+                            </span>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:9pt;">
+                        <span class="field-label">If Yes, please provide details</span>
+                        <div class="f-textarea" style="margin-top:3.5pt;min-height:32pt;">
+                            Mock Data
+                        </div>
+                    </div>
+
+                    <!-- Yes/No question rows -->
+                    <div class="q-row">
+                        <span class="q-text" style="flex:0 0 260pt;">Are you aware of any treatment given for this or
+                            any
+                            related illness in the past?</span>
+                        <div class="radio-options">
+                            <label class="radio-item"><span
+                                    class="r-circle Mock Data"></span>&nbsp;Yes</label>
+                            <label class="radio-item"><span
+                                    class="r-circle Mock Data"></span>&nbsp;No</label>
+                        </div>
+                    </div>
+
+                    <div class="q-row">
+                        <span class="q-text" style="flex:0 0 150pt;">Is it likely to re-occur?</span>
+                        <div class="radio-options">
+                            <label class="radio-item"><span
+                                    class="r-circle Mock Data"></span>&nbsp;Yes</label>
+                            <label class="radio-item"><span
+                                    class="r-circle Mock Data"></span>&nbsp;No</label>
+                        </div>
+                    </div>
+
+                    <div class="q-row">
+                        <span class="q-text" style="flex:0 0 150pt;">Does it need rehabilitation?</span>
+                        <div class="radio-options">
+                            <label class="radio-item"><span
+                                    class="r-circle Mock Data"></span>&nbsp;Yes</label>
+                            <label class="radio-item"><span
+                                    class="r-circle Mock Data"></span>&nbsp;No</label>
+                        </div>
+                    </div>
+
+                    <div class="q-row">
+                        <span class="q-text" style="flex:0 0 150pt;">Is it permanent?</span>
+                        <div class="radio-options">
+                            <label class="radio-item"><span
+                                    class="r-circle Mock Data"></span>&nbsp;Yes</label>
+                            <label class="radio-item"><span
+                                    class="r-circle Mock Data"></span>&nbsp;No</label>
+                        </div>
+                    </div>
+
+                    <div class="q-row">
+                        <span class="q-text">Does it need long term monitoring, consultations, check-ups, examinations
+                            or
+                            tests?</span>
+                        <div class="radio-options">
+                            <label class="radio-item"><span
+                                    class="r-circle Mock Data"></span>&nbsp;Yes</label>
+                            <label class="radio-item"><span
+                                    class="r-circle Mock Data"></span>&nbsp;No</label>
+                        </div>
+                    </div>
+
+                    <!-- Pregnancy subsection -->
+                    <p class="cf-sub-note" style="margin-top:7pt;">Applicable to cases of pregnancy only:</p>
+
+                    <div style="display:flex;gap:18pt;flex-wrap:wrap;margin-bottom:9pt;">
+                        <div style="display:flex;align-items:center;gap:7pt;flex:0 0 auto;">
+                            <span class="field-label" style="white-space:nowrap;">Estimated date of delivery</span>
+                            <div class="fv fv-blank fv-date" style="width:100pt;">
+                                <span class="fv-icon"><i class="fa-regular fa-calendar-days"></i></span>
+                                <span>
+                                    Mock Data
+                                </span>
+                            </div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:7pt;flex:0 0 auto;">
+                            <span class="q-text" style="white-space:nowrap;">Is birth of a single baby expected?</span>
+                            <div class="radio-options">
+                                <label class="radio-item"><span
+                                        class="r-circle Mock Data"></span>&nbsp;Yes</label>
+                                <label class="radio-item"><span
+                                        class="r-circle Mock Data"></span>&nbsp;No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Doctor signature + official stamp -->
+                    <div class="no-break">
+                        <span class="field-label field-label-wrap" style="margin-bottom:6pt;display:block;">Please sign
+                            and
+                            authenticate with an official stamp.</span>
+                        <div class="sig-row">
+                            <div class="sig-block" style="flex:1;">
+                                <div class="sig-value">
+                                    Mock Data
+                                </div>
+                                <div class="sig-line">Doctor's signature</div>
+                                <div class="sig-date-row">
+                                    <span class="sig-date-label">Date</span>
+                                    <div class="fv fv-blank fv-date" style="width:100pt;">
+                                        <span class="fv-icon"><i class="fa-regular fa-calendar-days"></i></span>
+                                        <span>
+                                            Mock Data
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="stamp-box">
+                                
+                                    <div class="stamp-value">[md.official_stamp]</div>
+                                
+                                    Official stamp of<br>medical provider
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /s6 -->
+
+                <!-- ══════════════════════════════════════════════════════════
+         SECTION 7 — WE CARE ABOUT YOUR PERSONAL DATA PROTECTION
+         ══════════════════════════════════════════════════════════ -->
+                <div class="section" id="s7-data-protection">
+                    <div class="section-title">7.&nbsp;We Care About Your Personal Data Protection</div>
+
+                    <div class="cf-decl">
+                        <p>Our Data Protection Notice explains how we protect your privacy. This is an important notice
+                            which outlines how we will process your personal data and should be read by you before the
+                            submission of any personal data to us. To read our Data Protection Notice visit:
+                            www.allianzworldwidecare.com/en/privacy. Alternatively, you can contact us on
+                            +353&nbsp;1&nbsp;630&nbsp;1301 to request a paper copy of our full Data Protection Notice.
+                            If
+                            you have any queries about how we use your personal data, you can always contact us by email
+                            at:
+                            AP.EU1DataPrivacyOfficer@allianz.com</p>
+                        <p>&nbsp;</p>
+                        <p><strong>DECLARATION</strong></p>
+                        <p>I certify that to the best of my knowledge, this Claim Form does not contain any false,
+                            misleading or incomplete information. I understand that in the event that this claim is
+                            found to
+                            be fraudulent, in whole or in part, the contract will be cancelled from the date of
+                            discovery of
+                            the fraudulent event and I may be liable to prosecution.</p>
+                        <p>&nbsp;</p>
+                        <p>I agree to waive any rights that I may have to medical secrecy/confidentiality in respect of
+                            my
+                            medical information and I authorise my medical practitioner, health professional or other
+                            relevant medical establishment to provide relevant medical information relating to me, if
+                            requested by Allianz Care, its medical advisers, its appointed representatives, or to any
+                            third
+                            party expert(s) in case of disputes, subject to any legal restrictions which may apply.</p>
+                        <p>&nbsp;</p>
+                        <p><strong>If a minor was treated, a parent or guardian should sign and date this
+                                section.</strong>
+                        </p>
+                    </div>
+
+                    <!-- Patient signature -->
+                    <div class="sig-row no-break" style="margin-top:10pt;">
+                        <div class="sig-block" style="flex:1;">
+                            <div class="sig-value">
+                                
+                                    [dpd.patient_signature]
+                                
+                            </div>
+                            <div class="sig-line">Patient's signature</div>
+                        </div>
+                        <div class="sig-date-row" style="flex:0 0 auto;align-self:flex-end;">
+                            <span class="sig-date-label">Date</span>
+                            <div class="fv fv-blank fv-date" style="width:100pt;">
+                                <span class="fv-icon"><i class="fa-regular fa-calendar-days"></i></span>
+                                <span>
+                                    Mock Data
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /s7 -->
+
+                <!-- ══════════════════════════════════════════════════════════
+         SECTION 8 — WE NEED YOUR CONSENT
+         ══════════════════════════════════════════════════════════ -->
+                <div class="section" id="s8-consent">
+                    <div class="section-title">8.&nbsp;We Need Your Consent</div>
+                    <p class="cf-decl">In line with the General Data Protection Regulation (GDPR), we need consent to
+                        process your medical information and pay your medical expenses. If you haven't provided us with
+                        your
+                        consent, please access my.allianzworldwidecare.com, login to Online Services and tick the
+                        required
+                        fields. Alternatively, you can download the Consent Form, available at
+                        www.allianzworldwidecare.com/en/consent-form. A paper copy is available on request. Please note
+                        that
+                        every member on the policy over 18 needs to provide their own consent.</p>
+                </div><!-- /s8 -->
+
+                <!-- ══════════════════════════════════════════════════════════
+         SECTION 9 — THIRD PARTY AUTHORISATION + CLAIMANT SIGN
+         ══════════════════════════════════════════════════════════ -->
+                <div class="section" id="s9-third-party">
+                    <div class="section-title">9.&nbsp;Third Party Authorisation</div>
+
+                    <div style="margin-bottom:9pt;">
+                        <span class="field-label">As the claimant, I hereby authorise</span>
+                        <div class="fv fv-blank" style="margin-top:3.5pt;">
+                            Mock Data
+                        </div>
+                        <p class="cf-decl" style="margin-top:5pt;">
+                            to act on my behalf in relation to the administration of this claim, which may include the
+                            disclosure of sensitive medical information.
+                        </p>
+                    </div>
+
+                    <!-- Claimant signature -->
+                    <div class="sig-row no-break">
+                        <div class="sig-block" style="flex:1;">
+                            <div class="sig-value">
+                                Mock Data
+                            </div>
+                            <div class="sig-line">Claimant's signature</div>
+                        </div>
+                        <div class="sig-date-row" style="flex:0 0 auto;align-self:flex-end;">
+                            <span class="sig-date-label">Date</span>
+                            <div class="fv fv-blank fv-date" style="width:100pt;">
+                                <span class="fv-icon"><i class="fa-regular fa-calendar-days"></i></span>
+                                <span>
+                                    Mock Data
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Claimant printed name -->
+                    <div style="margin-top:9pt;margin-bottom:9pt;">
+                        <span class="field-label">Claimant's printed name</span>
+                        <div class="fv fv-blank" style="margin-top:3.5pt;">
+                            Mock Data
+                        </div>
+                    </div>
+
+                    <!-- Documentation disclaimer -->
+                    <p class="cf-note cf-note-neutral" style="font-style:italic;">
+                        It is your responsibility to retain any original supporting documentation (e.g. medical
+                        receipts)
+                        where copies are submitted to us,
+                        as we reserve the right to request original supporting documentation/receipts up to 12 months
+                        after
+                        claims settlement for auditing
+                        purposes. We also reserve the right to request a proof of payment by you (e.g. bank or credit
+                        card
+                        statement) in respect of your
+                        medical receipts. We advise that you keep copies of all correspondence with us as we cannot be
+                        held
+                        responsible for correspondence
+                        that does not reach us for any reason that is outside of our reasonable control.
+                    </p>
+                </div>
+
+        </div>
+
+        <div class="cf-footer">
+            <img src="Mock Data"
+                alt="Please send your fully completed claim form with invoices/receipts">
+        </div>
+
+    </div><!-- /.page -->
+</body>
+
+</html>

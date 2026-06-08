@@ -18,6 +18,17 @@
             padding: 0;
         }
 
+        .pdf-container {
+            width: 21cm;
+            height: 29.7cm;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
         .header,
         .footer-text {
             background-color: #1B3F6D;
@@ -53,8 +64,12 @@
         }
 
         .clinic-details p {
-            font-size: 12px;
+            font-size: 14px;
             margin: 2px 0;
+        }
+
+        .clinic-details strong {
+            font-size: 16px;
         }
 
         .details-container {
@@ -83,12 +98,15 @@
             flex-grow: 1;
         }
 
+
         .details-heading {
             font-size: 13px;
-            font-weight: 300;
+            font-weight: 400;
             margin-bottom: 10px;
             color: #242424;
         }
+
+
 
         .patient-details p,
         .appointment-details p {
@@ -96,6 +114,7 @@
             justify-content: space-between;
             gap: 10px;
         }
+
 
         .patient-details strong,
         .appointment-details strong,
@@ -114,19 +133,12 @@
             color: #1B3F6D;
         }
 
+
         .dob-age {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 30px;
-        }
-
-        .section-title {
-            font-size: 14px;
-            font-weight: 600;
-            margin: 15px 0;
-            text-align: left;
-            padding: 0 20px;
         }
 
         .prescription-table-container {
@@ -165,7 +177,6 @@
             font-size: 12px;
             padding: 8px;
             text-align: left;
-            height: 40px;
         }
 
         .prescription-table td {
@@ -210,12 +221,6 @@
             max-height: 120px;
         }
 
-        .medicine-name {
-            display: block;
-            margin-bottom: 4px;
-            line-height: 1.4;
-        }
-
         .medicine-instruction {
             font-size: 10px;
             color: #1B3F6D;
@@ -230,21 +235,20 @@
         .prescribed-by-title {
             font-size: 13px;
             font-weight: 400;
-            margin-bottom: -5px;
+            margin-bottom: 10px;
             color: #242424;
         }
 
         .doctor-details {
             display: flex;
             justify-content: space-between;
-            margin-top: 5px;
+            margin-top: 10px;
         }
 
         .doctor-details table {
             width: 100%;
             font-size: 12px;
             border-collapse: collapse;
-            margin-top: 5px;
         }
 
         .doctor-details table th,
@@ -254,13 +258,11 @@
             text-align: left;
             vertical-align: top;
             word-wrap: break-word;
-
         }
 
         .doctor-details table td {
             color: #1B3F6D;
         }
-
 
         .doctor-details table th {
             background-color: #f3f9ff;
@@ -293,6 +295,10 @@
             color: #333;
         }
 
+        .signature-section p {
+            margin: 5px 0;
+            line-height: 1.5;
+        }
 
         .footer-text {
             font-size: 11px;
@@ -305,16 +311,7 @@
             line-height: 1.5;
         }
 
-        .pdf-container {
-            width: 21cm;
-            height: 29.7cm;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+
 
         .prescription-table {
             width: 100%;
@@ -342,6 +339,7 @@
 
         .truncate-text {
             max-height: none;
+            /* Allow text to expand fully */
             overflow: visible;
             word-break: break-word;
         }
@@ -389,27 +387,6 @@
 
         <% let currentPage = 1; %>
         <% let itemsProcessed = 0; %>
-        <% let availableHeight = 363.54; %>
-        
-        <% 
-            // Calculate address height impact once before the loop
-            const addressParts = [
-                patient_details?.patient_address_line_1,
-                patient_details?.patient_address_line_2,
-                patient_details?.patient_city,
-                patient_details?.patient_postal_code,
-                patient_details?.patient_country
-            ].filter(Boolean);
-
-            const fullAddress = addressParts.join(', ');
-            console.log('fullAddress.length:', fullAddress.length);
-            console.log('availableHeight before:', availableHeight);
-            if (fullAddress.length > 72) {
-                const dividedValue = Math.floor(fullAddress.length / 36);
-                availableHeight -= (12 * dividedValue) + 10; // 10px is bottom margin of availableHeight
-            }
-            console.log('availableHeight after:', availableHeight);
-        %>
         
         <% while (itemsProcessed < prescription_items.length) { %>
             <div class="page <%= currentPage > 1 ? 'page-break' : '' %>">
@@ -420,13 +397,13 @@
                     </div>
 
                     <div class="clinic-details">
-                        <p><strong><%= prescription.clinic_name %></strong></p>
-                        <p><%= [prescription.clinic_address_line_1, prescription.clinic_address_line_2].filter(Boolean).join(', ') %></p>
-                        <p><%= prescription.clinic_city %></p>
-                        <p><%= prescription.clinic_postal_code %></p>
-                        <p><%= prescription.clinic_country %></p>
-                        <p>Tel: <%= prescription.clinic_contact_number %></p>
-                        <p>Email: <%= prescription.clinic_email %></p>
+                        <p><strong><%= prescription?.pharmacy_name %></strong></p>
+                        <p><%= prescription?.pharmacy_address_line_1 %></p>
+                        <p><%= prescription?.pharmacy_address_line_2 %></p>
+                        <p><%= prescription?.pharmacy_city %></p>
+                        <p><%= prescription?.pharmacy_postal_code %></p>
+                        <p>Tel: <%= prescription?.pharmacy_contact_number %></p>
+                        <p>Email: <%= prescription?.pharmacy_email %></p>
                     </div>
                 </div>
 
@@ -483,16 +460,11 @@
                                     <%= prescription_date %>
                                 </span>
                             </p>
-                            <p><strong>Type:</strong> 
-                                <span>
-                                    <%= prescription_type %>
-                                </span>
-                            </p>
                         </div>
                     </div>
                 </div>
 
-                <div class="prescription-table-container" style="min-height: 364px;" data-min-height="<%= Math.round(availableHeight) %>">
+                <div class="prescription-table-container">
                     <table class="prescription-table">
                         <thead>
                             <tr>
@@ -507,6 +479,7 @@
                             <% let itemsInThisPage = 0; %>
                             <%
                                 let currentHeight = 0;
+                                const availableHeight = 363.54;
                             %>
                             <% for (let i = itemsProcessed; i < prescription_items.length; i++) { %>
                                 <% 
@@ -514,17 +487,7 @@
                                     const item = prescription_items[i];
                                     let estimatedHeight = 44; // base height
 
-                                    // Estimate the height of the unit
-
-                                    if(item.unit && item.unit.length > 45) {
-                                        estimatedHeight += 96;
-                                    }else if(item.unit && item.unit.length > 36) {
-                                        estimatedHeight += 48;
-                                    }else if(item.unit && item.unit.length > 27) {
-                                        estimatedHeight += 24;
-                                    }else if(item.unit && item.unit.length > 18) {
-                                        estimatedHeight += 12;
-                                    }else if (item.name && item.name.length > 197) {
+                                    if (item.name && item.name.length > 197) {
                                         estimatedHeight += 48;
                                     }else if (item.name && item.name.length > 131) {
                                         estimatedHeight += 24;
@@ -576,39 +539,50 @@
                 </div>
 
                 <div class="prescribed-by">
-                    <div class="prescribed-by-title">Prescribed By</div>
-                    <div class="doctor-details">
-                        <table>
-                            <tr>
-                                <th>Name:</th>
-                                <th>Registration No:</th>
-                                <th>Qualifications:</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <%= prescription?.doctor_title %>
-                                    <%= prescription?.doctor_first_name %>
-                                    <%= prescription?.doctor_sur_name %>
-                                </td>
-                                <td>GMC - <%= prescription?.doctor_gmc_number %>
-                                </td>
-                                <td>
-                                    <%= prescription?.doctor_qualification.replace(/,/g, ', ' ) %>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
+            <div class="prescribed-by-title">Pharmacist Details</div>
+            <div class="doctor-details">
+                <table>
+                    <tr>
+                        <th>Name:</th>
+                        <th>Registration No:</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <%= prescription.pharmacist_first_name %>
+                            <%= prescription.pharmacist_sur_name %>
+                        </td>
+                        <td>GPHC - <%= prescription.pharmacist_gphc %>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
-                <div class="qr-signature-container" style="min-height: 75px; justify-content: flex-end; gap: 28px;align-items:end">
-                    <div class="signature-section">
-                        Signature:
-                    </div>
-                    <div class="signature-section" style="
-                        border-bottom: 1px solid gray;
-                        width: 150px;">
-                    </div>
-                </div>
+        <div class="qr-signature-container">
+            <div class="qr-container">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://sendscript.com/dispense"
+                    alt="QR Code">
+                <p>Scan to Dispense</p>
+            </div>
+            <div class="signature-section">
+                <p>This prescription has been signed using an advanced electronic signature</p>
+                <p><strong>E-signature:</strong>
+                    <%= prescription.pharmacist_signature %>
+                </p>
+                <p><strong>Date and Time of signature:</strong>
+                    <%= new Date(prescription_created_at).toLocaleString('en-GB', { 
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: true,
+                          timeZone: 'UTC'   // 👈 prevents shifting to server timezone
+                    }).replace('AM', 'am').replace('PM', 'pm') %>
+                </p>
+                <p>To verify (or) dispense the prescription visit: www.sendscript.com/dispense</p>
+            </div>
+        </div>
 
                 <div class="footer-text">
                     <p><strong>To the Pharmacist:</strong> SendScript is an online electronic prescription platform that
@@ -621,14 +595,6 @@
             </div>
             <% currentPage++; %>
         <% } %>
-    <script>
-        document.querySelectorAll('.prescription-table-container').forEach(container => {
-            const minHeight = container.getAttribute('data-min-height');
-            if (minHeight) {
-                container.style.minHeight = minHeight + 'px';
-            }
-        });
-    </script>
 </body>
 
 </html>

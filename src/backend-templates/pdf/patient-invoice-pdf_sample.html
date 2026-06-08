@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>Invoice</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            color: #1F2937;
+            background-color: #F3F4F6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page {
+            background-color: #FFFFFF;
+            width: 210mm;
+            height: 297mm;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            page-break-after: always;
+            box-shadow: none;
+            overflow: hidden;
+        }
+
+        .page-bottom {
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .header-section {
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            background: #FFFFFF;
+            color: #1F1F1F;
+        }
+
+        .logo-box {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            align-items: flex-start;
+        }
+
+        .logo-img {
+            max-height: 33px;
+            object-fit: contain;
+        }
+
+        .clinic-details {
+            text-align: right;
+            max-width: 400px;
+        }
+
+        .clinic-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .clinic-info-text {
+            font-size: 10px;
+            line-height: 1.4;
+            margin-bottom: 2px;
+            opacity: 0.9;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .invoice-meta {
+            margin-top: 10px;
+            font-size: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            text-align: left;
+        }
+
+        .patient-section {
+            padding: 12px 20px 0;
+            display: flex;
+            gap: 8px;
+        }
+
+        .patient-card {
+            background: #F9F9F9;
+            border-radius: 6px;
+            padding: 10px;
+            border: 0.5px solid #E5E7EB;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-row {
+            display: flex;
+            gap: 8px;
+            font-size: 10px;
+            line-height: 1.3;
+        }
+
+        .info-label {
+            color: #6B7280;
+            min-width: 90px;
+        }
+
+        .info-value {
+            font-weight: 500;
+            color: #111827;
+        }
+
+        .table-section {
+            padding: 10px 20px;
+        }
+
+        .services-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 0.5px solid #E5E7EB;
+            border-radius: 8px;
+            overflow: hidden;
+            font-size: 9px;
+        }
+
+        .services-table thead tr {
+            background: #F9FAFB;
+            color: #1F1F1F;
+        }
+
+        .services-table th {
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 0.5px solid #E5E7EB;
+            color: inherit;
+        }
+
+        .services-table td {
+            padding: 12px 10px;
+            color: #4B5563;
+        }
+
+        .summary-section {
+            padding: 0 25px 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .summary-table {
+            min-width: 200px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 8px;
+            color: #4B5563;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            gap: 20px;
+            line-height: 14.175px;
+        }
+
+        .signature-section {
+            padding: 15px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: flex-start;
+        }
+
+        .doctor-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: inherit;
+            margin: 0;
+        }
+
+        .e-signature {
+            font-size: 11px;
+            color: inherit;
+            opacity: 0.8;
+            margin: 0;
+        }
+
+        .extras-section {
+            padding: 10px 25px 5px;
+        }
+
+        .extras-content-box {
+            background: #F9F9F9;
+            border-radius: 8px;
+            padding: 15px;
+            border: 0.5px solid #E5E7EB;
+            font-size: 10px;
+            line-height: 1.5;
+            color: #374151;
+        }
+
+        .extras-content-box p { margin-bottom: 8px; }
+        .extras-content-box p:last-child { margin-bottom: 0; }
+        .extras-content-box strong { color: #111827; }
+        .extras-content-box ul, .extras-content-box ol { margin-left: 20px; margin-bottom: 8px; }
+
+        .footer-wrapper {
+            background: #FFFFFF;
+            width: 100%;
+            border-top: 0.5px solid #E5E7EB;
+            color: #1F1F1F;
+        }
+
+        .disclaimer-box {
+            width: 100%;
+            color: inherit;
+            font-size: 10px;
+            line-height: 1.6;
+            text-align: center;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .disclaimer-box p { margin-bottom: 8px; }
+        .disclaimer-box p:last-child { margin-bottom: 0; }
+        .disclaimer-box strong { color: inherit; font-weight: 600; }
+        .disclaimer-box ul, .disclaimer-box ol { margin-left: 20px; margin-bottom: 8px; text-align: left; }
+
+        .footer-slogan {
+            padding: 20px 35px;
+            color: inherit;
+            font-size: 9px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            opacity: 0.05;
+            z-index: 0;
+            filter: grayscale(1);
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='page-container'>
+        
+        
+            
+            <div class='page'>
+                
+                    <img src='[logo_url]' class='watermark' alt='Watermark'>
+                
+
+                <header class='header-section'>
+                    <div class='logo-box'>
+                        
+                            <img src='[logo_url]' class='logo-img' alt='Logo'>
+                        
+                        <div class='invoice-meta'>
+                            <p><strong>Invoice Number: </strong>
+                                Mock Data
+                            </p>
+                            <p><strong>Invoice Date: </strong>
+                                Mock Data
+                            </p>
+                            
+                                <p><strong>Due Date: </strong>
+                                    [formatDate(due_date)]
+                                </p>
+                            
+                        </div>
+                    </div>
+                    <div class='clinic-details'>
+                        <h2 class='clinic-name'>
+                            HealthFirst Pharmacy
+                        </h2>
+                        <p class='clinic-info-text'>
+                            123 High Street, Medical District, London, SW1A 1AA
+                        </p>
+                        <p class='clinic-info-text'>Contact: Mock Data</p>
+                        <p class='clinic-info-text'>Email: info@healthfirstpharmacy.co.uk</p>
+                        
+                            <p class='clinic-info-text'>Fax: [clinic_fax]</p>
+                        
+                    </div>
+                </header>
+
+                <section class='patient-section'>
+                    <div class='patient-card'>
+                        <div class='info-row'><span class='info-label'>Patient Name:</span> <span class='info-value'>
+                            John Doe
+                        </span></div>
+                        <div class='info-row'><span class='info-label'>Date of Birth:</span> <span class='info-value'>
+                            Mock Data
+                        </span></div>
+                        <div class='info-row'><span class='info-label'>Address:</span> <span class='info-value'>
+                            123 High Street, Medical District, London, SW1A 1AA
+                        </span></div>
+                        <div class='info-row'><span class='info-label'>Mobile Number:</span> <span class='info-value'>
+                            Mock DataMock Data
+                        </span></div>
+                    </div>
+                    
+                        <div class='patient-card'>
+                            <div class='info-row'><span class='info-label'>Insurance:</span> <span class='info-value'>
+                                [insurance_company]
+                            </span></div>
+                            <div class='info-row'><span class='info-label'>Policy No:</span> <span class='info-value'>
+                                Mock Data
+                            </span></div>
+                            <div class='info-row'><span class='info-label'>Expiry:</span> <span class='info-value'>
+                                Mock Data
+                            </span></div>
+                        </div>
+                    
+                </section>
+
+                <section class='table-section'>
+                    <table class='services-table'>
+                        <thead>
+                            <tr>
+                                <th style='width: 40px;'>SL</th>
+                                <th>Service / Item Description</th>
+                                <th style='width: 80px; text-align: center;'>Qty</th>
+                                <th style='width: 100px; text-align: right;'>Rate</th>
+                                <th style='width: 100px; text-align: right;'>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                                
+                                <tr>
+                                    <td>[i + 1]</td>
+                                    <td><strong>Mock Data</strong><br/><small>Mock Data</small></td>
+                                    <td style='text-align: center;'>2 Mock Data</td>
+                                    <td style='text-align: right;'>£ £5.00</td>
+                                    <td style='text-align: right; font-weight: 600;'>£ 2</td>
+                                </tr>
+                            
+                        </tbody>
+                    </table>
+                </section>
+
+                
+                    <section class='summary-section'>
+                        <div class='summary-table'>
+                            
+                            <div class='summary-row' style='border-bottom: 0.5px solid #E5E7EB;'>
+                                <span style='color: #1B3F6D; font-weight: 600;'>Sub Total</span>
+                                <span style='color: #1B3F6D; font-weight: 600;'>£ £10.00</span>
+                            </div>
+
+                            
+                                <div class='summary-row' style='border-bottom: 0.5px solid #E5E7EB;'>
+                                    <div style='display: flex; gap: 8px; align-items: center;'>
+                                        <span>VAT</span>
+                                        <span style='border: 1px solid #E5E7EB; border-radius: 4px; padding: 2px 6px; font-size: 8px; color: #4B5563;'>[vat_percentage]%</span>
+                                    </div>
+                                    <span>£ [vat_amount.toFixed(2)]</span>
+                                </div>
+                            
+
+                            
+                                <div class='summary-row' style='border-bottom: 0.5px solid #E5E7EB;'>
+                                    <div style='display: flex; gap: 8px; align-items: center;'>
+                                        <span>Discount</span>
+                                        <span style='border: 1px solid #E5E7EB; border-radius: 4px; padding: 2px 6px; font-size: 8px; color: #4B5563;'>Mock Data</span>
+                                    </div>
+                                    <span style='color: #EF4444;'>- £ [discount_amount.toFixed(2)]</span>
+                                </div>
+                            
+
+                            
+                                <div class='summary-row' style='border-bottom: 0.5px solid #E5E7EB;'>
+                                    <div style='display: flex; gap: 8px; align-items: center;'>
+                                        <span>Shipping</span>
+                                        <span style='border: 1px solid #E5E7EB; border-radius: 4px; padding: 2px 6px; font-size: 8px; color: #4B5563;'>£ Mock Data</span>
+                                    </div>
+                                    <span>£ Mock Data</span>
+                                </div>
+                            
+
+                            <div class='summary-row' style='font-weight: 700; color: #1B3F6D; font-size: 10px; padding-top: 8px;'>
+                                <span>Total Amount</span>
+                                <span>£ [grand_total_val.toFixed(2)]</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    
+                        <div style='padding: 0 35px 5px; font-size: 9px; color: #6B7280;'><strong>Notes:</strong> [notes]</div>
+                    
+                
+
+                <div class='page-bottom'>
+                    
+                        <section class='extras-section'>
+                            <div class='extras-content-box'>
+                                [config.extrasContent]
+                            </div>
+                        </section>
+                    
+                    
+                        <section class='signature-section'>
+                            <p class='doctor-name'>Mock Data</p>
+                            <p class='e-signature'>E-signature: Mock Data</p>
+                        </section>
+                    
+                    
+                        <div class='footer-wrapper'>
+                            <footer class='footer-slogan'>
+                                <div class='disclaimer-box'>[config.footerContent]</div>
+                            </footer>
+                        </div>
+                    
+                </div>
+            </div>
+            
+            
+        
+    </div>
+</body>
+
+</html>

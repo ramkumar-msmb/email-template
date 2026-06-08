@@ -1,0 +1,458 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+        .pdf-container {
+            width: 21cm;
+            height: 29.7cm;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .header,
+        .footer-text {
+            background-color: #1B3F6D;
+            color: white;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+        .header-left {
+            display: flex;
+            flex-direction: column;
+        }
+        .header img {
+            width: 120px;
+            margin-bottom: 70px;
+        }
+        .clinic-details {
+            text-align: right;
+            line-height: 1.4;
+        }
+        .clinic-details p {
+            font-size: 12px;
+            margin: 2px 0;
+        }
+        .header-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        .details-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            margin-top: 8px;
+            align-items: stretch;
+        }
+        .details-box {
+            width: 48%;
+            display: flex;
+            flex-direction: column;
+            font-size: 12px;
+        }
+        .patient-details,
+        .appointment-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 15px;
+            background-color: #F3F9FF;
+            border-radius: 5px;
+            flex-grow: 1;
+        }
+        .details-heading {
+            font-size: 13px;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: #242424;
+        }
+        .patient-details p,
+        .appointment-details p {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .patient-details strong,
+        .appointment-details strong,.age {
+            min-width: 140px;
+            text-align: left;
+            font-weight: 500;
+        }
+        .patient-details span,
+        .appointment-details span,.age-value {
+            flex-grow: 1;
+            text-align: left;
+            color: #1B3F6D;
+        }
+        .dob-age {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+        .prescription-table-container {
+            max-height: 12cm; 
+            padding: 0 20px;
+            min-height: 10cm;
+        }
+        .prescription-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        .prescription-table th {
+            background-color: #1B3F6D;
+            color: white;
+            font-size: 12px;
+            padding: 8px;
+            text-align: left;
+        }
+        .prescription-table td {
+            font-size: 12px;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            border-bottom: 1px solid #eee;
+            word-wrap: break-word;
+        }
+        .prescription-table th:nth-child(1),
+        .prescription-table td:nth-child(1) {
+            width: 8%;
+        }
+        .prescription-table th:nth-child(2),
+        .prescription-table td:nth-child(2) {
+            width: 48%;
+        }
+        .prescription-table th:nth-child(3),
+        .prescription-table td:nth-child(3) {
+            width: 14%;
+        }
+        .prescription-table th:nth-child(4),
+        .prescription-table td:nth-child(4) {
+            width: 14%;
+        }
+        .prescription-table th:nth-child(5),
+        .prescription-table td:nth-child(5) {
+            width: 10%;
+        }
+        .medicine-details {
+            display: flex;
+            flex-direction: column;
+            font-size: 10px;
+            max-height: 120px;
+        }
+        .medicine-instruction {
+            font-size: 10px;
+            color: #1B3F6D;
+            margin-top: 3px;
+        }
+        .prescribed-by {
+            padding: 20px;
+            /* margin-top: 5px; */
+        }
+        .prescribed-by-title {
+            font-size: 13px;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: #242424;
+        }
+        .doctor-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .doctor-details table {
+            width: 100%;
+            font-size: 12px;
+            border-collapse: collapse;
+        }
+        .doctor-details table th,
+        .doctor-details table td {
+            background-color: #f3f9ff;
+            padding: 5px;
+            text-align: left;
+            vertical-align: top;
+            word-wrap: break-word;
+        }
+        .doctor-details table td {
+            color: #1B3F6D;
+        }
+        .doctor-details table th {
+            background-color: #f3f9ff;
+            width: 25%;
+        }
+        .qr-signature-container {
+            display: flex;
+            padding: 0 20px;
+        }
+        .qr-container {
+            width: 80px;
+            height: 80px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        .qr-container img {
+            width: 100%;
+        }
+        .qr-container p {
+            margin-top: 10px;
+            font-size: 10.2px;
+        }
+        .signature-section {
+            font-size: 11px;
+            color: #333;
+        }
+        .signature-section p {
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+        .footer-text {
+            font-size: 11px;
+            text-align: justify;
+            padding: 15px 20px;
+            margin-top: 20px;
+        }
+        .footer-text p {
+            line-height: 1.5;
+        }
+        .info-icon {
+            display: flex;
+            align-items: center;
+            padding-left: 16px;
+        }
+        
+        .prescription-table {
+            width: 100%;
+            border-collapse: collapse;
+            word-break: break-word;
+        }
+        .prescription-table th,
+        .prescription-table td {
+            font-size: 12px;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            border-bottom: 1px solid #eee;
+        }
+        .medicine-name {
+            display: block;
+            line-height: 1.4;
+            white-space: normal;
+            overflow: visible;
+            margin-bottom: 4px;
+            font-size: 12px;
+        }
+        .truncate-text {
+            max-height: none;
+            /* Allow text to expand fully */
+            overflow: visible;
+            word-break: break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pdf-container">
+        <div style="padding: 0px 20px; display: flex; justify-content: end;">
+            <img style="height: 80px;" src="https://public-consumables.s3.eu-west-2.amazonaws.com/tlc.jpeg"
+                alt="SendScript">
+        </div>
+
+        <div class="details-container">
+            <div class="details-box">
+                <div class="details-heading">Patient Details</div>
+                <div class="patient-details">
+                    <p><strong>Patient Name:</strong> <span>
+                            Mock Data
+                            Mock Data
+                            Mock Data
+                        </span></p>
+                    <p class="dob-age">
+                        <strong>Date Of Birth:</strong>
+                        <span>
+                            Mock Data
+                                <span class="age" style="color: #000; font-weight: 500; margin-left: 10px;"> Age:
+                                </span>
+                                <span class="age-value">
+                                    <!-- Mock Data -->
+                                    41
+                                </span>
+
+                        </span>
+                    </p>
+                    <p><strong>Mobile Number:</strong> <span>
+                        Mock Data Mock Data
+                        </span></p>
+                    <p><strong>Address:</strong>
+                        <span>
+                            123 High Street, Medical District, London, SW1A 1AA
+                            <br>
+                            Mock Data
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <!-- Appointment Details -->
+            <div class="details-box">
+                <div class="details-heading">Prescription Details</div>
+                <div class="appointment-details">
+                    <p><strong>Prescription ID:</strong> <span>
+                            INV-2023-001
+                        </span></p>
+                    <p><strong>Date:</strong> <span>
+                            08 Jun 2026
+                        </span></p>
+                </div>
+            </div>
+        </div>
+
+        
+            <div class="prescription-table-container">
+                <table class="prescription-table">
+                    <thead>
+                        <tr>
+                            <th>SL No</th>
+                            <th>Medicine</th>
+                            <th>Duration</th>
+                            <th>Method</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        
+                            <tr>
+                                <td>[currentChunk[i].slNo]</td>
+                                <td>
+                                    <div class="medicine-details">
+                                        <span class="medicine-name truncate-text">[currentChunk[i].name]</span>
+                                        <span class="medicine-instruction">- [currentChunk[i].dosage_note]</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    [currentChunk[i].duration] [currentChunk[i].duration_type]
+                                </td>
+                                <td>[currentChunk[i].method]</td>
+                                <td>
+                                    [currentChunk[i].quantity] [currentChunk[i].unit]
+                                </td>
+                            </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        
+
+
+        <div class="prescribed-by">
+            <div class="prescribed-by-title">Prescribed By</div>
+            <div class="doctor-details">
+                <table>
+                    <tr>
+                        <th>Name:</th>
+                        <th>Registration No:</th>
+                        <th>Qualifications:</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            Dr
+                            Sarah
+                            Smith
+                        </td>
+                        <td>GMC - [prescription.doctor_gmc_number]
+                        </td>
+                        <td>
+                            Mock Data
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="qr-signature-container">
+            <div class="qr-container">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://sendscript.com/dispense"
+                    alt="QR Code">
+                <p>Scan to Dispense</p>
+            </div>
+            <div class="signature-section">
+                <p>This prescription has been signed using an advanced electronic signature</p>
+                <p><strong>E-signature: https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png</strong>
+                </p>
+                <p><strong>Date and Time of signature:</strong>
+                    Mock Data
+                </p>                  
+                <p>To verify (or) dispense the prescription visit: www.sendscript.com/dispense</p>
+            </div>
+        </div>
+        <div>
+            <div
+                style="display: flex; justify-content: end; font-size: 14px; margin-right: 3rem; color: #1B3F6D; font-family: 'Nunito', sans-serif">
+                <p>We go further | We work as one | We personalise care</p>
+            </div>
+            <div class="info-icon">
+                <svg style="
+                height: 25px;
+                width: 31px;
+                fill: #1B3F6D;
+            " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 332.43 264.75"><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path d="M332.43,131.25c-19.32-.07-38.64-.22-58-.16-5,0-8.34,4-8.76,9.7-1.83,24.77-9.45,47.74-23.9,67.81-15.92,22.11-36.55,38.62-62.69,47.85-31.24,11-62.5,11.2-93.35-.31A127.87,127.87,0,0,1,20.91,203.4c-17.76-28.08-24.25-58.53-19.3-91C6.93,77.37,24,48.8,52.27,27.16,70.75,13,91.56,5,114.64,1.49c27.6-4.24,53.47.74,78,12.61,23.5,11.37,41.94,28.84,55.18,51.55a128.88,128.88,0,0,1,14.66,36.92c.74,3.33.1,5.13-3.11,6-3.49,1-4.83-.85-5.49-3.93A116.52,116.52,0,0,0,233.8,60.45,123.17,123.17,0,0,0,177,16.88c-27.72-10.55-56-11.26-83.63-1.78C60.56,26.37,36,47.94,20.76,79.82a121.54,121.54,0,0,0,9.71,121.81,128.89,128.89,0,0,0,28.62,30.11,117.81,117.81,0,0,0,43.49,20.38c29.59,7.09,58.23,4.15,85.62-9,15.73-7.54,29-18.55,40.19-32a122.11,122.11,0,0,0,26.94-57.47c1.1-6,1.38-12.25,2.67-18.25,1.83-8.56,7-12.68,16-12.79,17.49-.2,35,0,52.49-.06,2,0,4-.24,5.95-.37Z"/><path d="M114.47,184.53c1.24-4.1,2.86-10,4.8-15.8,6.36-19,12.87-38,19.19-57.1.52-1.55.63-4-.26-5s-3.35-.67-4.94-.26c-5,1.28-9.83,3.16-14.86,4.2-1.43.3-4-1-4.78-2.37-1.2-2.1-.77-4.54,2.28-5.49,5.54-1.73,11-3.85,16.59-5.27,10.74-2.71,17.7,4.51,14.61,15.35-2.81,9.86-6.22,19.55-9.49,29.27-4.45,13.22-9.09,26.38-13.49,39.61-2,5.94-.75,10.32,3,12.36a12.13,12.13,0,0,0,15-2.67c6.71-7.34,13.52-14.61,20.22-22,2-2.17,4-3.05,6.37-.81,2.25,2.1,2.9,3.84.21,6.59-7.52,7.68-14.59,15.78-21.9,23.66-5.35,5.78-13.92,7.38-21.57,4.37C118.2,200.32,114.66,194.4,114.47,184.53Z"/><path d="M146.37,53c10,0,17.61,7.64,17.58,17.81,0,9.67-8,17.37-18.12,17.44-9.59.07-17.94-8.21-17.48-18C128.78,61.24,135,52.61,146.37,53Zm-.14,26.43a8.37,8.37,0,0,0,8.65-8.86c-.07-4.8-4.24-9.08-8.76-9a8.54,8.54,0,0,0-8.52,9C137.75,76,141.13,79.48,146.23,79.4Z"/></g></g></svg>
+                <div style="width: 100%;
+                background: #1B3F6D;
+                height: 0.8px;
+                position: relative;
+                top: -0.5px;
+                left: -1px;">
+                    </div>
+            </div>
+            <div style="color: black; font-size: 12px; padding: 1rem 3rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <div>
+                        <p>20 Devonshire Place, London, W1G 6BW</p>
+                        <p><strong style="color: #1B3F6D;">T</strong> +44 (0)20 7935 4444 | <strong
+                                style="color: #1B3F6D;">E</strong> info@thelondonclinic.co.uk</p>
+                        <p>thelondonclinic.co.uk</p>
+                    </div>
+                    <div style="font-size: 10px; text-align: right;">
+                        <p style="color: #1B3F6D;">Trustees of the London Clinic Limited</p>
+                        <p style="color: #1B3F6D;">
+                            Registered Charity Number <span style="color: black;">211135</span>
+                        </p>
+                        <p style="color: #1B3F6D;">
+                            Registered Company Number <span style="color: black;">307579</span>
+                        </p>
+                        <p style="color: #1B3F6D;">
+                            Registered Address: <span style="color: black;">20 Devonshire Place, London, W1G 6BW</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: center; height: 15px; gap: 10px;">
+                <p style="font-size: 12px;">Powered By</p>
+                <img src="https://public-consumables.s3.eu-west-2.amazonaws.com/logo.png" alt="SendScript">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

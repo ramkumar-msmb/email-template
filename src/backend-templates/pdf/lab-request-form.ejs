@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Request Form</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #1B3F6D;
+            color: white;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .header-right {
+            text-align: right;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .logo {
+            height: 40px;
+            margin-bottom: 40px;
+        }
+
+        .form-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .header-contact {
+            margin-top: 10px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .order-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .order-info strong {
+            color: #1B3F6D;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #1B3F6D;
+            margin-bottom: 10px;
+        }
+
+        .details-row {
+            display: flex;
+            justify-content: space-between;
+            background-color: #F0F7FF;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .details-item span {
+            color: #666;
+            margin-right: 5px;
+        }
+
+        .details-item strong {
+            color: #1B3F6D;
+        }
+
+        .clinical-box {
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .clinical-info-title {
+            color: #1B3F6D;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #EEE;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .check-icon {
+            color: #1B3F6D;
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .other-info {
+            margin-top: 15px;
+            font-size: 13px;
+        }
+
+        .other-info p {
+            margin: 5px 0;
+        }
+
+        .other-info strong {
+            color: #1B3F6D;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #1B3F6D;
+        }
+
+        th {
+            background-color: #1B3F6D;
+            color: white;
+            text-align: left;
+            padding: 12px 15px;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #EEE;
+            font-size: 13px;
+            color: #444;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding: 0 30px 40px;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .footer strong {
+            color: #333;
+        }
+
+        .signature-block {
+            margin-top: 20px;
+        }
+
+        .legal-note {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        @media print {
+            body {
+                background-color: white;
+            }
+            .container {
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-left">
+                <img src="https://public-consumables.s3.eu-west-2.amazonaws.com/logo-white.png" alt="SendScript" class="logo">
+                <div class="form-title">LAB REQUEST FORM</div>
+            </div>
+            <div class="header-right">
+                <p><strong><%= clinic.name %></strong></p>
+                <p><%= [clinic.address_line_1, clinic.address_line_2].filter(Boolean).join(', ') %></p>
+                <p><%= clinic.city %></p>
+                <p><%= clinic.postal_code %></p>
+                <div class="header-contact">
+                    <p>Tel: <%= clinic.contact_number %></p>
+                    <p>Email: <%= clinic.email %></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Order Information -->
+            <div class="order-info">
+                <div>Order Number: <strong><%= booking_code %></strong></div>
+                <div>Date: <strong><%= booking_date %></strong></div>
+            </div>
+
+            <!-- Patient Details -->
+            <div class="section">
+                <div class="section-title">Patient Details</div>
+                <div class="details-row">
+                    <div class="details-item"><span>Full Name:</span> <strong><%= patient_name %></strong></div>
+                    <div class="details-item"><span>Gender:</span> <strong><%= patient_gender %></strong></div>
+                    <div class="details-item"><span>DOB:</span> <strong><%= patient_dob %></strong></div>
+                </div>
+            </div>
+
+            <!-- Clinical Details -->
+            <div class="section">
+                <div class="section-title">Clinical Details</div>
+                <div class="clinical-box">
+                    <div class="clinical-info-title">Clinical Information</div>
+                    <p><%= clinical_info || 'N/A' %></p>
+                    
+                    <div class="checkbox-container">
+                        <div class="checkbox-item">
+                            <span class="check-icon"><%= fasting ? '☑' : '☐' %></span> Fasting
+                        </div>
+                        <div class="checkbox-item">
+                            <span class="check-icon"><%= post_menopause ? '☑' : '☐' %></span> Post Menopause
+                        </div>
+                        <div class="checkbox-item">
+                            <span class="check-icon"><%= suspicious_cervix ? '☑' : '☐' %></span> Suspicious Cervix
+                        </div>
+                        <div class="checkbox-item">
+                            <span class="check-icon"><%= hrt ? '☑' : '☐' %></span> HRT
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-info">
+                    <p><strong>Ethnic origin:</strong> <%= ethnic_origin || 'N/A' %></p>
+                    <p><strong>Drug Therapy:</strong> <%= drug_therapy || 'N/A' %></p>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">SL No</th>
+                        <th style="width: 60%;">Test/Profile</th>
+                        <th style="width: 15%;">Code</th>
+                        <th style="width: 15%;">TAT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% items.forEach((item, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= item.name %></td>
+                        <td><%= item.code || 'N/A' %></td>
+                        <td><%= item.tat || 'N/A' %></td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <p>Requesting Doctor: <strong>Dr. <%= doctor_name %></strong></p>
+            <div class="signature-block">
+                <p>E-signature: <%= signature_hash %></p>
+                <p>Time of signature: <%= signature_time %></p>
+            </div>
+            <p class="legal-note">This lab request has been signed using an advanced electronic signature</p>
+        </div>
+    </div>
+</body>
+
+</html>
