@@ -65,23 +65,33 @@
         }
 
         .table-container {
-            padding: 0 20px;
-            flex: 1;
-            min-height: 12cm;
-            max-height: 12cm;
-            position: relative;
-            margin: 10px 0;
+            margin: 10px;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 0.5px solid #CBE3E3;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            border: 0;
+        }
+
+        thead,
+        table tr {
+            border: 0;
         }
 
         table th,
         table td {
             padding: 12px;
             border: 1px solid #ddd;
+            border: 0;
+        }
+
+        table th,
+        table td {
+            padding: 12px;
             font-size: 14px;
             font-weight: 300;
         }
@@ -90,17 +100,20 @@
             font-weight: bold;
             background-color: #1b3f6d;
             color: #fff;
-            text-align: center;
+            text-align: left;
         }
 
         table td {
             text-align: left;
         }
 
-        table td:first-child,
-        table td:nth-child(3),
-        table td:nth-child(4) {
-            text-align: center;
+        table td:first-child {
+            text-align: left;
+        }
+
+        table th:first-child,
+        table th:nth-child(3) {
+            width: 100px;
         }
 
         .totals-container {
@@ -108,19 +121,22 @@
             background-color: white;
             flex-grow: 1;
             line-height: 2.2;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
         }
 
         .amount-calc {
             display: flex;
             justify-content: space-between;
             margin-bottom: 5px;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .totals {
             display: flex;
             justify-content: space-between;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             border-top: 1px solid #ccc;
             padding-top: 10px;
@@ -161,7 +177,8 @@
             flex-direction: column;
         }
 
-        .patient-details, .invoice-details {
+        .patient-details,
+        .invoice-details {
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -181,20 +198,23 @@
             padding-top: 5px;
         }
 
-        .patient-details p, .invoice-details p {
+        .patient-details p,
+        .invoice-details p {
             display: flex;
             justify-content: space-between;
             gap: 10px;
             margin: 5px 0;
         }
 
-        .patient-details strong, .invoice-details strong {
+        .patient-details strong,
+        .invoice-details strong {
             min-width: 140px;
             text-align: left;
             font-weight: 500;
         }
 
-        .patient-details span, .invoice-details span {
+        .patient-details span,
+        .invoice-details span {
             flex-grow: 1;
             text-align: left;
             color: #1B3F6D;
@@ -210,74 +230,96 @@
 
 <body>
     
-    <div class="invoice-container">
-        <!-- HEADER -->
-        <div class="header">
-            <div class="header-left">
-                <img src="https://d2pznqasld4zpy.cloudfront.net/common/WebLogo.svg" alt="SendScript">
-                <p>Invoice</p>
-            </div>
-            <div class="header-right">
-                <p>[patient.site_name]</p>
-                <p>
-                    123 High Street, Medical District, London, SW1A 1AA
+        <div class="invoice-container">
+            <!-- HEADER -->
+            <div class="header">
+                <div class="header-left">
+                    <img src="https://d2pznqasld4zpy.cloudfront.net/common/WebLogo.svg" alt="SendScript">
+                    <p>Invoice</p>
+                </div>
+                <div class="header-right">
+                    <p>
+                        HealthFirst Pharmacy
+                    </p>
+                    <p>
+                        123 High Street, Medical District, London, SW1A 1AA
                 </p>
-                <p>[patient.site_postal_code]</p>
-                <p>Tel: [patient.site_contact_number]</p>
-                <p>Email: [patient.site_email]</p>
+                <p>SW1A 1AA</p>
+                <p>Tel: +44 20 7946 0958</p>
+                <p>Email: info@healthfirstpharmacy.co.uk</p>
             </div>
         </div>
 
+        <!-- Patient Details and Invoice Details -->
         <div class="details-container">
+            <!-- Patient Details -->
             <div class="details-box">
                 <div class="details-heading">Patient Details</div>
                 <div class="patient-details">
                     <p>
                         <strong>Full Name:</strong>
-                        <span>John Doe</span>
+                        <span>Dr John Doe</span>
                     </p>
                     <p>
                         <strong>Date Of Birth:</strong>
                         <span>
-                          [patient.dob]
-                        </span>
-                        <span>
-                            <span style="color:#000;font-weight:500;margin-left:10px;">Age:</span>
-                            <span>41</span>
-                        </span>
+                            8 June 2026</span>
+
+                                <span>
+                                    <span class="age" style="color: #000; font-weight: 500; margin-left: 10px;"> Age:
+                                    </span>
+                                    <span class="age-value">
+                                        <!-- 08 Jun 2026 -->
+                                        41
+                                    </span>
+                                </span>
                     </p>
-                    <p style="line-height: 16px;">
+                    <p>
                         <strong>Address:</strong>
                         <span>
-                          123 High Street, Medical District, London, SW1A 1AA
-                        </span>
-                      </p>
-                      
-                      <p>
+                            123 High Street, Medical District, London, SW1A 1AA
+                        </span>                          
+                    </p>
+                    <p>
                         <strong>Contact Number:</strong>
-                        <span>Mock Data Mock Data</span>
+                        <span>+44 20 7946 0958</span>
                     </p>
                 </div>
             </div>
-
+        
+            <!-- Invoice Details -->
             <div class="details-box">
                 <div class="details-heading">Invoice Details</div>
                 <div class="invoice-details">
                     <p>
                         <strong>Invoice Number:</strong>
-                        <span>[invoice_number]</span>
+                        <span>INV-2023-001</span>
                     </p>
                     <p>
                         <strong>Invoice Date:</strong>
                         <span>
-                          [invoice_date]
+                                8 June 2026
+                        </span>
+                    </p>
+                    <p>
+                        <strong>Booking Date:</strong>
+                        <span>
+                            08 Jun 2026
+                        </span>
+                    </p>
+                    <p>
+                        <strong>Booking Time:</strong>
+                        <span>
+                            10:30 AM
                         </span>
                     </p>
                 </div>
             </div>
         </div>
 
-        <div class="table-container" style="min-height: 364px;" data-min-height="[Math.round(availableHeight)]">
+
+        <!-- TABLE -->
+        <div class="table-container">
             <table>
                 <thead>
                     <tr>
@@ -288,46 +330,52 @@
                 </thead>
                 <tbody>
                     
-                    
-                    
-                        
                         <tr>
-                            <td>[i + 1]</td>
-                            <td>[item.scan_name]Mock Data</td>
-                            <td style="text-align: right; align-items: right;">£ [item.out_patient_price]</td>
+                            <td>
+                                [itemNumber]
+                            </td>
+                            <td>
+                                [item.scan_name]
+                            </td>
+                            <td>£ £5.00
+                            </td>
                         </tr>
                         
-                    
                 </tbody>
             </table>
         </div>
 
+        <!-- TOTALS SECTION - Only show on the last page -->
         
-        <div class="totals-container">
-            <div class="amount-calc">
-                <div>Gross Amount</div>
-                <div>£ [Number(grossAmount).toFixed(2)]</div>
+            <div class="totals-container">
+                <div class="amount-calc">
+                    <div>Gross Amount</div>
+                    <div>£ £5.00
+                    </div>
+                </div>
+                <div class="amount-calc">
+                    <div>Vat(20%)</div>
+                    <div>£ £5.00
+                    </div>
+                </div>
+                <div class="amount-calc">
+                    <div>Booking Charge</div>
+                    <div>£ £5.00
+                    </div>
+                </div>
+                <div class="totals">
+                    <div>Net Amount</div>
+                    <div>£ £150.00
+                    </div>
+                </div>
             </div>
-            <div class="totals">
-                <div>Net Amount</div>
-                <div>£ Mock Data</div>
-            </div>
-        </div>
-        
-        <div class="totals-container"></div>
-        
+            
+                <div class="totals-container"></div>
+                
 
-        <div class="footer"></div>
-    </div>
-    
-    <script>
-        document.querySelectorAll('.table-container').forEach(container => {
-            const minHeight = container.getAttribute('data-min-height');
-            if (minHeight) {
-                container.style.minHeight = minHeight + 'px';
-            }
-        });
-    </script>
+                    <div class="footer"></div>
+                    </div>
+                    
 </body>
 
 </html>

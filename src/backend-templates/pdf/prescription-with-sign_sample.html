@@ -27,8 +27,7 @@
             justify-content: space-between;
         }
 
-        .header,
-        .footer-text {
+        .header {
             background-color: #1B3F6D;
             color: white;
         }
@@ -37,7 +36,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
+            padding: 15px 18px;
         }
 
         .header-left {
@@ -70,7 +69,7 @@
         .details-container {
             display: flex;
             justify-content: space-between;
-            padding: 15px 20px;
+            padding: 15px 18px;
             margin-top: 8px;
             align-items: stretch;
         }
@@ -137,7 +136,7 @@
         }
 
         .prescription-table-container {
-            padding: 0 20px;
+            padding: 0 18px;
             flex: 1;
             min-height: 12cm;
             max-height: 12cm;
@@ -224,7 +223,7 @@
         }
 
         .prescribed-by {
-            padding: 20px;
+            padding: 18px;
         }
 
         .prescribed-by-title {
@@ -266,7 +265,7 @@
 
         .qr-signature-container {
             display: flex;
-            padding: 0 20px;
+            padding: 0 18px;
         }
 
         .qr-container {
@@ -294,19 +293,6 @@
             margin: 5px 0;
             line-height: 1.5;
         }
-
-        .footer-text {
-            font-size: 11px;
-            text-align: justify;
-            padding: 15px 20px;
-            margin-top: 8px;
-        }
-
-        .footer-text p {
-            line-height: 1.5;
-        }
-
-
 
         .prescription-table {
             width: 100%;
@@ -378,15 +364,6 @@
 </head>
 
 <body>
-
-
-        
-        
-        
-        
-        
-        
-        
             <div class="page Mock Data">
                 <div class="header">
                     <div class="header-left">
@@ -409,7 +386,7 @@
                     <div class="details-box">
                         <div class="details-heading">Patient Details</div>
                         <div class="patient-details">
-                            <p><strong>Patient Name:</strong> <span>
+                            <p><strong>Full Name:</strong> <span>
                                     Dr
                                     John
                                     Doe
@@ -498,6 +475,24 @@
                     </table>
                 </div>
 
+                <div class="details-container">
+                    <div class="details-box">
+                        <div class="details-heading">Comments To Patient</div>
+                        <div class="patient-details">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="details-box">
+                        <div class="details-heading">Comments To Pharmacy</div>
+                        <div class="appointment-details">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="prescribed-by">
                     <div class="prescribed-by-title">Prescribed By</div>
                     <div class="doctor-details">
@@ -538,15 +533,6 @@
                         </p>                  
                         <p>To verify (or) dispense the prescription visit: www.sendscript.com/dispense</p>
                     </div>
-                </div>
-
-                <div class="footer-text">
-                    <p><strong>To the Pharmacist:</strong> SendScript is an online electronic prescription platform that
-                        connects prescribers direct to pharmacies. All of our Doctors & Prescribers hold full clinical
-                        registrations and are listed on their respective specialist registers. Medications are prescribed
-                        following a comprehensive assessment either face to face and Remote Consultations. We are grateful to
-                        you for accepting this prescription. Please do not hesitate to contact our support team if you have any
-                        queries.</p>
                 </div>
             </div>
             

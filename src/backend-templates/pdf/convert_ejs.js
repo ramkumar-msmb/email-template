@@ -124,6 +124,7 @@ const mockDataMap = {
     'prescription.pharmacy_contact_number': '+44 20 7946 0958',
     'prescription.pharmacy_email': 'info@healthfirstpharmacy.co.uk',
     'prescription.pharmacist_code': 'PD671',
+    'prescription.pharmacist_gphc': '123456',
 
     'prescription_id': 'INV-2023-001',
     'prescription_date': '08 Jun 2026',
@@ -145,6 +146,9 @@ const mockDataMap = {
     'invoice.invoice_id': 'INV-2023-001',
     'invoice.date': '08 Jun 2026',
     'invoice.total_amount': '£150.00',
+    'invoice_id': 'INV-2023-001',
+    'formattedDate_invoice': '8 June 2026',
+    'formattedDate': '8 June 2026',
 
     'delivery_charge': '£5.00',
     'sub_total': '£10.00',

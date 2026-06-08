@@ -65,23 +65,33 @@
         }
 
         .table-container {
-            padding: 0 20px;
-            flex: 1;
-            min-height: 12cm;
-            max-height: 12cm;
-            position: relative;
-            margin: 10px 0;
+            margin: 10px;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 0.5px solid #CBE3E3;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            border: 0;
+        }
+
+        thead,
+        table tr {
+            border: 0;
         }
 
         table th,
         table td {
             padding: 12px;
             border: 1px solid #ddd;
+            border: 0;
+        }
+
+        table th,
+        table td {
+            padding: 12px;
             font-size: 14px;
             font-weight: 300;
         }
@@ -90,17 +100,20 @@
             font-weight: bold;
             background-color: #1b3f6d;
             color: #fff;
-            text-align: center;
+            text-align: left;
         }
 
         table td {
             text-align: left;
         }
 
-        table td:first-child,
-        table td:nth-child(3),
-        table td:nth-child(4) {
-            text-align: center;
+        table td:first-child {
+            text-align: left;
+        }
+
+        table th:first-child,
+        table th:nth-child(3) {
+            width: 100px;
         }
 
         .totals-container {
@@ -108,19 +121,22 @@
             background-color: white;
             flex-grow: 1;
             line-height: 2.2;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
         }
 
         .amount-calc {
             display: flex;
             justify-content: space-between;
             margin-bottom: 5px;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .totals {
             display: flex;
             justify-content: space-between;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             border-top: 1px solid #ccc;
             padding-top: 10px;
@@ -161,7 +177,8 @@
             flex-direction: column;
         }
 
-        .patient-details, .invoice-details {
+        .patient-details,
+        .invoice-details {
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -181,20 +198,23 @@
             padding-top: 5px;
         }
 
-        .patient-details p, .invoice-details p {
+        .patient-details p,
+        .invoice-details p {
             display: flex;
             justify-content: space-between;
             gap: 10px;
             margin: 5px 0;
         }
 
-        .patient-details strong, .invoice-details strong {
+        .patient-details strong,
+        .invoice-details strong {
             min-width: 140px;
             text-align: left;
             font-weight: 500;
         }
 
-        .patient-details span, .invoice-details span {
+        .patient-details span,
+        .invoice-details span {
             flex-grow: 1;
             text-align: left;
             color: #1B3F6D;
@@ -209,109 +229,126 @@
 </head>
 
 <body>
-    <% 
-    const items = scans || [];
-    let currentPage = 1;
-    let itemsProcessed = 0;
-    let availableHeight = 500.54; // Base available height for table
-    
-    // Calculate address height impact once before the loop
-    const addressParts = [
-        patient?.address_line_1,
-        patient?.address_line_2,
-        patient?.city,
-        patient?.postal_code,
-        patient?.country
-    ].filter(Boolean);
-
-    const fullAddress = addressParts.join(', ');
-    if (fullAddress.length > 72) {
-        const dividedValue = Math.floor(fullAddress.length / 36);
-        availableHeight -= (12 * dividedValue) + 10; // 10px is bottom margin of availableHeight
-    }
-    
-    // Loop through pages using while loop for dynamic pagination
-    while (itemsProcessed < items.length) {
-    %>
-    <div class="invoice-container">
-        <!-- HEADER -->
-        <div class="header">
-            <div class="header-left">
-                <img src="https://d2pznqasld4zpy.cloudfront.net/common/WebLogo.svg" alt="SendScript">
-                <p>Invoice</p>
-            </div>
-            <div class="header-right">
-                <p><%= patient.site_name %></p>
-                <p>
-                    <%= [
-                      patient.site_address_line_1,
-                      patient.site_address_line_2,
-                      patient.site_address_line_3,
-                      patient.site_city,
-                      patient.site_county,
-                      patient.site_country
-                    ].filter(Boolean).join(', ') %>
+    <% const items=prescription_items || []; // Calculate total pages needed const itemsPerPage=10; const
+        totalPages=Math.ceil(items.length / itemsPerPage); // Loop through pages for (let page=0; page < totalPages;
+        page++) { const startIndex=page * itemsPerPage; const endIndex=Math.min(startIndex + itemsPerPage,
+        items.length); const pageItems=items.slice(startIndex, endIndex); const isLastPage=page===totalPages - 1; %>
+        <div class="invoice-container">
+            <!-- HEADER -->
+            <div class="header">
+                <div class="header-left">
+                    <img src="https://d2pznqasld4zpy.cloudfront.net/common/WebLogo.svg" alt="SendScript">
+                    <p>Invoice</p>
+                </div>
+                <div class="header-right">
+                    <p>
+                        <%= pharmacy.name %>
+                    </p>
+                    <p>
+                        <%= [ pharmacy.address_line_1, pharmacy.address_line_2, pharmacy.address_line_3, pharmacy.city,
+                            pharmacy.county, pharmacy.country ].filter(Boolean).join(', ') %>
                 </p>
-                <p><%= patient.site_postal_code %></p>
-                <p>Tel: <%= patient.site_contact_number %></p>
-                <p>Email: <%= patient.site_email %></p>
+                <p><%= pharmacy.postal_code %></p>
+                <p>Tel: <%= pharmacy.contact_number %></p>
+                <p>Email: <%= pharmacy.email %></p>
             </div>
         </div>
 
+        <!-- Patient Details and Invoice Details -->
         <div class="details-container">
+            <!-- Patient Details -->
             <div class="details-box">
                 <div class="details-heading">Patient Details</div>
                 <div class="patient-details">
                     <p>
                         <strong>Full Name:</strong>
-                        <span><%= patient.patient_name %></span>
+                        <span><%= patient_details.patient_title %> <%= patient_details.patient_first_name %> <%= patient_details.patient_sur_name %></span>
                     </p>
                     <p>
                         <strong>Date Of Birth:</strong>
-                        <span>
-                          <%= patient.dob %>
-                        </span>
-                        <span>
-                            <span style="color:#000;font-weight:500;margin-left:10px;">Age:</span>
-                            <span><%= patient.patient_age %></span>
-                        </span>
+                        <span><% 
+                            // Parse the ISO date string
+                            const dobOriginal = new Date(patient_details.patient_dob);
+                            
+                            // Create a new date object with the date incremented by 1
+                            const dob = new Date(dobOriginal);
+                            dob.setDate(dobOriginal.getDate());
+                            
+                            // Format as DD/MM/YYYY
+                            const day = String(dob.getDate()).padStart(2, ' 0'); const month=String(dob.getMonth() +
+                            1).padStart(2, '0' ); // Month is 0-based const year=dob.getFullYear(); const
+                            formattedDate=`${day}/${month}/${year}`; %>
+                            <%= formattedDate %></span>
+
+                                <span>
+                                    <span class="age" style="color: #000; font-weight: 500; margin-left: 10px;"> Age:
+                                    </span>
+                                    <span class="age-value">
+                                        <!-- <%= Math.floor((new Date() - new Date(patient_details?.patient_dob)) / (1000 * 60 * 60 * 24 * 365.25)) %> -->
+                                        <%= patient_age %>
+                                    </span>
+                                </span>
                     </p>
-                    <p style="line-height: 16px;">
+                    <p>
                         <strong>Address:</strong>
                         <span>
-                          <%= (
-                            [patient?.address_line_1, patient?.address_line_2, patient?.city, patient?.country, patient?.postal_code]
-                              .filter(v => v && v.trim())
-                              .join(', ')
-                          ) || '-' %>
-                        </span>
-                      </p>
-                      
-                      <p>
+                            <%= [ patient_details?.patient_address_line_1, patient_details?.patient_address_line_2,
+                                patient_details?.patient_city, patient_details?.patient_country,
+                                patient_details?.patient_postal_code ].filter(Boolean).join(', ') %>
+                        </span>                          
+                    </p>
+                    <p>
                         <strong>Contact Number:</strong>
-                        <span><%= patient?.country_code %> <%= patient?.mobile?.trim() || '-' %></span>
+                        <span><%= patient_details.patient_mobile %></span>
                     </p>
                 </div>
             </div>
-
+        
+            <!-- Invoice Details -->
             <div class="details-box">
                 <div class="details-heading">Invoice Details</div>
                 <div class="invoice-details">
                     <p>
                         <strong>Invoice Number:</strong>
-                        <span><%= invoice_number %></span>
+                        <span><%= invoice_id %></span>
                     </p>
                     <p>
                         <strong>Invoice Date:</strong>
+                        <span><% 
+                            // Parse the ISO date string
+                            const dobOriginal_invoice = new Date(invoice_date);
+                            
+                            // Create a new date object with the date incremented by 1
+                            const dob_invoice = new Date(dobOriginal_invoice);
+                            dob_invoice.setDate(dobOriginal_invoice.getDate());
+                            
+                            // Format as DD/MM/YYYY
+                            const day_invoice = String(dob_invoice.getDate()).padStart(2, ' 0'); const
+                                month_invoice=String(dob_invoice.getMonth() + 1).padStart(2, '0' ); // Month is 0-based
+                                const year_invoice=dob_invoice.getFullYear(); const
+                                formattedDate_invoice=`${day_invoice}/${month_invoice}/${year_invoice}`; %>
+                                <%= formattedDate_invoice %>
+                        </span>
+                    </p>
+                    <p>
+                        <strong>Booking Date:</strong>
                         <span>
-                          <%= invoice_date %>
+                            <%= booking_date %>
+                        </span>
+                    </p>
+                    <p>
+                        <strong>Booking Time:</strong>
+                        <span>
+                            <%= booking_time %>
                         </span>
                     </p>
                 </div>
             </div>
         </div>
 
-        <div class="table-container" style="min-height: 364px;" data-min-height="<%= Math.round(availableHeight) %>">
+
+        <!-- TABLE -->
+        <div class="table-container">
             <table>
                 <thead>
                     <tr>
@@ -321,80 +358,54 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% let itemsInThisPage = 0; %>
-                    <%
-                        let currentHeight = 0;
-                        let actualIsLastPage = false;
-                    %>
-                    <% for (let i = itemsProcessed; i < items.length; i++) { %>
-                        <% 
-                            // Estimate if this row will fit
-                            const item = items[i];
-                            let estimatedHeight = 44; // base height
-
-                            // Estimate the height based on scan name + body part length
-                            const scanNameText = `${item.scan_name || ''}${item.body_part ? ' - ' + item.body_part : ''}`;
-                            if (scanNameText.length > 197) {
-                                estimatedHeight += 48;
-                            } else if (scanNameText.length > 131) {
-                                estimatedHeight += 24;
-                            } else if (scanNameText.length > 65) {
-                                estimatedHeight += 12;
-                            }
-
-                            // Break if adding this row would exceed available height, but only if we already have at least one row in the current page
-                            if (currentHeight + estimatedHeight > availableHeight && itemsInThisPage > 0) {
-                                break;
-                            }
-
-                            currentHeight += estimatedHeight;
-                        %>
+                    <% for (let i=0; i < pageItems.length; i++) { const item=pageItems[i]; const itemNumber=startIndex +
+                        i + 1; // Global item number %>
                         <tr>
-                            <td><%= i + 1 %></td>
-                            <td><%= item.scan_name %><%= item.body_part ? ' - ' + item.body_part : '' %></td>
-                            <td style="text-align: right; align-items: right;">£ <%= item.out_patient_price %></td>
+                            <td>
+                                <%= itemNumber %>
+                            </td>
+                            <td>
+                                <%= item.scan_name %>
+                            </td>
+                            <td>£ <%= item.price %>
+                            </td>
                         </tr>
-                        <% 
-                            itemsInThisPage++;
-                            itemsProcessed++;
-                            // Check if this is the last item overall
-                            if (i === items.length - 1) {
-                                actualIsLastPage = true;
-                            }
-                        %>
-                    <% } %>
+                        <% } %>
                 </tbody>
             </table>
         </div>
 
-        <% if (actualIsLastPage) { %>
-        <div class="totals-container">
-            <div class="amount-calc">
-                <div>Gross Amount</div>
-                <div>£ <%= Number(grossAmount).toFixed(2) %></div>
+        <!-- TOTALS SECTION - Only show on the last page -->
+        <% if (isLastPage) { %>
+            <div class="totals-container">
+                <div class="amount-calc">
+                    <div>Gross Amount</div>
+                    <div>£ <%= (total_price - (delivery_charge || 0)).toFixed(2) %>
+                    </div>
+                </div>
+                <div class="amount-calc">
+                    <div>Vat(20%)</div>
+                    <div>£ <%= (total_price - (delivery_charge || 0)).toFixed(2) %>
+                    </div>
+                </div>
+                <div class="amount-calc">
+                    <div>Booking Charge</div>
+                    <div>£ <%= (delivery_charge || 0).toFixed(2) %>
+                    </div>
+                </div>
+                <div class="totals">
+                    <div>Net Amount</div>
+                    <div>£ <%= Number(total_price || 0).toFixed(2) %>
+                    </div>
+                </div>
             </div>
-            <div class="totals">
-                <div>Net Amount</div>
-                <div>£ <%= Number(grossAmount || 0).toFixed(2) %></div>
-            </div>
-        </div>
-        <% } else { %>
-        <div class="totals-container"></div>
-        <% } %>
+            <% } else { %>
+                <div class="totals-container"></div>
+                <% } %>
 
-        <div class="footer"></div>
-    </div>
-    <% 
-        currentPage++;
-    } %>
-    <script>
-        document.querySelectorAll('.table-container').forEach(container => {
-            const minHeight = container.getAttribute('data-min-height');
-            if (minHeight) {
-                container.style.minHeight = minHeight + 'px';
-            }
-        });
-    </script>
+                    <div class="footer"></div>
+                    </div>
+                    <% } %>
 </body>
 
 </html>
