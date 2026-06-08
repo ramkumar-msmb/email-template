@@ -1,0 +1,12 @@
+
+=== src/backend-templates/email/lab-request-email.ejs ===
+title, patient_name, message_body, booking_code, patient_sex, patient_dob, clinic_phone, clinic_name, clinic_address, clinic_email
+
+=== src/backend-templates/email/lab-report-email.ejs ===
+const appointmentType=service_type?.toLowerCase() || '' ; const isVisit=appointmentType.includes('visit'); const isVideo=appointmentType.includes('video'); const isTelephonic=appointmentType.includes('telephonic'); const isClinic=appointmentType.includes('clinic');, appointment_code, patient_details.name, service_type ? service_type.charAt(0).toUpperCase() + service_type.slice(1).toLowerCase() : service_type, appointment_type ? appointment_type.charAt(0).toUpperCase() + appointment_type.slice(1).toLowerCase() : appointment_type, appointment_date, start_time, duration, patientAddress || '-', meetLink?.meeting_invite, patient_details.country_code, patient_details.mobile, doctor_details.name, doctor_details.qualifications, doctor_details.mobile, doctor_details.email, doctor_location_details?.name, patient_details.age, patient_details.gender, patient_details.email, patientAddress, price, clinic_details.name, clinic_details.contact_number, clinic_details.email
+
+=== src/backend-templates/email/doctor-consultation.ejs ===
+const appointmentType=service_type?.toLowerCase() || '' ; const isVisit=appointmentType.includes('visit'); const isVideo=appointmentType.includes('video'); const isTelephonic=appointmentType.includes('telephonic'); const isClinic=appointmentType.includes('clinic');, appointment_code, patient_details.name, service_type ? service_type.charAt(0).toUpperCase() + service_type.slice(1).toLowerCase() : service_type, appointment_type ? appointment_type.charAt(0).toUpperCase() + appointment_type.slice(1).toLowerCase() : appointment_type, appointment_date, start_time, duration, patientAddress || '-', meetLink?.meeting_invite, patient_details.country_code, patient_details.mobile, doctor_details.name, doctor_details.qualifications, doctor_details.mobile, doctor_details.email, doctor_location_details?.name, patient_details.age, patient_details.gender, patient_details.email, patientAddress, price, clinic_details.name, clinic_details.contact_number, clinic_details.email
+
+=== src/backend-templates/email/patient-data-access.ejs ===
+patient_name, doctor_name, clinic_name, patient_dob

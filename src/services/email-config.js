@@ -8,8 +8,8 @@ const mailtrapConfig = {
   port: process.env.SMTP_PORT || 2525,
   secure: false, // true for 465, false for other ports
   auth: {
-    user: process.env.SMTP_USER || '6d41edc6bc8b62',
-    pass: process.env.SMTP_PASS || '37c2d0a2b4d6c2'
+    user: process.env.SMTP_USER || '1d57bb45865cae',
+    pass: process.env.SMTP_PASS || '235cb0e7e35b07'
   },
   tls: {
     rejectUnauthorized: false
@@ -33,11 +33,11 @@ const emailTemplates = {
     subject: 'Sendscript Account Verification Unsuccessful'
   },
   doctorAccountCreated: {
-    templatePath: path.join(__dirname, '../templates/doctor-account-created.ejs'),
+    templatePath: path.join(__dirname, '../backend-templates/email/doctor-account-created.ejs'),
     subject: 'Welcome to SendScript - Account Created Successfully!'
   },
   doctorAccountCreation: {
-    templatePath: path.join(__dirname, '../templates/doctor-account-creation.ejs'),
+    templatePath: path.join(__dirname, '../backend-templates/email/doctor-account-creation.ejs'),
     subject: 'Complete Your SendScript Registration'
   },
   doctorSuperAdminApproval: {
@@ -48,22 +48,22 @@ const emailTemplates = {
     templatePath: path.join(__dirname, '../templates/signup.ejs'),
     subject: 'Complete Your SendScript Registration - Verification Code Inside'
   },
-  
+
   // Clinic Management Templates
   clinicJoinRequest: {
-    templatePath: path.join(__dirname, '../templates/clinic-join-request.ejs'),
+    templatePath: path.join(__dirname, '../backend-templates/email/clinic-join-request.ejs'),
     subject: 'Clinic Join Request Submitted Successfully'
   },
   clinicRegistration: {
-    templatePath: path.join(__dirname, '../templates/clinic-registration.ejs'),
+    templatePath: path.join(__dirname, '../backend-templates/email/clinic-registration.ejs'),
     subject: 'Clinic Registration Request Submitted'
   },
   clinicRegistrationApproved: {
-    templatePath: path.join(__dirname, '../templates/clinic-registration-approved.ejs'),
+    templatePath: path.join(__dirname, '../backend-templates/email/clinic-registration-approved.ejs'),
     subject: 'Clinic Registration Approved'
   },
   clinicRegistrationUnsuccessful: {
-    templatePath: path.join(__dirname, '../templates/clinic-registration-unsuccessful.ejs'),
+    templatePath: path.join(__dirname, '../backend-templates/email/clinic-registration-unsuccessful.ejs'),
     subject: 'Clinic Registration Update Required'
   },
   inviteDoctor: {
@@ -71,10 +71,10 @@ const emailTemplates = {
     subject: 'Invitation to Join SendScript Clinic'
   },
   paInvites: {
-    templatePath: path.join(__dirname, '../templates/pa-invites.ejs'),
+    templatePath: path.join(__dirname, '../backend-templates/email/doctor-invites-pa-email.ejs'),
     subject: 'Invitation to Join SendScript'
   },
-  
+
   // Email Verification Templates
   emailVerificationAccountCreation: {
     templatePath: path.join(__dirname, '../templates/email-verification-account-creation.ejs'),
@@ -96,7 +96,7 @@ const emailTemplates = {
     templatePath: path.join(__dirname, '../templates/reinitiate-onfido-verification.ejs'),
     subject: 'Complete Your Identity Verification - SendScript'
   },
-  
+
   // Pharmacy Templates
   pharmacyVerification: {
     templatePath: path.join(__dirname, '../templates/pharmacy-verification.ejs'),
@@ -122,7 +122,7 @@ const emailTemplates = {
     templatePath: path.join(__dirname, '../templates/pharmacy-via-prescription.ejs'),
     subject: 'New Prescription Available - SendScript'
   },
-  
+
   // Prescription Templates
   prescriptionWithSign: {
     templatePath: path.join(__dirname, '../templates/prescription-with-sign.ejs'),
@@ -148,7 +148,7 @@ const emailTemplates = {
     templatePath: path.join(__dirname, '../templates/sendto-unregister-pharmacy.ejs'),
     subject: 'Electronic Private Prescription from SendScript'
   },
-  
+
   // Payment Templates
   paymentConfirmed: {
     templatePath: path.join(__dirname, '../templates/payment-confirmed.ejs'),
@@ -159,14 +159,14 @@ const emailTemplates = {
     subject: 'Complete Your Prescription Payment'
   },
   paymentLink: {
-    templatePath: path.join(__dirname, '../templates/payment-link.ejs'),
+    templatePath: path.join(__dirname, '../backend-templates/email/payment-link.ejs'),
     subject: 'Payment Link - Complete Your Transaction'
   },
   paymentRequestFromPharmacy: {
     templatePath: path.join(__dirname, '../templates/payment-request-from-pharmacy.ejs'),
     subject: 'Payment Request From Pharmacy - SendScript'
   },
-  
+
   // Invoice Templates
   invoiceGenerate: {
     templatePath: path.join(__dirname, '../templates/invoice-generate.ejs'),
@@ -176,13 +176,25 @@ const emailTemplates = {
     templatePath: path.join(__dirname, '../templates/invoice-from-pharmacy.ejs'),
     subject: 'Invoice from Pharmacy via SendScript'
   },
-  
+
   // Patient & Data Templates
   patientDataAccess: {
-    templatePath: path.join(__dirname, '../templates/patient-data-access.ejs'),
+    templatePath: path.join(__dirname, '../backend-templates/email/patient-data-access.ejs'),
     subject: 'Patient Data Access Request - SendScript'
   },
-  
+  labRequestEmail: {
+    templatePath: path.join(__dirname, '../backend-templates/email/lab-request-email.ejs'),
+    subject: 'Lab Request - SendScript'
+  },
+  labReportEmail: {
+    templatePath: path.join(__dirname, '../backend-templates/email/lab-report-email.ejs'),
+    subject: 'Lab Report - SendScript'
+  },
+  doctorConsultation: {
+    templatePath: path.join(__dirname, '../backend-templates/email/doctor-consultation.ejs'),
+    subject: 'Doctor Consultation - SendScript'
+  },
+
   // Special Templates
   lehEmailTemplate: {
     templatePath: path.join(__dirname, '../templates/leh-email-template.ejs'),
@@ -199,7 +211,7 @@ const emailTemplates = {
 
   // Booking & Scan Templates
   bookingConfirmationWithInvoice: {
-    templatePath: path.join(__dirname, '../backend-templates/email/booking_confirmation_with_invoice.ejs'),
+    templatePath: path.join(__dirname, '../backend-templates/email/appointment-confirmation.ejs'),
     subject: 'Booking Confirmed – Scan Appointment & Invoice'
   },
   bookingInvoiceResend: {
@@ -211,11 +223,11 @@ const emailTemplates = {
     subject: 'Scan Rescheduled – New Appointment Details'
   },
   paymentLinkResend: {
-    templatePath: path.join(__dirname, '../backend-templates/email/payment_link_resend.ejs'),
+    templatePath: path.join(__dirname, '../backend-templates/email/appointment-payment-link.ejs'),
     subject: 'Payment Pending – Complete Your Scan Booking'
   },
   scanSlotReserved: {
-    templatePath: path.join(__dirname, '../backend-templates/email/scan_slot_reserved.ejs'),
+    templatePath: path.join(__dirname, '../backend-templates/email/appointment-booked.ejs'),
     subject: 'Scan Slot Reserved – Complete Payment to Confirm'
   },
   referScanBooking: {
@@ -231,8 +243,8 @@ const emailTemplates = {
     subject: 'Payment Request – Complete Your Scan Booking'
   },
   videoConsultation: {
-    templatePath: path.join(__dirname, '../backend-templates/email/video-consulation.ejs'),
-    subject: 'Video Consultation Appointment Confirmed'
+    templatePath: path.join(__dirname, '../backend-templates/email/zoom-meeting-link.ejs'),
+    subject: 'Zoom Meeting Link for Video Consultation'
   },
   doctorConsultationBooking: {
     templatePath: path.join(__dirname, '../backend-templates/email/doctor-consultation-booking.ejs'),
@@ -242,14 +254,18 @@ const emailTemplates = {
     templatePath: path.join(__dirname, '../backend-templates/email/doctor-consultation-payment-link.ejs'),
     subject: 'Complete Your Payment - Doctor Consultation'
   },
-  
+  doctorConsultationPayment: {
+    templatePath: path.join(__dirname, '../backend-templates/email/doctor-consultation-payment.ejs'),
+    subject: 'Payment Confirmation - Doctor Consultation'
+  },
+
   // Insurance and Invoice Templates
   insuranceEmailTemplate: {
     templatePath: path.join(__dirname, '../templates/insurance-email-template.ejs'),
     subject: 'Insurance Claim Request'
   },
   invoiceEmailTemplate: {
-    templatePath: path.join(__dirname, '../templates/invoice-email-template.ejs'),
+    templatePath: path.join(__dirname, '../backend-templates/email/appointment_invoice.ejs'),
     subject: 'Payment Request - Invoice'
   }
 };

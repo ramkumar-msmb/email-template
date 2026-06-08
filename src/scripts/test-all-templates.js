@@ -128,7 +128,7 @@ const sampleData = {
   // Payment
   paymentLink: {
     email: 'patient@example.com',
-    link: 'https://payments.sendscript.com/pay/12345'
+    link: 'https://payments.sendscript.com/pay/12345',
   },
 
   paymentForPrescription: {
@@ -430,7 +430,7 @@ async function testAllTemplates() {
   // Test SMTP connection first
   console.log('📡 Testing SMTP connection...');
   const connectionTest = await emailService.testConnection();
-  
+
   if (!connectionTest) {
     console.log('❌ SMTP connection failed. Please check your credentials.');
     process.exit(1);
@@ -497,7 +497,7 @@ async function testAllTemplates() {
       {
         name: 'Invite Doctor',
         method: 'sendInviteDoctorEmail',
-        args: [sampleData.inviteDoctor.email, sampleData.inviteDoctor.doctorName, {invitee_name: sampleData.inviteDoctor.inviteeName, inviting_doctor_name: sampleData.inviteDoctor.invitingDoctorName, accept_invitation_button_link: sampleData.inviteDoctor.acceptInvitationLink}]
+        args: [sampleData.inviteDoctor.email, sampleData.inviteDoctor.doctorName, { invitee_name: sampleData.inviteDoctor.inviteeName, inviting_doctor_name: sampleData.inviteDoctor.invitingDoctorName, accept_invitation_button_link: sampleData.inviteDoctor.acceptInvitationLink }]
       },
 
       // Email Verification Templates
@@ -701,7 +701,7 @@ async function testSpecificCategory(categoryName) {
 
 async function testAccountTemplates(emailService) {
   console.log('Testing Account Management Templates...');
-  
+
   const templates = [
     { method: 'sendAccountBlockedBySuperAdminEmail', args: [sampleData.accountBlocked.email, sampleData.accountBlocked.doctorName, sampleData.accountBlocked.reason] },
     { method: 'sendAccountRejectedBySuperAdminEmail', args: [sampleData.accountRejected.email, sampleData.accountRejected.doctorName, sampleData.accountRejected.reason] },
@@ -723,7 +723,7 @@ async function testAccountTemplates(emailService) {
 
 async function testBookingTemplates(emailService) {
   console.log('Testing Booking & Scan Templates...');
-  
+
   const templates = [
     { method: 'sendBookingConfirmationWithInvoiceEmail', args: [sampleData.bookingConfirmationWithInvoice.email, sampleData.bookingConfirmationWithInvoice.bookingData] },
     { method: 'sendBookingInvoiceResendEmail', args: [sampleData.bookingInvoiceResend.email, sampleData.bookingInvoiceResend.invoiceData] },

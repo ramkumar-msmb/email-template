@@ -43,7 +43,7 @@ class EmailService {
       console.log('✅ Email sent successfully!');
       console.log('📧 Message ID:', result.messageId);
       console.log('🔗 Preview URL:', nodemailer.getTestMessageUrl ? nodemailer.getTestMessageUrl(result) : 'N/A');
-      
+
       return result;
     } catch (error) {
       console.error('❌ Failed to send email:', error);
@@ -322,9 +322,100 @@ class EmailService {
     const templateData = {
       patient_name: accessData.patient_name,
       doctor_name: accessData.doctor_name,
-      clinic_name: accessData.clinic_name
+      clinic_name: accessData.clinic_name,
+      patient_dob: accessData.patient_dob || ''
     };
     return this.sendTemplateEmail('patientDataAccess', patientEmail, templateData);
+  }
+
+  async sendLabRequestEmail(recipientEmail, requestData) {
+    const templateData = {
+      title: requestData.title || 'Lab Request',
+      patient_name: requestData.patient_name,
+      message_body: requestData.message_body,
+      booking_code: requestData.booking_code,
+      patient_sex: requestData.patient_sex,
+      patient_dob: requestData.patient_dob,
+      clinic_phone: requestData.clinic_phone,
+      clinic_name: requestData.clinic_name,
+      clinic_address: requestData.clinic_address,
+      clinic_email: requestData.clinic_email
+    };
+    return this.sendTemplateEmail('labRequestEmail', recipientEmail, templateData);
+  }
+
+  async sendLabReportEmail(patientEmail, reportData) {
+    const templateData = {
+      appointment_code: reportData.appointment_code || 'APPT-1234',
+      service_type: reportData.service_type || 'Lab Report',
+      appointment_type: reportData.appointment_type || 'Standard',
+      appointment_date: reportData.appointment_date || 'N/A',
+      start_time: reportData.start_time || 'N/A',
+      duration: reportData.duration || 'N/A',
+      patientAddress: reportData.patientAddress || '',
+      meetLink: { meeting_invite: reportData.meeting_invite || '#' },
+      price: reportData.price || '0.00',
+      patient_details: {
+        name: reportData.patient_name,
+        country_code: reportData.patient_country_code || '',
+        mobile: reportData.patient_mobile || '',
+        age: reportData.patient_age || '',
+        gender: reportData.patient_gender || '',
+        email: reportData.patient_email || ''
+      },
+      doctor_details: {
+        name: reportData.doctor_name,
+        qualifications: reportData.doctor_qualifications || '',
+        mobile: reportData.doctor_mobile || '',
+        email: reportData.doctor_email || ''
+      },
+      doctor_location_details: {
+        name: reportData.doctor_location_name || ''
+      },
+      clinic_details: {
+        name: reportData.clinic_name,
+        contact_number: reportData.clinic_phone || '',
+        email: reportData.clinic_email || ''
+      }
+    };
+    return this.sendTemplateEmail('labReportEmail', patientEmail, templateData);
+  }
+
+  async sendDoctorConsultation(patientEmail, consultationData) {
+    const templateData = {
+      appointment_code: consultationData.appointment_code || 'APPT-1234',
+      service_type: consultationData.service_type || 'Doctor Consultation',
+      appointment_type: consultationData.appointment_type || 'Standard',
+      appointment_date: consultationData.appointment_date || 'N/A',
+      start_time: consultationData.start_time || 'N/A',
+      duration: consultationData.duration || 'N/A',
+      patientAddress: consultationData.patientAddress || '',
+      meetLink: { meeting_invite: consultationData.meeting_invite || '#' },
+      price: consultationData.price || '0.00',
+      patient_details: {
+        name: consultationData.patient_name,
+        country_code: consultationData.patient_country_code || '',
+        mobile: consultationData.patient_mobile || '',
+        age: consultationData.patient_age || '',
+        gender: consultationData.patient_gender || '',
+        email: consultationData.patient_email || ''
+      },
+      doctor_details: {
+        name: consultationData.doctor_name,
+        qualifications: consultationData.doctor_qualifications || '',
+        mobile: consultationData.doctor_mobile || '',
+        email: consultationData.doctor_email || ''
+      },
+      doctor_location_details: {
+        name: consultationData.doctor_location_name || ''
+      },
+      clinic_details: {
+        name: consultationData.clinic_name,
+        contact_number: consultationData.clinic_phone || '',
+        email: consultationData.clinic_email || ''
+      }
+    };
+    return this.sendTemplateEmail('doctorConsultation', patientEmail, templateData);
   }
 
   // Special Methods
@@ -346,7 +437,16 @@ class EmailService {
       patient_name: bookingData.patient_name,
       scan_name: bookingData.scan_name,
       booking_date: bookingData.booking_date,
+      appointment_date: bookingData.booking_date,
       booking_time: bookingData.booking_time,
+      start_time: bookingData.booking_time,
+      end_time: bookingData.booking_time,
+      hospital_name: bookingData.hospital_name,
+      address_line_1: bookingData.address_line_1,
+      address_line_2: bookingData.address_line_2,
+      city: bookingData.city,
+      postal_code: bookingData.postal_code,
+      country: bookingData.country,
       center_name: bookingData.center_name,
       center_address: bookingData.center_address,
       payment_status: bookingData.payment_status || 'Confirmed',
@@ -386,15 +486,28 @@ class EmailService {
 
   async sendPaymentLinkResendEmail(patientEmail, paymentData) {
     const templateData = {
-      patient_name: paymentData.patient_name,
-      scan_name: paymentData.scan_name,
-      booking_date: paymentData.booking_date,
-      booking_time: paymentData.booking_time,
-      payment_link: paymentData.payment_link,
-      booking_amount: paymentData.booking_amount,
-      booking_id: paymentData.booking_id,
-      center_name: paymentData.center_name,
-      center_address: paymentData.center_address
+      rawPaymentItems: {
+        patient_name: paymentData.patient_name,
+        scan_name: paymentData.scan_name,
+        body_part: 'body part',
+        hospital_name: 'wellcare hospital',
+        site_email: '[EMAIL_ADDRESS]',
+        address_line_1: '116 Harley Street',
+        address_line_2: 'Wimbledon',
+        city: 'London',
+        country: 'United Kingdom',
+        postal_code: 'SW19 1RH',
+        link: "asdfasdfasdf",
+        hospital_contact_number: '+44 20 7486 0701',
+        booking_date: paymentData.booking_date,
+        booking_time: paymentData.booking_time,
+        payment_link: paymentData.payment_link,
+        booking_amount: paymentData.booking_amount,
+        booking_id: paymentData.booking_id,
+        center_name: paymentData.center_name,
+        center_address: paymentData.center_address
+      },
+      link: "asdfasdf"
     };
     return this.sendTemplateEmail('paymentLinkResend', patientEmail, templateData);
   }
@@ -403,10 +516,20 @@ class EmailService {
     const templateData = {
       patient_name: reservationData.patient_name,
       scan_name: reservationData.scan_name,
+      body_part: 'body part',
       booking_date: reservationData.booking_date,
+      appointment_date: reservationData.booking_date,
       booking_time: reservationData.booking_time,
+      start_time: reservationData.booking_time,
       center_name: reservationData.center_name,
       center_address: reservationData.center_address,
+      hospital_name: 'wellcare hospital',
+      address_line_1: '116 Harley Street',
+      address_line_2: 'Wimbledon',
+      city: 'London',
+      country: 'United Kingdom',
+      postal_code: 'SW19 1RH',
+      contact_number: '+44 20 7486 0701',
       complete_payment_url: reservationData.complete_payment_url,
       booking_amount: reservationData.booking_amount,
       booking_id: reservationData.booking_id,
@@ -469,6 +592,7 @@ class EmailService {
       patient_name: consultationData.patient_name,
       link: consultationData.link,
       date_time: consultationData.date_time || '[Date & Time]',
+      date_and_time: consultationData.date_and_time || '[Date & Time]',
       consultant_name: consultationData.consultant_name || '[Consultant Name]',
       consultant_gmc: consultationData.consultant_gmc || '9293839',
       clinic_name: consultationData.clinic_name,
@@ -477,7 +601,8 @@ class EmailService {
       clinic_postal_code: consultationData.clinic_postal_code,
       clinic_country: consultationData.clinic_country,
       clinic_mobile: consultationData.clinic_mobile,
-      clinic_email: consultationData.clinic_email
+      clinic_email: consultationData.clinic_email,
+      gmc_number: 'asdfasdf',
     };
     return this.sendTemplateEmail('videoConsultation', patientEmail, templateData);
   }
@@ -490,44 +615,45 @@ class EmailService {
       patient_email: bookingData.patient_email || 'james@gmail.com',
       patient_phone: bookingData.patient_phone || '98765124312',
       patient_address: bookingData.patient_address || 'London, Uk',
-      
+
       // Appointment Information
       appointment_id: bookingData.appointment_id || 'CV13554776',
       appointment_type: bookingData.appointment_type || 'Visit Consultation - New Appointment',
       appointment_date: bookingData.appointment_date || 'Friday, Nov 21,2025',
       appointment_time: bookingData.appointment_time || '10:00 AM (30 mins)',
       appointment_duration: bookingData.appointment_duration || '30 mins',
-      
+
       // Home Address Details
       home_address_line1: bookingData.home_address_line1 || '82 The Broadway, Wimbledon',
       home_address_line2: bookingData.home_address_line2 || '23 Lane, London',
       home_address_line3: bookingData.home_address_line3 || 'United Kingdom, SW19 1RH',
       home_landmark: bookingData.home_landmark || 'Near Central Park, Opposite City Mall',
-      
+
       // Doctor Information
       doctor_name: bookingData.doctor_name || 'Dr. Sarah Johnson',
       doctor_specialty: bookingData.doctor_specialty || 'General Physician',
       doctor_phone: bookingData.doctor_phone || '98765124312',
       doctor_email: bookingData.doctor_email || 'welcare@gmail.com',
       doctor_hospital: bookingData.doctor_hospital || 'Well care Hospital',
-      
+
       // Video Consultation (if applicable)
       video_consultation_link: bookingData.video_consultation_link || null,
       doctor_call_phone: bookingData.doctor_call_phone || '445678857756',
-      
+
       // Payment Information
       consultation_fee: bookingData.consultation_fee || '£05:00',
       total_amount: bookingData.total_amount || '£10.00',
       payment_method: bookingData.payment_method || 'Credit Card',
       payment_card_ending: bookingData.payment_card_ending || '**4567',
       payment_date: bookingData.payment_date || 'Friday, Nov 20, 2025 at 11:00 AM',
-      
+      payment_link: bookingData.payment_link || 'https://google.com',
+
       // Clinic Information
       clinic_name: bookingData.clinic_name || '[Clinic Name]',
       clinic_address: bookingData.clinic_address || '[Address]',
       clinic_phone: bookingData.clinic_phone || '[Contact Number]',
       clinic_email: bookingData.clinic_email || '[Email]',
-      
+
       // Appointment Status
       show_confirmed: bookingData.show_confirmed !== false, // Default to true
       show_cancelled: bookingData.show_cancelled || false
@@ -543,24 +669,24 @@ class EmailService {
       patient_email: paymentData.patient_email || 'james@gmail.com',
       patient_phone: paymentData.patient_phone || '98765124312',
       patient_address: paymentData.patient_address || 'London, Uk',
-      
+
       // Appointment Information
       appointment_type: paymentData.appointment_type || 'Visit Consultation - New Appointment',
       appointment_date: paymentData.appointment_date || 'Friday, Nov 21,2025',
       appointment_time: paymentData.appointment_time || '10:00 AM (30 mins)',
-      
+
       // Doctor Information
       doctor_name: paymentData.doctor_name || 'Dr. Sarah Johnson',
       doctor_specialty: paymentData.doctor_specialty || 'General Physician',
       doctor_phone: paymentData.doctor_phone || '98765124312',
       doctor_email: paymentData.doctor_email || 'welcare@gmail.com',
       doctor_hospital: paymentData.doctor_hospital || 'Well care Hospital',
-      
+
       // Payment Information
       payment_link: paymentData.payment_link || null,
       consultation_fee: paymentData.consultation_fee || '£05:00',
       total_amount: paymentData.total_amount || '£412.00',
-      
+
       // Clinic Information
       clinic_name: paymentData.clinic_name || '[Clinic Name]',
       clinic_address: paymentData.clinic_address || '[Address]',
@@ -568,6 +694,56 @@ class EmailService {
       clinic_email: paymentData.clinic_email || '[Email]'
     };
     return this.sendTemplateEmail('doctorConsultationPaymentLink', patientEmail, templateData);
+  }
+
+  async sendDoctorConsultationPaymentEmail(patientEmail, paymentData) {
+    const templateData = {
+      payment_link: paymentData.payment_link || 'https://example.com/pay',
+      price: paymentData.total_amount || '412.00',
+      service_type: paymentData.appointment_type || 'Visit Consultation - New Appointment',
+      appointment_date: paymentData.appointment_date || 'Friday, Nov 21, 2025',
+      patientAddress: paymentData.patient_address || 'London, Uk',
+      appointment_type: 'asdfasdf',
+      date_and_time: 'asdfasdf',
+      duration: 'adsf',
+      patient_details: {
+        name: paymentData.patient_name || '[Patient Name]',
+        age: paymentData.patient_age || '48',
+        gender: paymentData.patient_gender || 'Male',
+        email: paymentData.patient_email || 'james@gmail.com',
+        country_code: paymentData.patient_country_code || '+44',
+        mobile: paymentData.patient_phone || '98765124312',
+        address_line_1: '82 The Broadway',
+        address_line_2: 'Wimbledon',
+        city: 'London',
+        country: 'United Kingdom',
+        postal_code: 'SW19 1RH'
+      },
+
+      doctor_details: {
+        name: paymentData.doctor_name || 'Dr. Sarah Johnson',
+        qualifications: paymentData.doctor_specialty || 'General Physician',
+        mobile: paymentData.doctor_phone || '98765124312',
+        email: paymentData.doctor_email || 'welcare@gmail.com'
+      },
+
+      doctor_location_details: {
+        name: paymentData.doctor_hospital || 'Well care Hospital'
+      },
+
+      clinic_details: {
+        name: paymentData.clinic_name || '[Clinic Name]',
+        email: paymentData.clinic_email || '[Email]',
+        contact_number: paymentData.clinic_phone || '[Contact Number]',
+        address: paymentData.clinic_address || '[Address]',
+        address_line_1: '82 The Broadway',
+        address_line_2: 'Wimbledon',
+        city: 'London',
+        country: 'United Kingdom',
+        postal_code: 'SW19 1RH'
+      }
+    };
+    return this.sendTemplateEmail('doctorConsultationPayment', patientEmail, templateData);
   }
 
   // Insurance and Invoice Methods
@@ -598,6 +774,18 @@ class EmailService {
       invoice_date: invoiceData.invoice_date,
       payment_link: invoiceData.payment_link,
       total_amount: invoiceData.total_amount,
+      scan_name: invoiceData.scan_name || 'test-scan',
+      body_part: 'body-part',
+      appointment_date: '22-02-2026',
+      start_time: '10:30AM (30 mins)',
+      end_time: '10:30AM (30 mins)',
+      hospital_name: 'wellcare hospital',
+      site_address_line_1: '116 Harley Street',
+      site_address_line_2: 'Wimbledon',
+      site_city: 'London',
+      site_country: 'United Kingdom',
+      site_postal_code: 'SW19 1RH',
+      site_contact_number: '+44 20 7486 0701',
       clinic_details: {
         name: invoiceData.clinic_name,
         contact: invoiceData.clinic_contact || '0207 486 0701',
