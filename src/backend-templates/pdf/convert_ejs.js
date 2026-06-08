@@ -181,6 +181,11 @@ const mockDataMap = {
     'hrt': '☑',
     'post_menopause': '☑',
     'suspicious_cervix': '☑',
+    'logo_url': 'https://d2pznqasld4zpy.cloudfront.net/common/logo.svg',
+    'prescriber_qualification': 'MBBS, BMedSci(Hons), nMRCGP, DFSRH, LOC IUD, DCD(Distinction), AGGM',
+    'prescriber_registration_no': 'GMC - 3457052',
+    'registration_no': 'GMC - 3457052',
+    'prescriber_name': 'Dr.Sarah Smith',
 };
 
 for (const file of files) {
