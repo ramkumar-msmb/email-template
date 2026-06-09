@@ -433,26 +433,70 @@
 
         <% let currentPage = 1; %>
         <% let itemsProcessed = 0; %>
-        <% let availableHeight = 363.54; %>
+         <% let availableHeight = 670; %>
         
-        <% 
-            // Calculate address height impact once before the loop
-            const addressParts = [
+         <%
+            const patientAddress = [
                 patient_details?.patient_address_line_1,
                 patient_details?.patient_address_line_2,
                 patient_details?.patient_city,
                 patient_details?.patient_postal_code,
                 patient_details?.patient_country
-            ].filter(Boolean);
+            ].filter(Boolean).join(', ');
 
-            const fullAddress = addressParts.join(', ');
-            console.log('fullAddress.length:', fullAddress.length);
-            console.log('availableHeight before:', availableHeight);
-            if (fullAddress.length > 72) {
-                const dividedValue = Math.floor(fullAddress.length / 36);
-                availableHeight -= (12 * dividedValue) + 10; // 10px is bottom margin of availableHeight
+            const clinicAddress = [
+                prescription?.clinic_address_line_1,
+                prescription?.clinic_address_line_2,
+                prescription?.clinic_city,
+                prescription?.clinic_postal_code,
+                prescription?.clinic_country
+            ].filter(Boolean).join(', ');
+
+            // Take the longer address because both boxes are inline
+            const longestAddressLength = Math.max(
+                patientAddress.length,
+                clinicAddress.length
+            );
+
+            console.log('Patient address length:', patientAddress.length);
+            console.log('Clinic address length:', clinicAddress.length);
+            console.log('Longest address length:', longestAddressLength);
+
+            if (longestAddressLength > 74) {
+                const extraLines =
+                    Math.ceil(longestAddressLength / 68) - 1;
+
+                availableHeight -= (extraLines * 9) + 10;
             }
+
             console.log('availableHeight after:', availableHeight);
+        %>
+
+        <%
+            const patientLength = comment_to_patient?.length || 0;
+            const pharmacyLength = comment_to_pharmacy?.length || 0;
+
+            const maxCommentLength = Math.max(
+                patientLength,
+                pharmacyLength
+            );
+
+            // Default height for comments section
+            let commentsHeightReduction = 68;
+
+            if (maxCommentLength > 86) {
+                const extraLines = Math.ceil(maxCommentLength / 86) - 1;
+                commentsHeightReduction += extraLines * 9;
+            }
+            if(comment_to_patient?.length || comment_to_pharmacy?.length ){
+                availableHeight -= commentsHeightReduction;
+            }
+
+            console.log('patientLength:', patientLength);
+            console.log('pharmacyLength:', pharmacyLength);
+            console.log('maxCommentLength:', maxCommentLength);
+            console.log('commentsHeightReduction:', commentsHeightReduction);
+            console.log('availableHeight after comments:', availableHeight);
         %>
         
         <% while (itemsProcessed < prescription_items.length) { %>
@@ -469,8 +513,8 @@
                 </div>
                 <div class="prescription-info-container">
                     <div class="px-meta-data-right">
-                        <p>Prescription ID: <strong><%= prescription.booking_code %></strong></p>
-                        <p>Date: <strong><%= prescription.prescription_date %></strong></p>
+                        <p>Prescription ID: <strong><%= prescription_id %></strong></p>
+                        <p>Date: <strong><%= prescription_date %></strong></p>
                     </div>
                     <div class="px-meta-data-left">
                         <p>Prescription Type: <strong>
@@ -502,7 +546,7 @@
                                         <span class="age" style="color: #444; font-weight: 500; margin-left: 10px;"> Gender:
                                         </span>
                                         <span class="age-value">
-                                            <%= patient_gender %>
+                                            <%= patient_details?.patient_gender %>
                                         </span>
                                 </span>
                             </p>
@@ -512,10 +556,9 @@
                                         patient_details?.patient_address_line_1,
                                         patient_details?.patient_address_line_2,
                                         patient_details?.patient_city,
-                                        patient_details?.patient_postal_code
+                                        patient_details?.patient_postal_code,
+                                        patient_details?.patient_country
                                     ].filter(Boolean).join(', ') %>
-                                    <br>
-                                    <%= patient_details?.patient_country %>
                                 </span>
                             </p>
                             <p><strong>Mobile Number:</strong> <span>
@@ -538,10 +581,9 @@
                                         prescription?.clinic_address_line_1,
                                         prescription?.clinic_address_line_2,
                                         prescription?.clinic_city,
-                                        prescription?.clinic_postal_code
+                                        prescription?.clinic_postal_code,
+                                        prescription?.clinic_country
                                     ].filter(Boolean).join(', ') %>
-                                    <br>
-                                    <%= prescription?.clinic_country %>
                                 </span>
                             </p>
                             <p><strong style="min-width: 59px;">Email Address:</strong> 
@@ -578,34 +620,34 @@
                                 <% 
                                     // Estimate if this row will fit
                                     const item = prescription_items[i];
-                                    let estimatedHeight = 44; // base height
+                                    let estimatedHeight = 48; // base height
 
                                     // Estimate the height of the unit
 
-                                    if(item.unit && item.unit.length > 45) {
-                                        estimatedHeight += 96;
-                                    }else if(item.unit && item.unit.length > 36) {
-                                        estimatedHeight += 48;
-                                    }else if(item.unit && item.unit.length > 27) {
-                                        estimatedHeight += 24;
-                                    }else if(item.unit && item.unit.length > 18) {
-                                        estimatedHeight += 12;
-                                    }else if (item.name && item.name.length > 197) {
-                                        estimatedHeight += 48;
-                                    }else if (item.name && item.name.length > 131) {
-                                        estimatedHeight += 24;
-                                    } else if (item.name && item.name.length > 65) {
-                                        estimatedHeight += 12;
+                                    if(item.unit && item.unit.length > 64) {
+                                        estimatedHeight += 35;
+                                    }else if(item.unit && item.unit.length > 50) {
+                                        estimatedHeight += 25;
+                                    }else if(item.unit && item.unit.length > 38) {
+                                        estimatedHeight += 15;
+                                    }else if(item.unit && item.unit.length > 25) {
+                                        estimatedHeight += 5;
+                                    }else if (item.name && item.name.length > 343) {
+                                        estimatedHeight += 27;
+                                    }else if (item.name && item.name.length > 257) {
+                                        estimatedHeight += 18;
+                                    } else if (item.name && item.name.length > 171) {
+                                        estimatedHeight += 9;
                                     }
 
                                     if (item.dosage_note) {
                                         const dosageNoteLength = item.dosage_note.length;
-                                        if (dosageNoteLength > 197) {
-                                            estimatedHeight += 48;
-                                        }else if (dosageNoteLength > 131) {
-                                            estimatedHeight += 24;
-                                        } else if (dosageNoteLength > 65) {
-                                            estimatedHeight += 12;
+                                        if (dosageNoteLength > 343) {
+                                            estimatedHeight += 27;
+                                        }else if (dosageNoteLength > 257) {
+                                            estimatedHeight += 18;
+                                        } else if (dosageNoteLength > 171) {
+                                            estimatedHeight += 9;
                                         }
                                     }
 
@@ -642,21 +684,23 @@
                 </div>
 
 
+                <% if (comment_to_patient || comment_to_pharmacy) { %>
                 <div class="details-container">
                     <div class="details-box">
                         <div class="details-heading">Comments To Patient</div>
                         <div class="comments patient-details">
-                            <p><%= patient_details?.comment_to_patient %></p>
+                            <p><%= comment_to_patient || 'N/A' %></p>
                         </div>
                     </div>
 
                     <div class="details-box">
                         <div class="details-heading">Comments To Pharmacy</div>
                         <div class="comments patient-details">
-                            <p><%= patient_details?.comment_to_pharmacy %></p>
+                            <p><%= comment_to_pharmacy || 'N/A' %></p>
                         </div>
                     </div>
                 </div>
+                <% } %>
 
                 <div class="prescribed-by">
                     <div class="prescribed-by-title">Prescribed By</div>
