@@ -6,16 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Invoice</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
         }
 
         .invoice-container {
-            height: 29.7cm;
             width: 21cm;
+            height: 29.7cm;
             background-color: white;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
@@ -25,12 +31,15 @@
         }
 
         .header {
-            background-color: #1b3f6d;
-            color: white;
-            padding: 10px 20px;
+            color: #222;
+            border-bottom: 1px solid #D9D9D9;
+        }
+
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 15px 18px;
         }
 
         .header-left {
@@ -38,165 +47,213 @@
             flex-direction: column;
         }
 
-        .header-left img {
+        .header img {
             width: 120px;
-            margin-bottom: 70px;
         }
 
-        .header-left p {
-            font-size: 16px;
-            font-weight: 600;
-            margin-top: 10px;
+        .header-line{
+            height: 1px;
+            width: 20cm;
+            padding: 0px 18px;
+            margin: 0px 18px 10px 18px;
+            background-color: #D9D9D9;
         }
 
-        .header-right {
+        .clinic-details {
             text-align: right;
-            line-height: 1.7;
+            line-height: 1.4;
         }
 
-        .header-right p {
-            font-size: 12px;
+        .clinic-details p {
+            font-size: 10px;
+            margin: 2px 0;
+        }
+        .clinic-details strong {
+            font-size: 15px;
             margin: 2px 0;
         }
 
-        .header-right p:first-child {
-            font-size: 14px;
+        .prescription-info-container{
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 18px;
+        }
+        .prescription-info-container .px-meta-data-right p,
+        .prescription-info-container .px-meta-data-left p{
+            font-size: 10px;
+            color: #444;
+        }
+        .prescription-info-container .px-meta-data-right p strong,
+        .prescription-info-container .px-meta-data-left p strong{
+            font-size: 10px;
+            color: #222;
+        }
+
+        .details-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 18px;
+            padding-top: 2px;
+            align-items: stretch;
+            gap: 12px;
+        }
+
+        .details-box {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            font-size: 12px;
+        }
+
+        .patient-details,
+        .appointment-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 12px;
+            border-radius: 6px;
+            border: 0.5px solid #D9D9D9;
+            flex-grow: 1;
+        }
+
+        .details-heading {
+            font-size: 9px;
             font-weight: 600;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .patient-details p,
+        .appointment-details p {
+            display: flex;
+            justify-content: space-between;
+            gap: 5px;
+        }
+
+        .patient-details strong,
+        .appointment-details strong,
+        .age {
+            text-align: left;
+            font-weight: 400;
+            font-size: 9px;
+            color: #444;
+        }
+
+        .patient-details span,
+        .appointment-details span,
+        .age-value {
+            flex-grow: 1;
+            text-align: left;
+            font-size: 9px;
+            color: #222;
+        }
+        .age-value {
+            margin-left: 5px;
+        }
+
+        .dob-age {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
         }
 
         .table-container {
-            padding: 0 20px;
+            margin: 10px 18px;
+            margin-top: 2px;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 0.5px solid #CBE3E3;
             flex: 1;
             min-height: 12cm;
-            max-height: 12cm;
+            max-height: 100%;
             position: relative;
-            margin: 10px 0;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            table-layout: fixed;
+            border: 0;
+        }
+
+        table thead,
+        table tr {
+            border: 0;
         }
 
         table th,
         table td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            font-size: 14px;
-            font-weight: 300;
-        }
-
-        table th {
-            font-weight: bold;
-            background-color: #1b3f6d;
-            color: #fff;
-            text-align: center;
+            font-size: 9px;
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+            border: 0;
+            word-break: break-word;
         }
 
         table td {
-            text-align: left;
+            padding-bottom: 5px;
+            padding-top: 5px;
+        }
+        table tr:first-child td {
+            padding-top: 10px;
+        }
+        table tr:last-child td {
+            padding-bottom: 10px;
         }
 
-        table td:first-child,
-        table td:nth-child(3),
+        table th {
+            font-weight: 500;
+            color: #444;
+            height: 30px;
+            font-size: 9px;
+            border-bottom: 1px solid #d9d9d9;
+        }
+
+        table th:nth-child(1),
+        table td:nth-child(1) {
+            width: 10%;
+        }
+
+        table th:nth-child(2),
+        table td:nth-child(2) {
+            width: 45%;
+        }
+
+        table th:nth-child(3),
+        table td:nth-child(3) {
+            width: 25%;
+        }
+
+        table th:nth-child(4),
         table td:nth-child(4) {
-            text-align: center;
+            width: 20%;
         }
 
         .totals-container {
-            padding: 20px;
+            padding: 15px 18px;
             background-color: white;
-            flex-grow: 1;
             line-height: 2.2;
+            font-size: 9px;
         }
 
         .amount-calc {
             display: flex;
             justify-content: space-between;
             margin-bottom: 5px;
+            color: #444;
+            font-size: 9px;
         }
 
         .totals {
             display: flex;
             justify-content: space-between;
-            font-size: 16px;
-            font-weight: bold;
-            border-top: 1px solid #ccc;
+            font-size: 11px;
+            font-weight: 600;
+            border-top: 1px solid #d9d9d9;
             padding-top: 10px;
-        }
-
-        .fixed-bottom {
-            position: relative;
-            margin-top: auto;
-            width: 100%;
-        }
-
-        .delivery-type {
-            background-color: #e8ecf0;
-            padding: 8px;
-            font-size: 12px;
-            font-weight: 400;
-        }
-
-        .footer {
-            background-color: #1b3f6d;
-            height: 23px;
-            color: #fff;
-            text-align: center;
-            font-size: 12px;
-            line-height: 20px;
-        }
-
-        .details-container {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 20px;
-            margin-top: 10px;
-        }
-
-        .details-box {
-            width: 48%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .patient-details, .invoice-details {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding: 15px;
-            background-color: #F3F9FF;
-            border-radius: 5px;
-            flex-grow: 1;
-            font-size: 12px;
-        }
-
-        .details-heading {
-            font-size: 13px;
-            font-weight: 400;
-            margin-bottom: 5px;
-            color: #242424;
-            padding-left: 10px;
-            padding-top: 5px;
-        }
-
-        .patient-details p, .invoice-details p {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            margin: 5px 0;
-        }
-
-        .patient-details strong, .invoice-details strong {
-            min-width: 140px;
-            text-align: left;
-            font-weight: 500;
-        }
-
-        .patient-details span, .invoice-details span {
-            flex-grow: 1;
-            text-align: left;
-            color: #1B3F6D;
+            color: #222;
         }
 
         @media print {
@@ -211,23 +268,26 @@
     
     <div class="invoice-container">
         <!-- HEADER -->
+        <!-- HEADER -->
         <div class="header">
             <div class="header-left">
-                <img src="https://d2pznqasld4zpy.cloudfront.net/common/WebLogo.svg" alt="SendScript">
-                <p>Invoice</p>
+                <img src="https://d2pznqasld4zpy.cloudfront.net/common/logo.svg" alt="SendScript">
             </div>
-            <div class="header-right">
-                <p>HealthFirst Pharmacy</p>
-                <p>
-                    123 High Street, Medical District, London, SW1A 1AA
-                </p>
-                <p>SW1A 1AA</p>
-                <p>Tel: +44 20 7946 0958</p>
-                <p>Email: info@healthfirstpharmacy.co.uk</p>
+            <div class="clinic-details">
+                <p><strong>INVOICE</strong></p>
+                <p>Powered by SendScript</p>
             </div>
         </div>
 
-        <!-- Patient Details and Invoice Details -->
+        <div class="prescription-info-container">
+            <div class="px-meta-data-right">
+                <p>Invoice Number: <strong>INV-2023-001</strong></p>
+                <p>Invoice Date: <strong>8 June 2026</strong></p>
+            </div>
+        </div>
+        <div class="header-line"></div>
+
+        <!-- Patient Details and Pharmacy Details -->
         <div class="details-container">
             <!-- Patient Details -->
             <div class="details-box">
@@ -237,15 +297,12 @@
                         <strong>Full Name:</strong>
                         <span>Dr John Doe</span>
                     </p>
-                    <p>
-                        <strong>Date Of Birth:</strong>
+                    <p class="dob-age">
+                        <strong>DOB:</strong>
                         <span>
-                          8 June 2026</span>
-                        
-                        <span>
-                            <span class="age" style="color: #000; font-weight: 500; margin-left: 10px;"> Age: </span>
+                          8 June 2026
+                            <span class="age" style="color: #444; font-weight: 500; margin-left: 10px;"> Age: </span>
                             <span class="age-value">
-                                <!-- 08 Jun 2026 -->
                                 41
                             </span>
                         </span>
@@ -263,18 +320,34 @@
                 </div>
             </div>
         
-            <!-- Invoice Details -->
+            <!-- Pharmacy Details -->
             <div class="details-box">
-                <div class="details-heading">Invoice Details</div>
-                <div class="invoice-details">
-                    <p>
-                        <strong>Invoice Number:</strong>
-                        <span>INV-2023-001</span>
-                    </p>
-                    <p>
-                        <strong>Invoice Date:</strong>
+                <div class="details-heading">Pharmacy Information</div>
+                <div class="appointment-details">
+                    <p><strong style="min-width: 59px;">Pharmacy Name:</strong>
                         <span>
-                        8 June 2026</span>
+                            HealthFirst Pharmacy
+                        </span>
+                    </p>
+                    <p><strong style="min-width: 59px;">Pharmacy Address:</strong> 
+                        <span>
+                            123 High Street, Medical District, London, SW1A 1AA
+                        </span>
+                    </p>
+                    <p><strong style="min-width: 59px;">Email Address:</strong> 
+                        <span>
+                            info@healthfirstpharmacy.co.uk
+                        </span>
+                    </p>
+                    <p><strong style="min-width: 59px;">Telephone:</strong> 
+                        <span>
+                            +44 20 7946 0958
+                        </span>
+                    </p>
+                    <p><strong style="min-width: 59px;">Postal Code:</strong> 
+                        <span>
+                            SW1A 1AA
+                        </span>
                     </p>
                 </div>
             </div>
@@ -282,7 +355,7 @@
         
 
         <!-- TABLE -->
-        <div class="table-container" style="min-height: 364px;" data-min-height="[Math.round(availableHeight)]">
+        <div class="table-container" data-min-height="[Math.round(availableHeight)]">
             <table>
                 <thead>
                     <tr>
@@ -331,8 +404,6 @@
         
         <div class="totals-container"></div>
         
-
-        <div class="footer"></div>
     </div>
     
     <script>

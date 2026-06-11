@@ -476,12 +476,8 @@
 
         <%
             const patientLength = comment_to_patient?.length || 0;
-            const pharmacyLength = comment_to_pharmacy?.length || 0;
 
-            const maxCommentLength = Math.max(
-                patientLength,
-                pharmacyLength
-            );
+            const maxCommentLength = patientLength
 
             // Default height for comments section
             let commentsHeightReduction = 68;
@@ -491,12 +487,11 @@
                 commentsHeightReduction += extraLines * 9;
             }
 
-            if(comment_to_patient?.length || comment_to_pharmacy?.length ){
+            if(comment_to_patient?.length ){
                 availableHeight -= commentsHeightReduction;
             }
 
             console.log('patientLength:', patientLength);
-            console.log('pharmacyLength:', pharmacyLength);
             console.log('maxCommentLength:', maxCommentLength);
             console.log('commentsHeightReduction:', commentsHeightReduction);
             console.log('availableHeight after comments:', availableHeight);
@@ -516,13 +511,8 @@
                 </div>
                 <div class="prescription-info-container">
                     <div class="px-meta-data-right">
-                        <p>Prescription ID: <strong><%= prescription.booking_code %></strong></p>
-                        <p>Date: <strong><%= prescription.prescription_date %></strong></p>
-                    </div>
-                    <div class="px-meta-data-left">
-                        <p>Prescription Type: <strong>
-                                <%= prescription_type %>
-                            </strong></p>
+                        <p>Prescription ID: <strong><%= prescription_id %></strong></p>
+                        <p>Date: <strong><%= prescription_date %></strong></p>
                     </div>
                 </div>
                 <div class="header-line"></div>
@@ -549,7 +539,7 @@
                                         <span class="age" style="color: #444; font-weight: 500; margin-left: 10px;"> Gender:
                                         </span>
                                         <span class="age-value">
-                                            <%= patient_gender %>
+                                            <%= patient_details?.patient_gender %>
                                         </span>
                                 </span>
                             </p>
@@ -693,7 +683,7 @@
                     <div class="details-box details-box-full">
                         <div class="details-heading">Comments To Patient</div>
                         <div class="comments patient-details">
-                            <p><%= patient_details?.comment_to_patient %></p>
+                            <p><%= comment_to_patient %></p>
                         </div>
                     </div>
                 </div>
