@@ -47,10 +47,6 @@
             flex-direction: column;
         }
 
-        .header-left img {
-            width: 120px;
-        }
-
         .header-left p {
             font-size: 16px;
             font-weight: 600;
@@ -272,11 +268,15 @@
                 page-break-after: always;
             }
         }
+        .logo_url{
+            height: 30px;
+            object-fit: contain;
+        }
     </style>
 </head>
 
 <body>
-    <% const items=prescription_items || []; // Calculate total pages needed const itemsPerPage=10; const
+    <% const items=scans || []; // Calculate total pages needed const itemsPerPage=10; const
         totalPages=Math.ceil(items.length / itemsPerPage); // Loop through pages for (let page=0; page < totalPages;
         page++) { const startIndex=page * itemsPerPage; const endIndex=Math.min(startIndex + itemsPerPage,
         items.length); const pageItems=items.slice(startIndex, endIndex); const isLastPage=page===totalPages - 1; %>
@@ -284,7 +284,7 @@
             <!-- HEADER -->
             <div class="header">
                 <div class="header-left">
-                    <img src="<%= logo_url %>" alt="SendScript">
+                    <img class="logo_url" src="<%= logo_url || 'https://dtl3fe7urqkwq.cloudfront.net/logo.png' %>" alt="SendScript">
                 </div>
                 <div class="clinic-details">
                     <p><strong>INVOICE</strong></p>

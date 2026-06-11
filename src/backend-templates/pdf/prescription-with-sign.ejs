@@ -425,6 +425,10 @@
         tfoot {
             display: table-footer-group;
         }
+         .logo_url {
+            height: 30px;
+            object-fit: contain;
+        }
     </style>
 </head>
 
@@ -504,7 +508,7 @@
             <div class="page <%= currentPage > 1 ? 'page-break' : '' %>">
                 <div class="header">
                     <div class="header-left">
-                        <img src="https://d2pznqasld4zpy.cloudfront.net/common/logo.svg" alt="SendScript">
+                        <img class="logo_url" src="<%= logo_url || 'https://dtl3fe7urqkwq.cloudfront.net/logo.png' %>" alt="SendScript">
                     </div>
 
                     <div class="clinic-details">
