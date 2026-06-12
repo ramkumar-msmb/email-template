@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Request Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,263 +17,424 @@
         body {
             background-color: #f5f5f5;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
         }
 
         .page {
-            width: 21cm;
-            min-height: 29.7cm;
-            background-color: white;
-            margin: 0 auto;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             position: relative;
+            width: 21cm;
+            height: 29.7cm;
+            background-color: #FFFFFF;
+            margin: 0 auto;
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
+        .page-break {
+            page-break-before: always;
+            break-before: page;
+        }
+
+        /* Watermark crescent logo in the background */
+        .watermark-container {
+            position: absolute;
+            width: 250px;
+            height: 170px;
+            left: calc(50% - 125px);
+            top: calc(50% - 85px);
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .ellipse {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            flex: none;
+        }
+
+        .ellipse-36 {
+            background: rgba(180, 180, 180, 0.15);
+            margin-right: -130px;
+        }
+
+        .ellipse-37 {
+            background: #FFFFFF;
+            margin-right: -130px;
+        }
+
+        .ellipse-38 {
+            background: rgba(180, 180, 180, 0.15);
+        }
+
+        /* Header logo and title */
         .header {
-            background-color: #1B3F6D;
-            color: white;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            padding: 20px;
-        }
-
-        .header-left {
-            display: flex;
-            flex-direction: column;
-            gap: 75px;
+            align-items: center;
+            padding: 25px 20px 15px;
+            z-index: 2;
         }
 
         .header-logo img {
-            height: 18px;
+            height: 22px;
             width: auto;
         }
 
         .header-title {
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .clinic-details {
-            text-align: right;
-            line-height: 1.7;
-            font-size: 12px;
-        }
-
-        .clinic-name {
             font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 6px;
+            font-size: 16px;
+            color: #222222;
+            letter-spacing: 0.5px;
         }
 
-        .clinic-details p {
-            font-size: 11px;
-            margin: 2px 0;
-            font-weight: 100 !important;
+        /* Divider line */
+        .divider-line {
+            margin: 0 20px;
+            height: 1px;
+            border-bottom: 0.5px solid #EEEEEE;
+            z-index: 2;
         }
 
-        .booking-info {
+        /* Booking info and Requested date */
+        .booking-info-row {
             display: flex;
             justify-content: space-between;
-            padding: 0px 20px;
-            padding-top: 17px;
-            padding-bottom: 7px;
+            padding: 10px 20px;
             font-size: 11px;
-            background-color: white;
+            color: #444444;
+            z-index: 2;
         }
 
-        .booking-info span {
+        .booking-info-row strong {
+            color: #222222;
+            font-weight: 600;
+        }
+
+        /* Patient and Clinic details */
+        .details-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            margin-top: 8px;
+            z-index: 2;
+            gap: 20px;
+        }
+
+        .details-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .details-heading {
+            font-weight: 600;
+            font-size: 12px;
+            margin-bottom: 8px;
             color: #242424;
-            font-weight: 400;
         }
 
-        .booking-info strong {
-            color: #1B3F6D;
-            font-weight: 500;
-        }
-
-        .content-section {
-            padding: 5px 20px;
+        .details-card {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 15px;
+            border: 0.5px solid #D9D9D9;
+            border-radius: 10px;
+            background-color: transparent;
+            min-height: 120px;
             flex-grow: 1;
         }
 
-        .section-title {
-            font-size: 11px;
-            font-weight: 400;
-            color: #242424;
-            margin-bottom: 10px;
-            margin-top: 6px;
-        }
-
-        .info-box {
-            background-color: #F3F9FF;
-            border-radius: 8px;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            border: 0.5px solid #D9D9D9;
-        }
-
-        .info-row {
+        .details-row {
             display: flex;
-            margin-bottom: 12px;
             font-size: 11px;
-            align-items: flex-start;
+            line-height: 1.4;
         }
 
-        .info-row:last-child {
-            margin-bottom: 0;
-        }
-
-        .info-label {
-            min-width: 140px;
-            color: #242424;
+        .details-row .label {
+            width: 95px;
+            color: #444444;
             font-weight: 400;
-        }
-
-        .info-value {
-            color: #1B3F6D;
-            flex: 1;
-            font-weight: 500;
-        }
-
-        .text-section {
-            margin-bottom: 10px;
-            border: 0.5px solid #D9D9D9;
-            border-radius: 8px;
-            padding: 12px 15px;
-            background-color: #ffff;
-        }
-
-        .text-section-title {
-            font-size: 10px;
-            font-weight: 400;
-            color: #242424;
-            margin-bottom: 8px;
-        }
-
-        .text-section-content {
-            font-size: 10px;
-            color: #222;
-            line-height: 1.6;
-            font-weight: 550;
-        }
-
-        .referred-by-section {
-            padding: 0 20px 22px;
-        }
-
-        .referred-by-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: #242424;
-            margin-bottom: 5px;
-            margin-top: 8px;
-        }
-
-        .referred-box {
-            background-color: #F3F9FF;
-            border-radius: 8px;
-            padding: 18px 20px;
-            border: 1px solid #E8F2FD;
-        }
-
-        .referred-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
-
-        .referred-item {
-            font-size: 11px;
-        }
-
-        .referred-label {
-            color: #242424;
-            font-weight: 400;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .referred-value {
-            color: #1B3F6D;
-            font-weight: 500;
-            word-wrap: break-word;
-        }
-
-        .qr-signature-container {
-            display: flex;
-            padding: 0 35px 25px;
-            gap: 25px;
-            align-items: flex-start;
-        }
-
-        .qr-container {
-            width: 90px;
             flex-shrink: 0;
         }
 
-        .qr-container img {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
+        .details-row .val {
+            color: #222222;
+            font-weight: 500;
+            flex-grow: 1;
+            word-break: break-word;
         }
 
-        .qr-label {
-            margin-top: 6px;
-            font-size: 9px;
-            color: #666;
-            text-align: center;
+        /* Scan items table */
+        .table-container {
+            padding: 0 20px;
+            margin: 10px 0;
+            flex: 1;
+            min-height: 7.5cm;
+            max-height: 7.5cm;
+            position: relative;
+            z-index: 2;
+        }
+
+        .table-wrapper {
+            border: 0.5px solid #D9D9D9;
+            border-radius: 10px;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        .scan-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: none;
+            background: transparent;
+        }
+
+        .scan-table th {
+            height: 38px;
+            background: transparent;
+            border-bottom: 0.5px solid #D9D9D9;
             font-weight: 500;
+            font-size: 11px;
+            color: #444444;
+            text-align: left;
+            padding: 0 16px;
+        }
+
+        .scan-table td {
+            height: 35px;
+            border-bottom: 0.5px solid #EEEEEE;
+            font-weight: 400;
+            font-size: 11px;
+            color: #242424;
+            text-align: left;
+            padding: 0 16px;
+            vertical-align: middle;
+        }
+
+        .scan-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .scan-table th:nth-child(1),
+        .scan-table td:nth-child(1) {
+            width: 10%;
+        }
+
+        .scan-table th:nth-child(2),
+        .scan-table td:nth-child(2) {
+            width: 40%;
+            font-weight: 500;
+        }
+
+        .scan-table th:nth-child(3),
+        .scan-table td:nth-child(3) {
+            width: 25%;
+        }
+
+        .scan-table th:nth-child(4),
+        .scan-table td:nth-child(4) {
+            width: 25%;
+        }
+
+        .empty-row td {
+            color: transparent !important;
+            user-select: none;
+        }
+
+        /* Clinical and Additional info */
+        .info-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            margin-top: auto;
+            z-index: 2;
+            gap: 20px;
+        }
+
+        .info-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .info-column.full-width {
+            flex: none;
+            width: 100%;
+        }
+
+        .info-column.full-width .info-card {
+            min-height: auto;
+        }
+
+        .info-heading {
+            font-weight: 600;
+            font-size: 12px;
+            color: #222222;
+        }
+
+        .info-card {
+            border: 0.5px solid #D9D9D9;
+            border-radius: 6px;
+            padding: 15px;
+            min-height: 125px;
+            font-weight: 400;
+            font-size: 11px;
+            line-height: 1.5;
+            color: #444444;
+            background: transparent;
+            text-align: justify;
+            word-wrap: break-word;
+        }
+
+        /* Footer / Signature section */
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 2;
+        }
+
+        .prescribed-section {
+            padding: 10px 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .prescribed-heading {
+            font-weight: 600;
+            font-size: 12px;
+            color: #222222;
+        }
+
+        .prescribed-card {
+            border: 0.5px solid #D9D9D9;
+            border-radius: 8px;
+            padding: 12px 15px;
+            background: transparent;
+        }
+
+        .prescribed-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .prescribed-table th {
+            font-weight: 400;
+            font-size: 9px;
+            color: #444444;
+            text-align: left;
+            padding-bottom: 4px;
+        }
+
+        .prescribed-table td {
+            font-weight: 600;
+            font-size: 11px;
+            color: #222222;
+            text-align: left;
+            vertical-align: top;
+            word-break: break-word;
         }
 
         .signature-section {
-            font-size: 11px;
-            color: #242424;
-            line-height: 1.8;
-            flex: 1;
+            display: flex;
+            padding: 0 20px;
+            align-items: center;
+            width: 100%;
+            gap: 25px;
         }
 
-        .signature-section p {
-            margin: 5px 0;
+        .qr-code-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 75px;
+            gap: 6px;
         }
 
-        .signature-section strong {
-            font-weight: 400;
-            color: #242424;
+        .qr-code-box img {
+            width: 60px;
+            height: 60px;
+            border-radius: 4px;
         }
 
-        .signature-value {
-            color: #1B3F6D;
+        .qr-text {
             font-weight: 500;
-            word-break: break-all;
+            font-size: 8px;
+            color: #666666;
+            text-align: center;
+        }
+
+        .sig-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        .sig-title {
+            font-weight: 500;
+            color: #222222;
+        }
+
+        .sig-esign {
+            font-weight: 400;
+            color: #444444;
+        }
+
+        .sig-time {
+            font-weight: 400;
+            color: #444444;
+        }
+
+        .sig-verify {
+            font-weight: 400;
+            color: #222222;
+        }
+
+        .sig-verify a {
+            color: #1B3F6D;
+            text-decoration: none;
+            font-weight: 500;
         }
 
         .footer-text {
-            background-color: #1B3F6D;
-            color: white;
-            font-size: 9px;
+            font-size: 10px;
             text-align: justify;
-            padding: 15px 20px;
-            line-height: 1.7;
-            font-weight: 200;
-        }
-
-        .footer-text strong {
-            font-weight: 600;
+            padding: 15px 20px 20px;
+            color: #666666;
+            line-height: 1.5;
         }
 
         @media print {
             body {
-                background-color: white;
+                background-color: #FFFFFF;
+            }
+
+            .page-container {
                 padding: 0;
             }
 
             .page {
                 box-shadow: none;
-                margin: 0;
             }
         }
          .logo_url {
@@ -283,217 +445,325 @@
 </head>
 
 <body>
-    <div class="page">
-        <!-- Header -->
-        <div class="header">
-            <div class="header-left">
-                <div class="header-logo">
-                    <img class="logo_url" src="<%= logo_url || 'https://dtl3fe7urqkwq.cloudfront.net/logo.png' %>" alt="SendScript">
-                </div>
-                <div class="header-title">Request Form</div>
-            </div>
-            <div class="clinic-details">
-                <p class="clinic-name" style="font-size: 14px; font-weight: 400;">
-                    <%= clinic.name %>
-                </p>
-                <p>
-                    <%= clinic.address_line_1 %>
-                </p>
-                <p>
-                    <%= clinic.address_line_2 %>
-                </p>
-                <p>
-                    <%= clinic.city %>, <%= clinic.country %>
-                </p>
-                <p>
-                    <%= clinic.postal_code %>
-                </p>
-                <p>Contact Number: <%= clinic.contact_number %>
-                </p>
-                <p>Email: <%= clinic.email %>
-                </p>
-            </div>
-        </div>
+    <% const getVal=(obj, path, fallback='N/A' )=> {
+        try {
+        const parts = path.split('.');
+        let current = obj;
+        for (const part of parts) {
+        if (current === null || current === undefined) return fallback;
+        current = current[part];
+        }
+        return current !== undefined && current !== null ? current : fallback;
+        } catch {
+        return fallback;
+        }
+        };
 
-        <!-- Booking Info -->
-        <div class="booking-info">
-            <span>Booking ID: <strong>
-                    <%= booking_id %>
-                </strong></span>
-            <span>Requested Date:
-                <strong>
-                    <%= (()=> {
-                        if (!requested_date) return 'NA';
-                        const date = new Date(requested_date);
-                        const day = String(date.getDate()).padStart(2, '0');
-                        const month = String(date.getMonth() + 1).padStart(2, '0');
-                        const year = String(date.getFullYear());
-                        return `${day}/${month}/${year}`;
-                        })() %>
-                </strong>
-            </span>
-        </div>
+        const clinicName = typeof clinic !== 'undefined' ? getVal(clinic, 'name', '') : '';
+        const clinicAddress1 = typeof clinic !== 'undefined' ? getVal(clinic, 'address_line_1', '') : '';
+        const clinicAddress2 = typeof clinic !== 'undefined' ? getVal(clinic, 'address_line_2', '') : '';
+        const clinicCity = typeof clinic !== 'undefined' ? getVal(clinic, 'city', '') : '';
+        const clinicCountry = typeof clinic !== 'undefined' ? getVal(clinic, 'country', '') : '';
+        const clinicPostalCode = typeof clinic !== 'undefined' ? getVal(clinic, 'postal_code', '') : '';
+        const clinicContactNumber = typeof clinic !== 'undefined' ? getVal(clinic, 'contact_number', '') : '';
+        const clinicEmail = typeof clinic !== 'undefined' ? getVal(clinic, 'email', '') : '';
 
-        <!-- Content Section -->
-        <div class="content-section">
-            <!-- Patient Details -->
-            <div class="section-title">Patient Details</div>
-            <div class="info-box">
-                <div class="info-row">
-                    <div class="info-label">Patient Name:</div>
-                    <div class="info-value">
-                        <%= patient.name %>
-                    </div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Date Of Birth:</div>
-                    <div class="info-value">
-                        <%= (()=> {
-                            if (!patient.dob) return 'NA';
-                            const date = new Date(patient.dob);
-                            const day = String(date.getDate()).padStart(2, '0');
-                            const month = String(date.getMonth() + 1).padStart(2, '0');
-                            const year = String(date.getFullYear());
-                            return `${day}/${month}/${year}`;
-                        })() %> &nbsp;&nbsp;&nbsp; Age: <%= patient_age %>
-                    </div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Phone Number:</div>
-                    <div class="info-value">
-                        <%= patient.country_code %> <%= patient.mobile %>
-                    </div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Address:</div>
-                    <div class="info-value">
-                        <%= (()=> {
-                            const address = [
-                            patient.address_line_1,
-                            patient.address_line_2,
-                            patient.city,
-                            patient.country,
-                            patient.postal_code
-                            ].filter(Boolean).join(', ');
-                            return address || 'NA';
-                            })() %>
-                    </div>
-                </div>
-            </div>
+        const fullClinicAddress = [clinicAddress1, clinicAddress2, clinicCity, clinicCountry, clinicPostalCode].filter(v => v && v !== 'N/A').join(', ');
+        const bookingId = typeof booking_id !== 'undefined' ? booking_id : '';
 
-            <!-- Scan Details -->
-            <div class="section-title">Scan Details</div>
-            <div class="info-box">
-                <div class="info-row">
-                    <div class="info-label">Scan Type:</div>
-                    <div class="info-value">
-                        <%= scan_name || 'NA' %>
-                    </div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Department:</div>
-                    <div class="info-value">
-                        <%= department_name || 'NA' %>
-                    </div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Body Parts:</div>
-                    <div class="info-value">
-                        <%= body_parts || 'NA' %>
-                    </div>
-                </div>
-            </div>
+        let formattedRequestedDate = '';
+        if (typeof requested_date !== 'undefined' && requested_date) {
+        try {
+        const date = new Date(requested_date);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = String(date.getFullYear());
+        formattedRequestedDate = `${day}/${month}/${year}`;
+        } catch {}
+        }
 
-            <!-- Clinical Information -->
-            <div class="text-section">
-                <div class="text-section-title">Clinical Information</div>
-                <div class="text-section-content">
-                    <%= clinical_indication %>
-                </div>
-            </div>
+        const patientName = typeof patient !== 'undefined' ? getVal(patient, 'name', '') : '';
+        let patientDob = '';
+        if (typeof patient !== 'undefined' && patient.dob) {
+        try {
+        const date = new Date(patient.dob);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = String(date.getFullYear());
+        patientDob = `${day}/${month}/${year}`;
+        } catch {}
+        }
+        const patientAgeVal = typeof patient_age !== 'undefined' ? patient_age : '';
+        const patientCountryCode = typeof patient !== 'undefined' ? getVal(patient, 'country_code', '') : '';
+        const patientMobile = typeof patient !== 'undefined' ? getVal(patient, 'mobile', '') : '';
 
-            <!-- Additional Information -->
-            <div class="text-section">
-                <div class="text-section-title">Additional Information</div>
-                <div class="text-section-content">
-                    <%= additional_information %>
-                </div>
-            </div>
-        </div>
+        let patientAddress = '';
+        if (typeof patient !== 'undefined' && (patient.address_line_1 || patient.address_line_2)) {
+        patientAddress = [patient.address_line_1, patient.address_line_2, patient.city, patient.country,
+        patient.postal_code].filter(Boolean).join(', ');
+        }
 
-        <!-- Referred By Section -->
-        <div class="referred-by-section">
-            <div class="referred-by-title">Referred By</div>
-            <div class="referred-box">
-                <div class="referred-grid">
-                    <div class="referred-item">
-                        <span class="referred-label">Name:</span>
-                        <div class="referred-value">
-                            <%= doctor.title %>
-                                <%= doctor.first_name %>
-                                    <%= doctor.sur_name %>
+        const clinicalIndicationText = typeof clinical_indication !== 'undefined' ? clinical_indication : '';
+        const additionalInformationText = typeof additional_information !== 'undefined' ? additional_information : '';
+
+        const doctorTitle = typeof doctor !== 'undefined' ? getVal(doctor, 'title', '') : '';
+        const doctorFirstName = typeof doctor !== 'undefined' ? getVal(doctor, 'first_name', '') : '';
+        const doctorSurName = typeof doctor !== 'undefined' ? getVal(doctor, 'sur_name', '') : '';
+        const doctorFullName = `${doctorTitle} ${doctorFirstName} ${doctorSurName}`.trim();
+        const doctorGmc = typeof doctor !== 'undefined' ? getVal(doctor, 'gmc_number', '') : '';
+        const doctorQualification = typeof doctor !== 'undefined' ? getVal(doctor, 'qualification', '') : '';
+        const doctorEsign = typeof doctor !== 'undefined' ? getVal(doctor, 'esign', '') : '';
+
+        let signatureTime = '';
+        if (typeof requested_date !== 'undefined' && requested_date) {
+        try {
+        const date = new Date(requested_date);
+        signatureTime = date.toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit',
+        minute: '2-digit', hour12: true, timeZone: 'UTC' }).replace(',', '');
+        } catch {}
+        }
+
+        let scansList = [];
+        if (typeof scans !== 'undefined' && Array.isArray(scans)) {
+        scansList = scans;
+        } else if (typeof scan_name !== 'undefined' && scan_name) {
+        scansList = [{ scan_name: scan_name, department_name: typeof department_name !== 'undefined' ? department_name :
+        '', body_parts: typeof body_parts !== 'undefined' ? body_parts : '' }];
+        }
+
+        const displayPatientAddress = patientAddress && patientAddress.trim() && patientAddress !== 'N/A' ? patientAddress : '--';
+        const displayPatientMobile = patientMobile && patientMobile.trim() && patientMobile !== 'N/A' ? `${patientCountryCode && patientCountryCode !== 'N/A' ? patientCountryCode + ' ' : ''}${patientMobile}`.trim() : '--';
+        const displayClinicAddress = fullClinicAddress && fullClinicAddress.trim() && fullClinicAddress !== 'N/A' ? fullClinicAddress : '--';
+        const displayClinicContactNumber = clinicContactNumber && clinicContactNumber.trim() && clinicContactNumber !== 'N/A' ? clinicContactNumber : '--';
+
+        let currentPage = 1;
+        let itemsProcessed = 0;
+        const itemsPerPage = 5;
+        const hasAdditionalInfo = typeof additional_information !== 'undefined' && additional_information !== null &&
+        additional_information !== '' && additional_information !== 'N/A';
+        %>
+
+        <div class="page-container">
+            <% while (itemsProcessed < scansList.length || (scansList.length===0 && currentPage===1)) { %>
+                <div class="page <%= currentPage > 1 ? 'page-break' : '' %>">
+                    <!-- Watermark Background Logo -->
+                    <div class="watermark-container">
+                        <div class="ellipse ellipse-36"></div>
+                        <div class="ellipse ellipse-37"></div>
+                        <div class="ellipse ellipse-38"></div>
+                    </div>
+
+                    <!-- Header -->
+                    <div class="header">
+                        <div class="header-logo">
+                            <img class="logo_url" src="<%= logo_url || 'https://dtl3fe7urqkwq.cloudfront.net/logo.png' %>" alt="SendScript">
+                        </div>
+                        <div class="header-title">REQUEST FORM</div>
+                    </div>
+
+                    <!-- Divider Line -->
+                    <div class="divider-line"></div>
+
+                    <!-- Booking Info & Requested Date -->
+                    <div class="booking-info-row">
+                        <div>Booking ID: <strong>
+                                <%= bookingId %>
+                            </strong></div>
+                        <div>Requested Date: <strong>
+                                <%= formattedRequestedDate %>
+                            </strong></div>
+                    </div>
+
+                    <!-- Details Section (Patient / Clinic) -->
+                    <div class="details-container">
+                        <!-- Patient details column -->
+                        <div class="details-box">
+                            <div class="details-heading">Patient Details</div>
+                            <div class="details-card">
+                                <div class="details-row">
+                                    <span class="label">Full Name:</span>
+                                    <span class="val">
+                                        <%= patientName %>
+                                    </span>
+                                </div>
+                                <div class="details-row">
+                                    <span class="label">DOB:</span>
+                                    <span class="val">
+                                        <%= patientDob %> (<%= patientAgeVal %>)
+                                    </span>
+                                </div>
+                                <div class="details-row">
+                                    <span class="label">Address:</span>
+                                    <span class="val">
+                                        <%= displayPatientAddress %>
+                                    </span>
+                                </div>
+                                <div class="details-row">
+                                    <span class="label">Mobile Number:</span>
+                                    <span class="val">
+                                        <%= displayPatientMobile %>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Clinic details column -->
+                        <div class="details-box">
+                            <div class="details-heading">Clinic Details</div>
+                            <div class="details-card">
+                                <div class="details-row">
+                                    <span class="label">Clinic Name:</span>
+                                    <span class="val">
+                                        <%= clinicName %>
+                                    </span>
+                                </div>
+                                <div class="details-row">
+                                    <span class="label">Clinic Address:</span>
+                                    <span class="val">
+                                        <%= displayClinicAddress %>
+                                    </span>
+                                </div>
+                                <div class="details-row">
+                                    <span class="label">Email Address:</span>
+                                    <span class="val">
+                                        <%= clinicEmail %>
+                                    </span>
+                                </div>
+                                <div class="details-row">
+                                    <span class="label">Telephone:</span>
+                                    <span class="val">
+                                        <%= displayClinicContactNumber %>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="referred-item">
-                        <span class="referred-label">Registration No:</span>
-                        <div class="referred-value">GMC - <%= doctor.gmc_number %>
+
+                    <!-- Scans Table Section -->
+                    <div class="table-container">
+                        <div class="table-wrapper">
+                            <table class="scan-table">
+                                <thead>
+                                    <tr>
+                                        <th>SL No</th>
+                                        <th>Scan Type</th>
+                                        <th>Department</th>
+                                        <th>Body Part</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% let itemsInThisPage=0; for (let i=itemsProcessed; i < scansList.length &&
+                                        itemsInThisPage < itemsPerPage; i++) { const item=scansList[i]; %>
+                                        <tr>
+                                            <td>
+                                                <%= i + 1 %>
+                                            </td>
+                                            <td>
+                                                <%= item.scan_name %>
+                                            </td>
+                                            <td>
+                                                <%= item.department_name %>
+                                            </td>
+                                            <td>
+                                                <%= item.body_parts %>
+                                            </td>
+                                        </tr>
+                                        <% itemsInThisPage++; itemsProcessed++; } %>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <div class="referred-item">
-                        <span class="referred-label">Qualification:</span>
-                        <div class="referred-value">
-                            <%= doctor.qualification %>
+
+                    <!-- Info Section (Clinical / Additional) -->
+                    <div class="info-container">
+                        <% if (hasAdditionalInfo) { %>
+                            <div class="info-column">
+                                <div class="info-heading">Clinical Information</div>
+                                <div class="info-card">
+                                    <%= clinicalIndicationText %>
+                                </div>
+                            </div>
+
+                            <div class="info-column">
+                                <div class="info-heading">Additional Information</div>
+                                <div class="info-card">
+                                    <%= additionalInformationText %>
+                                </div>
+                            </div>
+                            <% } else { %>
+                                <div class="info-column full-width">
+                                    <div class="info-heading">Clinical Information</div>
+                                    <div class="info-card">
+                                        <%= clinicalIndicationText %>
+                                    </div>
+                                </div>
+                                <% } %>
+                    </div>
+
+                    <!-- Footer Section (Prescribed By & Signature) -->
+                    <div class="footer-container">
+                        <div class="prescribed-section">
+                            <div class="prescribed-heading">Prescribed By</div>
+                            <div class="prescribed-card">
+                                <table class="prescribed-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 35%;">Name:</th>
+                                            <th style="width: 25%;">Registration No:</th>
+                                            <th style="width: 40%;">Qualification:</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <%= doctorFullName %>
+                                            </td>
+                                            <td>GMC - <%= doctorGmc %>
+                                            </td>
+                                            <td>
+                                                <%= doctorQualification %>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="signature-section">
+                            <div class="qr-code-box">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://sendscript.com/scan-referral-form"
+                                    alt="QR Code">
+                                <div class="qr-text">Scan to Download</div>
+                            </div>
+                            <div class="sig-details">
+                                <p class="sig-title">This request has been signed using an advanced electronic signature
+                                </p>
+                                <p class="sig-esign">E-signature: <%= doctorEsign %>
+                                </p>
+                                <p class="sig-time">Time of signature: <%= signatureTime %>
+                                </p>
+                                <p class="sig-verify">To download request form visit: <a
+                                        href="https://www.sendscript.com/scan-referral-form"
+                                        target="_blank">www.sendscript.com/scan-referral-form</a></p>
+                            </div>
+                        </div>
+
+                        <div class="footer-text">
+                            <p><strong>To the Hospitals:</strong> SendScript is a secure online platform that allows
+                                doctors to send scan requests directly to hospitals and diagnostic centers. All our
+                                prescribers are fully qualified and registered with their respective clinical boards.
+                                Scan requests are issued following a thorough patient assessment, conducted either
+                                in-person or through remote consultations. We appreciate your support in receiving and
+                                processing these requests. Request forms can be downloaded from our website using the
+                                Booking ID and Date of Birth. Once the scan is completed, the report can be uploaded
+                                directly to the platform for the referring doctor to access. For any questions or
+                                assistance, please contact our support team.</p>
                         </div>
                     </div>
                 </div>
-            </div>
+                <% currentPage++; %>
+                    <% } %>
         </div>
-
-        <!-- QR and Signature Section -->
-        <div class="qr-signature-container">
-            <div class="qr-container">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://sendscript.com/requestform"
-                    alt="QR Code">
-                <div class="qr-label">Scan to download</div>
-            </div>
-            <div class="signature-section">
-                <p>This request has been signed using an advanced electronic signature</p>
-                <p><strong>E-signature:</strong> <span class="signature-value">
-                        <%= doctor.esign %>
-                    </span></p>
-                <p><strong>Time of signature:</strong> <span class="signature-value">
-                        <%= (()=> {
-                        if (!requested_date) return 'NA';
-                        const date = new Date(requested_date);
-                        const options = {
-                        day: '2-digit',
-                        month: 'short',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        hour12: true,
-                        timeZone: 'UTC'
-                        };
-                        return date.toLocaleString('en-GB', options).replace(',', '');
-                        })() %>
-                    </span></p>
-                <p>To download request form visit: <span class="signature-value">www.sendscript.com/scan-referral-form</span>
-                </p>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer-text">
-            <p><strong>To the Hospitals:</strong> SendScript is a secure online platform that allows doctors to send
-                scan requests directly to hospitals and diagnostic centers. All our prescribers are fully qualified and
-                registered with their respective clinical boards. Scan requests are issued following a thorough patient
-                assessment, conducted either in-person or through remote consultations. We appreciate your support in
-                receiving and processing these requests. Request forms can be downloaded from our website using the
-                Booking ID and Date of Birth. Once the scan is completed, the report can be uploaded directly to the
-                platform for the referring doctor to access. For any questions or assistance, please contact our support
-                team.</p>
-        </div>
-    </div>
 </body>
 
 </html>
