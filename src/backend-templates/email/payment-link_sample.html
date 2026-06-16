@@ -370,7 +370,7 @@
             }
 
             /* Email template mobile promotion styles */
-            /* .t1801 {
+            .t1801 {
                 padding-top: 20px !important
             }
 
@@ -448,7 +448,7 @@
 
             .t16911 {
                 width: 100% !important
-            } */
+            }
         }
     </style>
     <!--[if !mso]>-->
@@ -785,7 +785,7 @@
                                                                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
                                                                                                 Dear <span class="t38"
                                                                                                     style="margin:0;Margin:0;font-weight:600;mso-line-height-rule:exactly;">
-                                                                                                    <%= patient_name %>
+                                                                                                    John Doe
                                                                                                 </span>,</p>
                                                                                         </td>
                                                                                     </tr>
@@ -819,7 +819,7 @@
                                                                                                 style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:23px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
                                                                                                 You have received a
                                                                                                 payment request from the
-                                                                                                <%= pharmacy_name %> to
+                                                                                                HealthFirst Pharmacy to
                                                                                                     dispense your
                                                                                                     prescribed
                                                                                                     medication. Please
@@ -856,11 +856,11 @@
                                                                                     <tr>
                                                                                         <td class="t53"
                                                                                             style="overflow:hidden;background-color:#032550;text-align:center;line-height:24px;mso-line-height-rule:exactly;mso-text-raise:3px;padding:8px 20px 8px 20px;border-radius:27px 27px 27px 27px;">
-                                                                                            <a href="<%= link %>"
+                                                                                            <a href="https://example.com/link"
                                                                                                 target="_blank"
                                                                                                 class="t51"
                                                                                                 style="display:block;margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:24px;font-weight:600;font-style:normal;font-size:15px;text-decoration:none;direction:ltr;color:#E3F0FF;text-align:center;mso-line-height-rule:exactly;mso-text-raise:3px;">Pay
-                                                                                                £<%= total_price %></a>
+                                                                                                ££150.00</a>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>
@@ -1171,8 +1171,7 @@
                                                                                                                                                                                                                                         class="t88">
                                                                                                                                                                                                                                         <p class="t87"
                                                                                                                                                                                                                                             style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:18px;font-weight:500;font-style:normal;font-size:11px;text-decoration:none;text-transform:none;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;">
-                                                                                                                                                                                                                                            <%= pharmacy_name
-                                                                                                                                                                                                                                                %>
+                                                                                                                                                                                                                                            HealthFirst Pharmacy
                                                                                                                                                                                                                                         </p>
                                                                                                                                                                                                                                     </td>
                                                                                                                                                                                                                                 </tr>
@@ -1422,8 +1421,7 @@
                                                                                                                                                                                                                                     class="t125">
                                                                                                                                                                                                                                     <p class="t124"
                                                                                                                                                                                                                                         style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:18px;font-weight:500;font-style:normal;font-size:11px;text-decoration:none;text-transform:none;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;">
-                                                                                                                                                                                                                                        <%= pharmacy_email
-                                                                                                                                                                                                                                            %>
+                                                                                                                                                                                                                                        info@healthfirstpharmacy.co.uk
                                                                                                                                                                                                                                     </p>
                                                                                                                                                                                                                                 </td>
                                                                                                                                                                                                                             </tr>
@@ -1623,8 +1621,7 @@
                                                                                                                                                                                                                                     class="t157">
                                                                                                                                                                                                                                     <p class="t156"
                                                                                                                                                                                                                                         style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:18px;font-weight:500;font-style:normal;font-size:11px;text-decoration:none;text-transform:none;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;">
-                                                                                                                                                                                                                                        <%= pharmacy_contact
-                                                                                                                                                                                                                                            %>
+                                                                                                                                                                                                                                        [pharmacy_contact]
                                                                                                                                                                                                                                     </p>
                                                                                                                                                                                                                                 </td>
                                                                                                                                                                                                                             </tr>
@@ -1876,14 +1873,7 @@
                                                                                                                                                                                                                                         class="t197">
                                                                                                                                                                                                                                         <p class="t196"
                                                                                                                                                                                                                                             style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:18px;font-weight:500;font-style:normal;font-size:11px;text-decoration:none;text-transform:none;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;">
-                                                                                                                                                                                                                                            <%= [
-                                                                                                                                                                                                                                                pharmacy_address_line_1,
-                                                                                                                                                                                                                                                pharmacy_address_line_2,
-                                                                                                                                                                                                                                                pharmacy_city,
-                                                                                                                                                                                                                                                pharmacy_postal_code,
-                                                                                                                                                                                                                                                pharmacy_state
-                                                                                                                                                                                                                                                ].filter(Boolean).join(', ') 
-                                                                                                                                                                                                                                            %>
+                                                                                                                                                                                                                                            123 High Street, Medical District, London, SW1A 1AA
                                                                                                                                                                                                                                         </p>
                                                                                                                                                                                                                                     </td>
                                                                                                                                                                                                                                 </tr>
@@ -1988,7 +1978,7 @@
                                                                                                 cellspacing="0"
                                                                                                 style="width:100% !important;">
                                                                                                 <!-- loop container starts here -->
-                                                                                                <% prescriptionItems.forEach((item, index) => { %>
+                                                                                                
                                                                                                     <tr class="loop_container">
                                                                                                         <td align="center">
                                                                                                             <table class="t263" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;">
@@ -2008,7 +1998,7 @@
                                                                                                                                                             <tr>
                                                                                                                                                                 <td class="t228" style="border:1px solid #D9D9D9;overflow:hidden;border-radius:999px 999px 999px 999px;">
                                                                                                                                                                     <p class="t227" style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:24px;font-weight:500;font-style:normal;font-size:10px;text-decoration:none;text-transform:none;direction:ltr;color:#777777;text-align:center;mso-line-height-rule:exactly;mso-text-raise:4px;">
-                                                                                                                                                                        <%= index + 1 %>
+                                                                                                                                                                        [index + 1]
                                                                                                                                                                     </p>
                                                                                                                                                                 </td>
                                                                                                                                                                 <td class="t229" style="width:20px;" width="20"></td>
@@ -2040,7 +2030,7 @@
                                                                                                                                                                                                                                     <td class="t233">
                                                                                                                                                                                                                                         <!-- Dynamic item name -->
                                                                                                                                                                                                                                         <p class="t232" style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:20px;font-weight:400;font-style:normal;font-size:10px;text-decoration:none;text-transform:none;direction:ltr;color:#444444;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                                                                                                                                                                                                            <%= item.name %>&nbsp;
+                                                                                                                                                                                                                                            [item.name]&nbsp;
                                                                                                                                                                                                                                         </p>
                                                                                                                                                                                                                                     </td>
                                                                                                                                                                                                                                 </tr>
@@ -2060,7 +2050,7 @@
                                                                                                                                                                                                                                     <td class="t238">
                                                                                                                                                                                                                                         <!-- Dynamic quantity -->
                                                                                                                                                                                                                                         <p class="t237" style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:15px;font-weight:400;font-style:normal;font-size:9px;text-decoration:none;text-transform:none;direction:ltr;color:#777777;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;">
-                                                                                                                                                                                                                                            Qty: <%= item.quantity %>
+                                                                                                                                                                                                                                            Qty: [item.quantity]
                                                                                                                                                                                                                                         </p>
                                                                                                                                                                                                                                     </td>
                                                                                                                                                                                                                                 </tr>
@@ -2082,7 +2072,7 @@
                                                                                                                                                                                                 <td class="t246">
                                                                                                                                                                                                     <!-- Dynamic price -->
                                                                                                                                                                                                     <p class="t245" style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:22px;font-weight:400;font-style:normal;font-size:10px;text-decoration:none;text-transform:none;direction:ltr;color:#444444;text-align:right;mso-line-height-rule:exactly;mso-text-raise:4px;">
-                                                                                                                                                                                                        £ <%= parseFloat(item.price).toFixed(2) %>
+                                                                                                                                                                                                        £ 150.00
                                                                                                                                                                                                     </p>
                                                                                                                                                                                                 </td>
                                                                                                                                                                                             </tr>
@@ -2118,7 +2108,7 @@
                                                                                                             </div>
                                                                                                         </td>
                                                                                                     </tr>
-                                                                                                    <% }); %>
+                                                                                                    
                                                                                                 <!-- loop container ends here -->
                                                                                                 <tr>
                                                                                                     <td align="center">
@@ -2194,7 +2184,7 @@
                                                                                                                                                                 class="t308">
                                                                                                                                                                 <p class="t307"
                                                                                                                                                                     style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:20px;font-weight:400;font-style:normal;font-size:10px;text-decoration:none;text-transform:none;direction:ltr;color:#444444;text-align:right;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                                                                                                                                    £ <%= parseFloat(gross_amount).toFixed(2) %>
+                                                                                                                                                                    £ £150.00
                                                                                                                                                                 </p>
                                                                                                                                                             </td>
                                                                                                                                                         </tr>
@@ -2288,7 +2278,7 @@
                                                                                                                                                                 class="t324">
                                                                                                                                                                 <p class="t323"
                                                                                                                                                                     style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:20px;font-weight:400;font-style:normal;font-size:10px;text-decoration:none;text-transform:none;direction:ltr;color:#444444;text-align:right;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                                                                                                                                    £ <%= parseFloat(delivery_charge).toFixed(2) %>
+                                                                                                                                                                    £ Mock Data
                                                                                                                                                                 </p>
                                                                                                                                                             </td>
                                                                                                                                                         </tr>
@@ -2382,7 +2372,7 @@
                                                                                                                                                                 class="t340">
                                                                                                                                                                 <p class="t339"
                                                                                                                                                                     style="margin:0;Margin:0;font-family:Poppins,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:20px;font-weight:600;font-style:normal;font-size:10px;text-decoration:none;text-transform:none;direction:ltr;color:#1B3F6D;text-align:right;mso-line-height-rule:exactly;mso-text-raise:3px;">
-                                                                                                                                                                    £ <%= parseFloat(total_price).toFixed(2) %>
+                                                                                                                                                                    £ £150.00
                                                                                                                                                                 </p>
                                                                                                                                                             </td>
                                                                                                                                                         </tr>
