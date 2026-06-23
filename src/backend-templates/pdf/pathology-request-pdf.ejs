@@ -521,12 +521,13 @@
                                 </div>
                             </section>
                             <% } %>
-                                <section class='main-content'>
-                                    <div class='tests-column'>
-                                        <% if (typeof show_watermark==='undefined' || show_watermark) { %>
+                            <% if (typeof show_watermark==='undefined' || show_watermark) { %>
                                             <img src="<%= typeof logo_url !== 'undefined' && logo_url ? logo_url : 'https://d2pznqasld4zpy.cloudfront.net/logo.png' %>"
                                                 class="table-watermark" alt="Watermark">
                                             <% } %>
+                                <section class='main-content'>
+                                    <div class='tests-column'>
+                                        
                                                 <table class='tests-table'>
                                                     <thead>
                                                         <tr>

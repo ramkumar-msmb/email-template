@@ -48,15 +48,14 @@
         /* Watermark crescent logo in the background */
         .watermark-container {
             position: absolute;
-            width: 250px;
-            height: 170px;
-            left: calc(50% - 125px);
-            top: calc(50% - 85px);
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            pointer-events: none;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            opacity: 0.05;
             z-index: 0;
+            filter: grayscale(1);
+            pointer-events: none;
         }
 
         .ellipse {
@@ -547,12 +546,7 @@
             <% while (itemsProcessed < scansList.length || (scansList.length===0 && currentPage===1)) { %>
                 <div class="page <%= currentPage > 1 ? 'page-break' : '' %>">
                     <!-- Watermark Background Logo -->
-                    <div class="watermark-container">
-                        <div class="ellipse ellipse-36"></div>
-                        <div class="ellipse ellipse-37"></div>
-                        <div class="ellipse ellipse-38"></div>
-                    </div>
-
+                    <img src="<%= logo_url || 'https://dtl3fe7urqkwq.cloudfront.net/logo.png' %>" class="watermark-container" alt="watermark-container">
                     <!-- Header -->
                     <div class="header">
                         <div class="header-logo">

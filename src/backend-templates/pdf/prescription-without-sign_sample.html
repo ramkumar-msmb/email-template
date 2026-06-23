@@ -237,7 +237,7 @@
 
         .prescription-table th:nth-child(3),
         .prescription-table td:nth-child(3) {
-            width: 14%;
+            width: 12%;
         }
 
         .prescription-table th:nth-child(4),
@@ -429,6 +429,17 @@
             height: 30px;
             object-fit: contain;
         }
+        .watermark-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            opacity: 0.05;
+            z-index: 0;
+            filter: grayscale(1);
+            pointer-events: none;
+        }
     </style>
 </head>
 
@@ -531,11 +542,13 @@
                 </div>
 
                 <div class="prescription-table-container" style="min-height: 364px;" data-min-height="[Math.round(availableHeight)]">
+                    <img src="https://d2pznqasld4zpy.cloudfront.net/common/logo.svg" class="watermark-container" alt="watermark-container">
                     <table class="prescription-table">
                         <thead>
                             <tr>
                                 <th>SL No</th>
                                 <th>Medicine</th>
+                                <th>Dosage Pattern</th>
                                 <th>Duration</th>
                                 <th>Method</th>
                                 <th>Quantity</th>
@@ -553,6 +566,13 @@
                                             <span class="medicine-name truncate-text">Rifadin 100 mg/ 5ml syrup 120 ml</span>
                                             <span class="medicine-instruction">- 200 ml</span>
                                         </div>
+                                    </td>
+                                    <td>
+                                        
+                                            2-1-1-1 - 2-1-1-1 - 2-1-1-1 - 2-1-1-1
+                                        
+                                            2-1-1-1
+                                        
                                     </td>
                                     <td>
                                         200 Days

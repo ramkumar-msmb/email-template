@@ -186,6 +186,12 @@ const mockDataMap = {
     'prescriber_registration_no': 'GMC - 3457052',
     'registration_no': 'GMC - 3457052',
     'prescriber_name': 'Dr.Sarah Smith',
+
+    'dosage_pattern': '2-1-1-1',
+    'dosage_pattern.morning': '2',
+    'dosage_pattern.afternoon': '1',
+    'dosage_pattern.evening': '1',
+    'dosage_pattern.night': '1',
 };
 
 for (const file of files) {

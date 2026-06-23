@@ -432,6 +432,17 @@
             height: 30px;
             object-fit: contain;
         }
+        .watermark-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            opacity: 0.05;
+            z-index: 0;
+            filter: grayscale(1);
+            pointer-events: none;
+        }
     </style>
 </head>
 
@@ -534,6 +545,7 @@
                 </div>
 
                 <div class="prescription-table-container">
+                    <img src="https://d2pznqasld4zpy.cloudfront.net/common/logo.svg" class="watermark-container" alt="watermark-container">
                     <table class="prescription-table">
                         <thead>
                             <tr>

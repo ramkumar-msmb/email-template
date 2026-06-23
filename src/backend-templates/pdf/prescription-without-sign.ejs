@@ -429,6 +429,17 @@
             height: 30px;
             object-fit: contain;
         }
+        .watermark-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            opacity: 0.05;
+            z-index: 0;
+            filter: grayscale(1);
+            pointer-events: none;
+        }
     </style>
 </head>
 
@@ -605,11 +616,13 @@
                 </div>
 
                 <div class="prescription-table-container" style="min-height: 364px;" data-min-height="<%= Math.round(availableHeight) %>">
+                    <img src="<%= logo_url || 'https://dtl3fe7urqkwq.cloudfront.net/logo.png' %>" class="watermark-container" alt="watermark-container">
                     <table class="prescription-table">
                         <thead>
                             <tr>
                                 <th>SL No</th>
                                 <th>Medicine</th>
+                                <th>Dosage Pattern</th>
                                 <th>Duration</th>
                                 <th>Method</th>
                                 <th>Quantity</th>
@@ -669,6 +682,13 @@
                                             <span class="medicine-name truncate-text"><%= item.name %></span>
                                             <span class="medicine-instruction">- <%= item.dosage_note %></span>
                                         </div>
+                                    </td>
+                                    <td>
+                                        <% if (item.dosage_pattern && typeof item.dosage_pattern === 'object') { %>
+                                            <%= item.dosage_pattern.morning || '0' %> - <%= item.dosage_pattern.afternoon || '0' %> - <%= item.dosage_pattern.evening || '0' %> - <%= item.dosage_pattern.night || '0' %>
+                                        <% } else { %>
+                                            <%= item.dosage_pattern || '-' %>
+                                        <% } %>
                                     </td>
                                     <td>
                                         <%= item.duration %> <%= item.duration_type %>
