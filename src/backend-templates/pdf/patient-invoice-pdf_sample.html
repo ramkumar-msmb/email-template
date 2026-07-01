@@ -44,8 +44,12 @@
         }
 
         .page-bottom {
-            margin-top: auto;
             width: 100%;
+            flex-shrink: 0;
+        }
+
+        .flex-spacer {
+            flex-grow: 1;
         }
 
         .header-section {
@@ -56,6 +60,7 @@
             gap: 20px;
             background: #FFFFFF;
             color: #1F1F1F;
+            flex-shrink: 0;
         }
 
         .logo-box {
@@ -104,6 +109,7 @@
             padding: 12px 20px 0;
             display: flex;
             gap: 8px;
+            flex-shrink: 0;
         }
 
         .patient-card {
@@ -136,6 +142,7 @@
 
         .table-section {
             padding: 10px 20px;
+            flex-shrink: 0;
         }
 
         .services-table {
@@ -172,6 +179,7 @@
             padding: 0 25px 20px;
             display: flex;
             justify-content: flex-end;
+            flex-shrink: 0;
         }
 
         .summary-table {
@@ -195,6 +203,7 @@
             flex-direction: column;
             gap: 6px;
             align-items: flex-start;
+            flex-shrink: 0;
         }
 
         .doctor-name {
@@ -213,6 +222,7 @@
 
         .extras-section {
             padding: 10px 25px 5px;
+            flex-shrink: 0;
         }
 
         .extras-content-box {
@@ -223,6 +233,9 @@
             font-size: 10px;
             line-height: 1.5;
             color: #374151;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            overflow: hidden;
         }
 
         .extras-content-box p { margin-bottom: 8px; }
@@ -427,6 +440,7 @@
                     
                 
 
+                <div class='flex-spacer'></div>
                 <div class='page-bottom'>
                     
                         <section class='extras-section'>
@@ -457,3 +471,4 @@
 </body>
 
 </html>
+<!-- CONFIG: {"logo":"https://dtl3fe7urqkwq.cloudfront.net/logo.png","logoSize":33,"clinicName":"1-gokul","addressLine1":"S/o,k.p.vijayakumar","addressLine2":"13/1,THIRU VI KA STREET","city":"ERODE","postalCode":"638455","country":"United Kingdom","emailAddress":"gokul234@gmail.com","contactNumber":"7766554433","footerContent":"","includeDoctorSignature":true,"colors":{"headerBg":"#FFFFFF","headerText":"#1F1F1F","cardBg":"#F9F9F9","tableHeaderBg":"#F9FAFB","tableHeaderText":"#1F1F1F","footerBg":"#FFFFFF","footerText":"#1F1F1F"},"invoicePrefix":"INV-","invoiceNumberStartWith":"001","includeLogoWatermark":true} -->

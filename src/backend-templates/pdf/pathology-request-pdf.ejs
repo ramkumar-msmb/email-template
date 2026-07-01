@@ -473,7 +473,7 @@
 
                                         <span class='grid-label'>Mobile Number:</span>
                                         <span class='grid-value'>
-                                            <%= typeof patient_mobile !=='undefined' ? patient_mobile : '{mobile}' %>
+                                            <%= typeof patient_mobile !== 'undefined' ? `${patient_country_code || ''} ${patient_mobile}` : '{mobile}' %>
                                         </span>
 
                                         <span class='grid-label'>DOB:</span>
@@ -579,50 +579,34 @@
                                             </div>
 
                                             <div class='checkbox-list'>
-                                                <div class='checkbox-item'>
-                                                    <div
-                                                        class='checkbox-icon <%= typeof fasting !== "undefined" && fasting ? "checked" : "" %>'>
-                                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="3" stroke-linecap="round"
-                                                            stroke-linejoin="round">
-                                                            <polyline points="20 6 9 17 4 12"></polyline>
-                                                        </svg>
+                                                <% 
+                                                const excludedKeys = ['clinical_information', 'ethnic_origin', 'drug_therapy', 'notes'];
+                                                const details = typeof clinical_details !== 'undefined' ? clinical_details : {};
+                                                
+                                                Object.keys(details).forEach(function(key) {
+                                                    if (excludedKeys.includes(key)) return;
+                                                    
+                                                    const isChecked = !!details[key];
+                                                    let label = key;
+                                                    if (key.toLowerCase() === 'hrt') {
+                                                        label = 'HRT';
+                                                    } else {
+                                                        label = key.split('_').map(function(word) {
+                                                            return word.charAt(0).toUpperCase() + word.slice(1);
+                                                        }).join(' ');
+                                                    }
+                                                %>
+                                                    <div class='checkbox-item'>
+                                                        <div class='checkbox-icon <%= isChecked ? "checked" : "" %>'>
+                                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                                stroke-width="3" stroke-linecap="round"
+                                                                stroke-linejoin="round">
+                                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                                            </svg>
+                                                        </div>
+                                                        <span><%= label %></span>
                                                     </div>
-                                                    <span>Fasting</span>
-                                                </div>
-                                                <div class='checkbox-item'>
-                                                    <div
-                                                        class='checkbox-icon <%= typeof post_menopause !== "undefined" && post_menopause ? "checked" : "" %>'>
-                                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="3" stroke-linecap="round"
-                                                            stroke-linejoin="round">
-                                                            <polyline points="20 6 9 17 4 12"></polyline>
-                                                        </svg>
-                                                    </div>
-                                                    <span>Post Menopause</span>
-                                                </div>
-                                                <div class='checkbox-item'>
-                                                    <div
-                                                        class='checkbox-icon <%= typeof suspicious_cervix !== "undefined" && suspicious_cervix ? "checked" : "" %>'>
-                                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="3" stroke-linecap="round"
-                                                            stroke-linejoin="round">
-                                                            <polyline points="20 6 9 17 4 12"></polyline>
-                                                        </svg>
-                                                    </div>
-                                                    <span>Suspicious Cervix</span>
-                                                </div>
-                                                <div class='checkbox-item'>
-                                                    <div
-                                                        class='checkbox-icon <%= typeof hrt !== "undefined" && hrt ? "checked" : "" %>'>
-                                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="3" stroke-linecap="round"
-                                                            stroke-linejoin="round">
-                                                            <polyline points="20 6 9 17 4 12"></polyline>
-                                                        </svg>
-                                                    </div>
-                                                    <span>HRT</span>
-                                                </div>
+                                                <% }); %>
                                             </div>
 
                                             <div class='clinical-text-block'>

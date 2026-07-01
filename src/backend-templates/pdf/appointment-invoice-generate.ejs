@@ -47,6 +47,10 @@
             flex-direction: column;
         }
 
+        .header-left img {
+            width: 120px;
+        }
+
         .header-left p {
             font-size: 16px;
             font-weight: 600;
@@ -268,18 +272,35 @@
                 page-break-after: always;
             }
         }
-        .logo_url{
+         .logo_url {
             height: 30px;
             object-fit: contain;
+        }
+        .watermark-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            opacity: 0.05;
+            z-index: 0;
+            filter: grayscale(1);
+            pointer-events: none;
         }
     </style>
 </head>
 
 <body>
-    <% const items=scans || []; // Calculate total pages needed const itemsPerPage=10; const
-        totalPages=Math.ceil(items.length / itemsPerPage); // Loop through pages for (let page=0; page < totalPages;
-        page++) { const startIndex=page * itemsPerPage; const endIndex=Math.min(startIndex + itemsPerPage,
-        items.length); const pageItems=items.slice(startIndex, endIndex); const isLastPage=page===totalPages - 1; %>
+    <% 
+        const items = scans || [];
+        const itemsPerPage = 10;
+        const totalPages = Math.ceil(items.length / itemsPerPage);
+        for (let page = 0; page < totalPages; page++) {
+            const startIndex = page * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, items.length);
+            const pageItems = items.slice(startIndex, endIndex);
+            const isLastPage = page === totalPages - 1;
+    %>
         <div class="invoice-container">
             <!-- HEADER -->
             <div class="header">
@@ -294,21 +315,9 @@
 
             <div class="prescription-info-container">
                 <div class="px-meta-data-right">
-                    <p>Invoice Number: <strong><%= invoice_id %></strong></p>
-                    <p>Invoice Date: <strong><% 
-                        // Parse the ISO date string
-                        const dobOriginal_invoice = new Date(invoice_date);
-                        
-                        // Create a new date object with the date incremented by 1
-                        const dob_invoice = new Date(dobOriginal_invoice);
-                        dob_invoice.setDate(dobOriginal_invoice.getDate());
-                        
-                        // Format as DD/MM/YYYY
-                        const day_invoice = String(dob_invoice.getDate()).padStart(2, '0');
-                        const month_invoice=String(dob_invoice.getMonth() + 1).padStart(2, '0');
-                        const year_invoice=dob_invoice.getFullYear();
-                        const formattedDate_invoice=`${day_invoice}/${month_invoice}/${year_invoice}`; %>
-                        <%= formattedDate_invoice %>
+                    <p>Invoice Number: <strong><%= invoice_number %></strong></p>
+                    <p>Invoice Date: <strong>
+                        <%= invoice_date %>
                     </strong></p>
                 </div>
                 <div class="px-meta-data-left">
@@ -326,73 +335,67 @@
                     <div class="patient-details">
                         <p>
                             <strong>Full Name:</strong>
-                            <span><%= patient_details.patient_title %> <%= patient_details.patient_first_name %> <%= patient_details.patient_sur_name %></span>
+                            <span><%= patient.patient_name %></span>
                         </p>
                         <p class="dob-age">
                             <strong>DOB:</strong>
-                            <span><% 
-                                // Parse the ISO date string
-                                const dobOriginal = new Date(patient_details.patient_dob);
-                                
-                                // Create a new date object with the date incremented by 1
-                                const dob = new Date(dobOriginal);
-                                dob.setDate(dobOriginal.getDate());
-                                
-                                // Format as DD/MM/YYYY
-                                const day = String(dob.getDate()).padStart(2, '0');
-                                const month=String(dob.getMonth() + 1).padStart(2, '0');
-                                const year=dob.getFullYear();
-                                const formattedDate=`${day}/${month}/${year}`; %>
-                                <%= formattedDate %>
+                            <span>
+                                <%= patient.dob %>
                                 <span class="age" style="color: #444; font-weight: 500; margin-left: 10px;"> Age: </span>
                                 <span class="age-value">
-                                    <%= patient_age %>
+                                    <%= patient?.patient_age %>
                                 </span>
                             </span>
                         </p>
                         <p>
                             <strong>Address:</strong>
                             <span>
-                                <%= [ patient_details?.patient_address_line_1, patient_details?.patient_address_line_2,
-                                    patient_details?.patient_city, patient_details?.patient_country,
-                                    patient_details?.patient_postal_code ].filter(Boolean).join(', ') %>
+                                <%= [ patient?.address_line_1, patient?.address_line_2,
+                                    patient?.city, patient?.country,
+                                    patient?.postal_code ].filter(Boolean).join(', ') %>
                             </span>                          
                         </p>
                         <p>
                             <strong>Contact Number:</strong>
-                            <span><%= patient_details.patient_mobile %></span>
+                            <span><%= patient.mobile %></span>
                         </p>
                     </div>
                 </div>
             
                 <!-- Pharmacy Details -->
                 <div class="details-box">
-                    <div class="details-heading">Pharmacy Information</div>
+                    <div class="details-heading">Hospital Information</div>
                     <div class="appointment-details">
-                        <p><strong style="min-width: 59px;">Pharmacy Name:</strong>
+                        <p><strong style="min-width: 59px;">Hospital Name:</strong>
                             <span>
-                                <%= pharmacy.name %>
+                                <%= patient.site_name %>
                             </span>
                         </p>
-                        <p><strong style="min-width: 59px;">Pharmacy Address:</strong> 
+                        <p><strong style="min-width: 59px;">Hospital Address:</strong> 
                             <span>
-                                <%= [ pharmacy.address_line_1, pharmacy.address_line_2, pharmacy.address_line_3, pharmacy.city,
-                                    pharmacy.county, pharmacy.country ].filter(Boolean).join(', ') %>
+                                <%= [
+                                    patient.site_address_line_1,
+                                    patient.site_address_line_2,
+                                    patient.site_address_line_3,
+                                    patient.site_city,
+                                    patient.site_county,
+                                    patient.site_country
+                                ].filter(Boolean).join(', ') %>
                             </span>
                         </p>
                         <p><strong style="min-width: 59px;">Email Address:</strong> 
                             <span>
-                                <%= pharmacy.email %>
+                                <%= patient.site_email %>
                             </span>
                         </p>
                         <p><strong style="min-width: 59px;">Telephone:</strong> 
                             <span>
-                                <%= pharmacy.contact_number %>
+                                <%= patient.site_contact_number %>
                             </span>
                         </p>
                         <p><strong style="min-width: 59px;">Postal Code:</strong> 
                             <span>
-                                <%= pharmacy.postal_code %>
+                                <%= patient.site_postal_code %>
                             </span>
                         </p>
                     </div>
@@ -402,6 +405,7 @@
 
         <!-- TABLE -->
         <div class="table-container">
+        <img src="<%= logo_url || 'https://dtl3fe7urqkwq.cloudfront.net/logo.png' %>" class="watermark-container" alt="watermark-container">
             <table>
                 <thead>
                     <tr>
@@ -417,10 +421,8 @@
                             <td>
                                 <%= itemNumber %>
                             </td>
-                            <td>
-                                <%= item.scan_name %>
-                            </td>
-                            <td style="text-align: right; align-items: right;">£ <%= item.price %>
+                            <td><%= item.scan_name %><%= item.body_part ? ' - ' + item.body_part : '' %></td>
+                            <td style="text-align: right; align-items: right;">£ <%= item.out_patient_price %>
                             </td>
                         </tr>
                         <% } %>
@@ -433,22 +435,12 @@
             <div class="totals-container">
                 <div class="amount-calc">
                     <div>Gross Amount</div>
-                    <div>£ <%= (total_price - (delivery_charge || 0)).toFixed(2) %>
-                    </div>
-                </div>
-                <div class="amount-calc">
-                    <div>Vat(20%)</div>
-                    <div>£ <%= (total_price - (delivery_charge || 0)).toFixed(2) %>
-                    </div>
-                </div>
-                <div class="amount-calc">
-                    <div>Booking Charge</div>
-                    <div>£ <%= (delivery_charge || 0).toFixed(2) %>
+                    <div>£ <%= Number(grossAmount).toFixed(2) %>
                     </div>
                 </div>
                 <div class="totals">
                     <div>Net Amount</div>
-                    <div>£ <%= Number(total_price || 0).toFixed(2) %>
+                    <div>£ <%= Number(grossAmount || 0).toFixed(2) %>
                     </div>
                 </div>
             </div>

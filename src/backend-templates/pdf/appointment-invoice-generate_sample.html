@@ -47,6 +47,10 @@
             flex-direction: column;
         }
 
+        .header-left img {
+            width: 120px;
+        }
+
         .header-left p {
             font-size: 16px;
             font-weight: 600;
@@ -268,9 +272,20 @@
                 page-break-after: always;
             }
         }
-        .logo_url{
+         .logo_url {
             height: 30px;
             object-fit: contain;
+        }
+        .watermark-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            opacity: 0.05;
+            z-index: 0;
+            filter: grayscale(1);
+            pointer-events: none;
         }
     </style>
 </head>
@@ -291,9 +306,9 @@
 
             <div class="prescription-info-container">
                 <div class="px-meta-data-right">
-                    <p>Invoice Number: <strong>INV-2023-001</strong></p>
+                    <p>Invoice Number: <strong>[invoice_number]</strong></p>
                     <p>Invoice Date: <strong>
-                        8 June 2026
+                        [invoice_date]
                     </strong></p>
                 </div>
                 <div class="px-meta-data-left">
@@ -311,12 +326,12 @@
                     <div class="patient-details">
                         <p>
                             <strong>Full Name:</strong>
-                            <span>Dr John Doe</span>
+                            <span>John Doe</span>
                         </p>
                         <p class="dob-age">
                             <strong>DOB:</strong>
                             <span>
-                                8 June 2026
+                                [patient.dob]
                                 <span class="age" style="color: #444; font-weight: 500; margin-left: 10px;"> Age: </span>
                                 <span class="age-value">
                                     41
@@ -331,38 +346,38 @@
                         </p>
                         <p>
                             <strong>Contact Number:</strong>
-                            <span>+44 20 7946 0958</span>
+                            <span>[patient.mobile]</span>
                         </p>
                     </div>
                 </div>
             
                 <!-- Pharmacy Details -->
                 <div class="details-box">
-                    <div class="details-heading">Pharmacy Information</div>
+                    <div class="details-heading">Hospital Information</div>
                     <div class="appointment-details">
-                        <p><strong style="min-width: 59px;">Pharmacy Name:</strong>
+                        <p><strong style="min-width: 59px;">Hospital Name:</strong>
                             <span>
-                                HealthFirst Pharmacy
+                                [patient.site_name]
                             </span>
                         </p>
-                        <p><strong style="min-width: 59px;">Pharmacy Address:</strong> 
+                        <p><strong style="min-width: 59px;">Hospital Address:</strong> 
                             <span>
                                 123 High Street, Medical District, London, SW1A 1AA
                             </span>
                         </p>
                         <p><strong style="min-width: 59px;">Email Address:</strong> 
                             <span>
-                                info@healthfirstpharmacy.co.uk
+                                [patient.site_email]
                             </span>
                         </p>
                         <p><strong style="min-width: 59px;">Telephone:</strong> 
                             <span>
-                                +44 20 7946 0958
+                                [patient.site_contact_number]
                             </span>
                         </p>
                         <p><strong style="min-width: 59px;">Postal Code:</strong> 
                             <span>
-                                SW1A 1AA
+                                [patient.site_postal_code]
                             </span>
                         </p>
                     </div>
@@ -372,6 +387,7 @@
 
         <!-- TABLE -->
         <div class="table-container">
+        <img src="https://d2pznqasld4zpy.cloudfront.net/common/logo.svg" class="watermark-container" alt="watermark-container">
             <table>
                 <thead>
                     <tr>
@@ -386,10 +402,8 @@
                             <td>
                                 [itemNumber]
                             </td>
-                            <td>
-                                [item.scan_name]
-                            </td>
-                            <td style="text-align: right; align-items: right;">£ £5.00
+                            <td>[item.scan_name]Mock Data</td>
+                            <td style="text-align: right; align-items: right;">£ [item.out_patient_price]
                             </td>
                         </tr>
                         
@@ -402,22 +416,12 @@
             <div class="totals-container">
                 <div class="amount-calc">
                     <div>Gross Amount</div>
-                    <div>£ £5.00
-                    </div>
-                </div>
-                <div class="amount-calc">
-                    <div>Vat(20%)</div>
-                    <div>£ £5.00
-                    </div>
-                </div>
-                <div class="amount-calc">
-                    <div>Booking Charge</div>
-                    <div>£ £5.00
+                    <div>£ [Number(grossAmount).toFixed(2)]
                     </div>
                 </div>
                 <div class="totals">
                     <div>Net Amount</div>
-                    <div>£ £150.00
+                    <div>£ Mock Data
                     </div>
                 </div>
             </div>

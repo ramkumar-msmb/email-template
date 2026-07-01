@@ -261,9 +261,20 @@
                 page-break-after: always;
             }
         }
-        .logo_url {
+         .logo_url {
             height: 30px;
             object-fit: contain;
+        }
+        .watermark-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            opacity: 0.05;
+            z-index: 0;
+            filter: grayscale(1);
+            pointer-events: none;
         }
     </style>
 </head>
@@ -325,33 +336,32 @@
             </div>
         
             <!-- Pharmacy Details -->
+            
+
             <div class="details-box">
-                <div class="details-heading">Pharmacy Information</div>
+                <div class="details-heading">[entityLabel] Information</div>
                 <div class="appointment-details">
-                    <p><strong style="min-width: 59px;">Pharmacy Name:</strong>
-                        <span>
-                            HealthFirst Pharmacy
-                        </span>
+                    <p>
+                        <strong style="min-width: 59px;">[entityLabel] Name:</strong>
+                        <span>HealthFirst Pharmacy</span>
                     </p>
-                    <p><strong style="min-width: 59px;">Pharmacy Address:</strong> 
+                    <p>
+                        <strong style="min-width: 59px;">[entityLabel] Address:</strong>
                         <span>
                             123 High Street, Medical District, London, SW1A 1AA
                         </span>
                     </p>
-                    <p><strong style="min-width: 59px;">Email Address:</strong> 
-                        <span>
-                            info@healthfirstpharmacy.co.uk
-                        </span>
+                    <p>
+                        <strong style="min-width: 59px;">Email Address:</strong>
+                        <span>info@healthfirstpharmacy.co.uk</span>
                     </p>
-                    <p><strong style="min-width: 59px;">Telephone:</strong> 
-                        <span>
-                            +44 20 7946 0958
-                        </span>
+                    <p>
+                        <strong style="min-width: 59px;">Telephone:</strong>
+                        <span>+44 20 7946 0958</span>
                     </p>
-                    <p><strong style="min-width: 59px;">Postal Code:</strong> 
-                        <span>
-                            SW1A 1AA
-                        </span>
+                    <p>
+                        <strong style="min-width: 59px;">Postal Code:</strong>
+                        <span>SW1A 1AA</span>
                     </p>
                 </div>
             </div>
@@ -360,6 +370,7 @@
 
         <!-- TABLE -->
         <div class="table-container" data-min-height="[Math.round(availableHeight)]">
+            <img src="https://d2pznqasld4zpy.cloudfront.net/common/logo.svg" class="watermark-container" alt="watermark-container">
             <table>
                 <thead>
                     <tr>

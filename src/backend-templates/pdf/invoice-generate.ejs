@@ -261,9 +261,20 @@
                 page-break-after: always;
             }
         }
-        .logo_url {
+         .logo_url {
             height: 30px;
             object-fit: contain;
+        }
+        .watermark-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            opacity: 0.05;
+            z-index: 0;
+            filter: grayscale(1);
+            pointer-events: none;
         }
     </style>
 </head>
@@ -377,40 +388,39 @@
             </div>
         
             <!-- Pharmacy Details -->
+            <% const label = entityLabel === 'Clinic' ? 'Clinic' : 'Pharmacy'; %>
+
             <div class="details-box">
-                <div class="details-heading">Pharmacy Information</div>
+                <div class="details-heading"><%= entityLabel %> Information</div>
                 <div class="appointment-details">
-                    <p><strong style="min-width: 59px;">Pharmacy Name:</strong>
-                        <span>
-                            <%= pharmacy.name %>
-                        </span>
+                    <p>
+                        <strong style="min-width: 59px;"><%= entityLabel %> Name:</strong>
+                        <span><%= pharmacy.name %></span>
                     </p>
-                    <p><strong style="min-width: 59px;">Pharmacy Address:</strong> 
+                    <p>
+                        <strong style="min-width: 59px;"><%= entityLabel %> Address:</strong>
                         <span>
                             <%= [
-                              pharmacy.address_line_1,
-                              pharmacy.address_line_2,
-                              pharmacy.address_line_3,
-                              pharmacy.city,
-                              pharmacy.county,
-                              pharmacy.country
+                                pharmacy.address_line_1,
+                                pharmacy.address_line_2,
+                                pharmacy.address_line_3,
+                                pharmacy.city,
+                                pharmacy.county,
+                                pharmacy.country
                             ].filter(Boolean).join(', ') %>
                         </span>
                     </p>
-                    <p><strong style="min-width: 59px;">Email Address:</strong> 
-                        <span>
-                            <%= pharmacy.email %>
-                        </span>
+                    <p>
+                        <strong style="min-width: 59px;">Email Address:</strong>
+                        <span><%= pharmacy.email %></span>
                     </p>
-                    <p><strong style="min-width: 59px;">Telephone:</strong> 
-                        <span>
-                            <%= pharmacy.contact_number %>
-                        </span>
+                    <p>
+                        <strong style="min-width: 59px;">Telephone:</strong>
+                        <span><%= pharmacy.contact_number %></span>
                     </p>
-                    <p><strong style="min-width: 59px;">Postal Code:</strong> 
-                        <span>
-                            <%= pharmacy.postal_code %>
-                        </span>
+                    <p>
+                        <strong style="min-width: 59px;">Postal Code:</strong>
+                        <span><%= pharmacy.postal_code %></span>
                     </p>
                 </div>
             </div>
@@ -419,6 +429,7 @@
 
         <!-- TABLE -->
         <div class="table-container" data-min-height="<%= Math.round(availableHeight) %>">
+            <img src="<%= logo_url || 'https://dtl3fe7urqkwq.cloudfront.net/logo.png' %>" class="watermark-container" alt="watermark-container">
             <table>
                 <thead>
                     <tr>
