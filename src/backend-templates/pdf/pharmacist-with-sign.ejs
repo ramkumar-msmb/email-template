@@ -41,11 +41,15 @@
 
         .header-left {
             display: flex;
-            flex-direction: column;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
         }
 
         .header img {
-            width: 120px;
+            height: auto;
+            width: auto;
+            max-width: 100%;
         }
         .header-line{
             height: 1px;
@@ -67,7 +71,7 @@
         }
 
         .clinic-details p {
-            font-size: 10px;
+            font-size: 11px;
             margin: 2px 0;
         }
         .clinic-details strong {
@@ -113,7 +117,7 @@
 
 
         .details-heading {
-            font-size: 9px;
+            font-size: 10px;
             font-weight: 600;
             margin-bottom: 10px;
             color: #222;
@@ -134,7 +138,7 @@
         .age {
             text-align: left;
             font-weight: 400;
-            font-size: 9px;
+            font-size: 10px;
             color: #444;
         }
 
@@ -144,7 +148,7 @@
         .age-value {
             flex-grow: 1;
             text-align: left;
-            font-size: 9px;
+            font-size: 10px;
             color: #222;
         }
         .age-value {
@@ -199,7 +203,7 @@
 
         .prescription-table th,
         .prescription-table td {
-            font-size: 9px;
+            font-size: 10px;
             padding: 10px;
             text-align: left;
             vertical-align: top;
@@ -221,7 +225,7 @@
             font-weight: 500;
             color: #444;
             height: 30px;
-            font-size: 9px;
+            font-size: 11px;
         }
         .prescription-table th{
             border-bottom: 1px solid #d9d9d9;
@@ -271,7 +275,7 @@
         
 
         .prescribed-by-title {
-            font-size: 8px;
+            font-size: 10px;
             font-weight: 400;
             margin-bottom: 5px;
             color: #222;
@@ -283,12 +287,12 @@
         }
         .prescription-info-container .px-meta-data-right p,
         .prescription-info-container .px-meta-data-left p{
-            font-size: 10px;
+            font-size: 12px;
             color: #444;
         }
         .prescription-info-container .px-meta-data-right p strong,
         .prescription-info-container .px-meta-data-left p strong{
-            font-size: 10px;
+            font-size: 12px;
             color: #222;
         }
 
@@ -332,10 +336,11 @@
             display: flex;
             padding: 0 18px;
             padding-bottom: 18px;
+            gap: 10px;
         }
 
         .qr-container {
-            width: 45px;
+            width: 52px;
             height: 100%;
             flex-shrink: 0;
             display: flex;
@@ -345,8 +350,8 @@
         }
 
         .qr-container .qr-content {
-            width: 35px;
-            height: 38px;
+            width: 40px;
+            height: 42px;
 
         }
         .qr-container img {
@@ -355,17 +360,17 @@
 
         .qr-container p {
             margin-top: 3px;
-            font-size: 5px;
+            font-size: 6px;
             white-space: nowrap;
         }
 
         .signature-section {
-            font-size: 6.05px;
+            font-size: 8px;
             color: #222;
         }
 
         .signature-section p {
-            margin: 5px 0;
+            margin: 4px 0;
             line-height: 1.5;
         }
         .signature-section p:first-child{
@@ -382,7 +387,7 @@
             white-space: normal;
             overflow: visible;
             margin-bottom: 4px;
-            font-size: 9px;
+            font-size: 10px;
         }
 
         .truncate-text {
@@ -428,7 +433,6 @@
             display: table-footer-group;
         }
          .logo_url {
-            height: 30px;
             object-fit: contain;
         }
         .watermark-container {
