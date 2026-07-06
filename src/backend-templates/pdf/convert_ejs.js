@@ -181,7 +181,7 @@ const mockDataMap = {
     'hrt': '☑',
     'post_menopause': '☑',
     'suspicious_cervix': '☑',
-    'logo_url': 'https://d2pznqasld4zpy.cloudfront.net/common/logo.svg',
+    'logo_url': 'http://127.0.0.1:5500/src/backend-templates/pdf/logo.png',
     'prescriber_qualification': 'MBBS, BMedSci(Hons), nMRCGP, DFSRH, LOC IUD, DCD(Distinction), AGGM',
     'prescriber_registration_no': 'GMC - 3457052',
     'registration_no': 'GMC - 3457052',

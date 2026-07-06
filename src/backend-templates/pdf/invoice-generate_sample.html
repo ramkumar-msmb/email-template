@@ -28,6 +28,7 @@
             display: flex;
             flex-direction: column;
             page-break-after: always;
+            position: relative;
         }
 
         .header {
@@ -44,11 +45,16 @@
 
         .header-left {
             display: flex;
-            flex-direction: column;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
         }
 
         .header img {
-            width: 120px;
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 100%;
         }
 
         .header-line{
@@ -65,7 +71,7 @@
         }
 
         .clinic-details p {
-            font-size: 10px;
+            font-size: 11px;
             margin: 2px 0;
         }
         .clinic-details strong {
@@ -80,12 +86,12 @@
         }
         .prescription-info-container .px-meta-data-right p,
         .prescription-info-container .px-meta-data-left p{
-            font-size: 10px;
+            font-size: 12px;
             color: #444;
         }
         .prescription-info-container .px-meta-data-right p strong,
         .prescription-info-container .px-meta-data-left p strong{
-            font-size: 10px;
+            font-size: 12px;
             color: #222;
         }
 
@@ -117,7 +123,7 @@
         }
 
         .details-heading {
-            font-size: 9px;
+            font-size: 10px;
             font-weight: 600;
             margin-bottom: 10px;
             color: #222;
@@ -135,7 +141,7 @@
         .age {
             text-align: left;
             font-weight: 400;
-            font-size: 9px;
+            font-size: 10px;
             color: #444;
         }
 
@@ -144,7 +150,7 @@
         .age-value {
             flex-grow: 1;
             text-align: left;
-            font-size: 9px;
+            font-size: 10px;
             color: #222;
         }
         .age-value {
@@ -164,8 +170,7 @@
             overflow: hidden;
             border-radius: 10px;
             border: 0.5px solid #CBE3E3;
-            flex: 1;
-            min-height: 12cm;
+            /* min-height: 12cm; */
             max-height: 100%;
             position: relative;
         }
@@ -184,7 +189,7 @@
 
         table th,
         table td {
-            font-size: 9px;
+            font-size: 10px;
             padding: 10px;
             text-align: left;
             vertical-align: top;
@@ -207,7 +212,7 @@
             font-weight: 500;
             color: #444;
             height: 30px;
-            font-size: 9px;
+            font-size: 11px;
             border-bottom: 1px solid #d9d9d9;
         }
 
@@ -243,13 +248,13 @@
             justify-content: space-between;
             margin-bottom: 5px;
             color: #444;
-            font-size: 9px;
+            font-size: 11px;
         }
 
         .totals {
             display: flex;
             justify-content: space-between;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 600;
             border-top: 1px solid #d9d9d9;
             padding-top: 10px;
@@ -286,7 +291,7 @@
         <!-- HEADER -->
         <div class="header">
             <div class="header-left">
-                <img class="logo_url" src="https://d2pznqasld4zpy.cloudfront.net/common/logo.svg" alt="SendScript">
+                <img class="logo_url" src="http://127.0.0.1:5500/src/backend-templates/pdf/logo.png" alt="SendScript">
             </div>
             <div class="clinic-details">
                 <p><strong>INVOICE</strong></p>
@@ -369,8 +374,8 @@
         
 
         <!-- TABLE -->
+        <img src="http://127.0.0.1:5500/src/backend-templates/pdf/logo.png" class="watermark-container" alt="watermark-container">
         <div class="table-container" data-min-height="[Math.round(availableHeight)]">
-            <img src="https://d2pznqasld4zpy.cloudfront.net/common/logo.svg" class="watermark-container" alt="watermark-container">
             <table>
                 <thead>
                     <tr>

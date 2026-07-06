@@ -88,9 +88,16 @@
             z-index: 2;
         }
 
+        .header-logo {
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
         .header-logo img {
-            height: 22px;
+            height: auto;
             width: auto;
+            max-width: 100%;
         }
 
         .header-title {
@@ -113,7 +120,7 @@
             display: flex;
             justify-content: space-between;
             padding: 10px 20px;
-            font-size: 11px;
+            font-size: 12px;
             color: #444444;
             z-index: 2;
         }
@@ -450,12 +457,12 @@
             
                 <div class="page Mock Data">
                     <!-- Watermark Background Logo -->
-                    <img src="https://d2pznqasld4zpy.cloudfront.net/common/logo.svg" class="watermark-container" alt="watermark-container">
+                    <img src="http://127.0.0.1:5500/src/backend-templates/pdf/logo.png" class="watermark-container" alt="watermark-container">
 
                     <!-- Header -->
-                    <div class="header"><img src="https://d2pznqasld4zpy.cloudfront.net/common/logo.svg" class="watermark-container" alt="watermark-container">
+                    <div class="header"><img src="http://127.0.0.1:5500/src/backend-templates/pdf/logo.png" class="watermark-container" alt="watermark-container">
                         <div class="header-logo">
-                            <img class="logo_url" src="https://d2pznqasld4zpy.cloudfront.net/common/logo.svg" alt="SendScript">
+                            <img class="logo_url" src="http://127.0.0.1:5500/src/backend-templates/pdf/logo.png" alt="SendScript">
                         </div>
                         <div class="header-title">REQUEST FORM</div>
                     </div>

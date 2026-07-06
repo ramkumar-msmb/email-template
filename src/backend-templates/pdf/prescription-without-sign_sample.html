@@ -41,11 +41,15 @@
 
         .header-left {
             display: flex;
-            flex-direction: column;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
         }
 
         .header img {
-            width: 120px;
+            height: auto;
+            width: auto;
+            max-width: 100%;
         }
         .header-line{
             height: 1px;
@@ -330,6 +334,7 @@
             display: flex;
             padding: 0 18px;
             padding-bottom: 18px;
+            gap: 10px;
         }
 
         .qr-container {
@@ -458,7 +463,7 @@
             <div class="page Mock Data">
                 <div class="header">
                     <div class="header-left">
-                <img class="logo_url" src="https://d2pznqasld4zpy.cloudfront.net/common/logo.svg" alt="SendScript">
+                <img class="logo_url" src="http://127.0.0.1:5500/src/backend-templates/pdf/logo.png" alt="SendScript">
                     </div>
 
                     <div class="clinic-details">
@@ -542,7 +547,7 @@
                 </div>
 
                 <div class="prescription-table-container" style="min-height: 364px;" data-min-height="[Math.round(availableHeight)]">
-                    <img src="https://d2pznqasld4zpy.cloudfront.net/common/logo.svg" class="watermark-container" alt="watermark-container">
+                    <img src="http://127.0.0.1:5500/src/backend-templates/pdf/logo.png" class="watermark-container" alt="watermark-container">
                     <table class="prescription-table">
                         <thead>
                             <tr>

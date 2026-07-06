@@ -41,11 +41,16 @@
 
         .header-left {
             display: flex;
-            flex-direction: column;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
         }
 
         .header img {
-            width: 120px;
+            height: auto;
+            width: auto;
+            max-width: 100%;
+            max-height: 60px;
         }
         .header-line{
             height: 1px;
@@ -67,7 +72,7 @@
         }
 
         .clinic-details p {
-            font-size: 10px;
+            font-size: 11px;
             margin: 2px 0;
         }
         .clinic-details strong {
@@ -95,7 +100,7 @@
             width: 100%;
         }
         .details-box .comments{
-            font-size: 9px;
+            font-size: 12px;
             font-weight: 400;
             color: #444;
         }
@@ -113,7 +118,7 @@
 
 
         .details-heading {
-            font-size: 9px;
+            font-size: 12px;
             font-weight: 600;
             margin-bottom: 10px;
             color: #222;
@@ -134,8 +139,9 @@
         .age {
             text-align: left;
             font-weight: 400;
-            font-size: 9px;
+            font-size: 12px;
             color: #444;
+            min-width: 105px !important;
         }
 
 
@@ -144,7 +150,7 @@
         .age-value {
             flex-grow: 1;
             text-align: left;
-            font-size: 9px;
+            font-size: 12px;
             color: #222;
         }
         .age-value {
@@ -199,7 +205,7 @@
 
         .prescription-table th,
         .prescription-table td {
-            font-size: 9px;
+            font-size: 13px;
             padding: 10px;
             text-align: left;
             vertical-align: top;
@@ -222,7 +228,7 @@
             font-weight: 500;
             color: #444;
             height: 30px;
-            font-size: 9px;
+            font-size: 13px;
         }
         .prescription-table th{
             border-bottom: 1px solid #d9d9d9;
@@ -240,7 +246,7 @@
 
         .prescription-table th:nth-child(3),
         .prescription-table td:nth-child(3) {
-            width: 14%;
+            width: 12%;
         }
 
         .prescription-table th:nth-child(4),
@@ -261,7 +267,7 @@
         }
 
         .medicine-instruction {
-            font-size: 9px;
+            font-size: 12px;
             color: #1B3F6D;
         }
 
@@ -272,7 +278,7 @@
         
 
         .prescribed-by-title {
-            font-size: 8px;
+            font-size: 12px;
             font-weight: 400;
             margin-bottom: 5px;
             color: #222;
@@ -284,12 +290,12 @@
         }
         .prescription-info-container .px-meta-data-right p,
         .prescription-info-container .px-meta-data-left p{
-            font-size: 10px;
+            font-size: 14px;
             color: #444;
         }
         .prescription-info-container .px-meta-data-right p strong,
         .prescription-info-container .px-meta-data-left p strong{
-            font-size: 10px;
+            font-size: 14px;
             color: #222;
         }
 
@@ -306,7 +312,7 @@
 
         .doctor-details table {
             width: 100%;
-            font-size: 9px;
+            font-size: 12px;
             border-collapse: collapse;
         }
 
@@ -333,10 +339,11 @@
             display: flex;
             padding: 0 18px;
             padding-bottom: 18px;
+            gap: 20px;
         }
 
         .qr-container {
-            width: 45px;
+            width: 52px;
             height: 100%;
             flex-shrink: 0;
             display: flex;
@@ -346,9 +353,8 @@
         }
 
         .qr-container .qr-content {
-            width: 35px;
-            height: 38px;
-
+            width: 44px;
+            height: 48px;
         }
         .qr-container img {
             width: 100%;
@@ -356,17 +362,17 @@
 
         .qr-container p {
             margin-top: 3px;
-            font-size: 5px;
+            font-size: 8px;
             white-space: nowrap;
         }
 
         .signature-section {
-            font-size: 6.05px;
+            font-size: 10px;
             color: #222;
         }
 
         .signature-section p {
-            margin: 5px 0;
+            margin: 4px 0;
             line-height: 1.5;
         }
         .signature-section p:first-child{
@@ -383,7 +389,7 @@
             white-space: normal;
             overflow: visible;
             margin-bottom: 4px;
-            font-size: 9px;
+            font-size: 13px;
         }
 
         .truncate-text {
@@ -429,7 +435,6 @@
             display: table-footer-group;
         }
          .logo_url {
-            height: 30px;
             object-fit: contain;
         }
         .watermark-container {
@@ -461,7 +466,7 @@
             <div class="page Mock Data">
                 <div class="header">
                     <div class="header-left">
-                <img class="logo_url" src="https://d2pznqasld4zpy.cloudfront.net/common/logo.svg" alt="SendScript">
+                <img class="logo_url" src="http://127.0.0.1:5500/src/backend-templates/pdf/logo.png" alt="SendScript">
                     </div>
 
                     <div class="clinic-details">
@@ -490,11 +495,7 @@
                             <p class="dob-age">
                                 <strong>DOB:</strong> <span>
                                     08 Jun 2026
-                                        <span class="age" style="color: #444; font-weight: 500; margin-left: 10px;"> Age:
-                                        </span>
-                                        <span class="age-value">
-                                            41
-                                        </span>
+                                        (41)
                                         <span class="age" style="color: #444; font-weight: 500; margin-left: 10px;"> Gender:
                                         </span>
                                         <span class="age-value">
@@ -502,16 +503,14 @@
                                         </span>
                                 </span>
                             </p>
+                            <p><strong>Contact:</strong> <span>
+                                +91 +44 20 7946 0958
+                                </span></p>
                             <p><strong >Address:</strong>
                                 <span>
                                     123 High Street, Medical District, London, SW1A 1AA
-                                    <br>
-                                    United Kingdom
                                 </span>
                             </p>
-                            <p><strong>Mobile Number:</strong> <span>
-                                +91 +44 20 7946 0958
-                                </span></p>
                         </div>
                     </div>
 
@@ -523,13 +522,7 @@
                                     HealthFirst Pharmacy
                                 </span>
                             </p>
-                            <p><strong style="min-width: 59px;">Pharmacy Address:</strong> 
-                                <span>
-                                     123 High Street, Medical District, London, SW1A 1AA
-                                    <br>
-                                    United Kingdom
-                                </span>
-                            </p>
+                            
                             <p><strong style="min-width: 59px;">Email Address:</strong> 
                                 <span>
                                     info@healthfirstpharmacy.co.uk
@@ -540,12 +533,19 @@
                                     +44 20 7946 0958
                                 </span>
                             </p>
+                            <p><strong style="min-width: 59px;">Pharmacy Address:</strong> 
+                                <span>
+                                     123 High Street, Medical District, London, SW1A 1AA
+                                    <br>
+                                    United Kingdom
+                                </span>
+                            </p>
                         </div>
                     </div>
                 </div>
 
-                <div class="prescription-table-container">
-                    <img src="https://d2pznqasld4zpy.cloudfront.net/common/logo.svg" class="watermark-container" alt="watermark-container">
+                <div class="prescription-table-container" data-min-height="[Math.round(availableHeight)]">
+                    <img src="http://127.0.0.1:5500/src/backend-templates/pdf/logo.png" class="watermark-container" alt="watermark-container">
                     <table class="prescription-table">
                         <thead>
                             <tr>
@@ -638,14 +638,6 @@
             </div>
             
         
-    <script>
-        document.querySelectorAll('.prescription-table-container').forEach(container => {
-            const minHeight = container.getAttribute('data-min-height');
-            if (minHeight) {
-                container.style.minHeight = minHeight + 'px';
-            }
-        });
-    </script>
 </body>
 
 </html>

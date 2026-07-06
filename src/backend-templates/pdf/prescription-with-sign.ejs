@@ -50,6 +50,7 @@
             height: auto;
             width: auto;
             max-width: 100%;
+            max-height: 60px;
         }
         .header-line{
             height: 1px;
@@ -96,7 +97,7 @@
             font-size: 12px;
         }
         .details-box .comments{
-            font-size: 9px;
+            font-size: 12px;
             font-weight: 400;
             color: #444;
         }
@@ -114,7 +115,7 @@
 
 
         .details-heading {
-            font-size: 10px;
+            font-size: 12px;
             font-weight: 600;
             margin-bottom: 10px;
             color: #222;
@@ -135,8 +136,9 @@
         .age {
             text-align: left;
             font-weight: 400;
-            font-size: 10px;
+            font-size: 12px;
             color: #444;
+            min-width: 80px !important;
         }
 
 
@@ -145,7 +147,7 @@
         .age-value {
             flex-grow: 1;
             text-align: left;
-            font-size: 10px;
+            font-size: 12px;
             color: #222;
         }
         .age-value {
@@ -200,7 +202,7 @@
 
         .prescription-table th,
         .prescription-table td {
-            font-size: 10px;
+            font-size: 13px;
             padding: 10px;
             text-align: left;
             vertical-align: top;
@@ -223,7 +225,7 @@
             font-weight: 500;
             color: #444;
             height: 30px;
-            font-size: 11px;
+            font-size: 13px;
         }
         .prescription-table th{
             border-bottom: 1px solid #d9d9d9;
@@ -262,7 +264,7 @@
         }
 
         .medicine-instruction {
-            font-size: 9px;
+            font-size: 12px;
             color: #1B3F6D;
         }
 
@@ -273,7 +275,7 @@
         
 
         .prescribed-by-title {
-            font-size: 10px;
+            font-size: 12px;
             font-weight: 400;
             margin-bottom: 5px;
             color: #222;
@@ -285,12 +287,12 @@
         }
         .prescription-info-container .px-meta-data-right p,
         .prescription-info-container .px-meta-data-left p{
-            font-size: 12px;
+            font-size: 14px;
             color: #444;
         }
         .prescription-info-container .px-meta-data-right p strong,
         .prescription-info-container .px-meta-data-left p strong{
-            font-size: 12px;
+            font-size: 14px;
             color: #222;
         }
 
@@ -307,7 +309,7 @@
 
         .doctor-details table {
             width: 100%;
-            font-size: 9px;
+            font-size: 12px;
             border-collapse: collapse;
         }
 
@@ -334,7 +336,7 @@
             display: flex;
             padding: 0 18px;
             padding-bottom: 18px;
-            gap: 10px;
+            gap: 20px;
         }
 
         .qr-container {
@@ -348,9 +350,8 @@
         }
 
         .qr-container .qr-content {
-            width: 40px;
-            height: 42px;
-
+            width: 44px;
+            height: 48px;
         }
         .qr-container img {
             width: 100%;
@@ -358,12 +359,12 @@
 
         .qr-container p {
             margin-top: 3px;
-            font-size: 6px;
+            font-size: 8px;
             white-space: nowrap;
         }
 
         .signature-section {
-            font-size: 8px;
+            font-size: 10px;
             color: #222;
         }
 
@@ -385,7 +386,7 @@
             white-space: normal;
             overflow: visible;
             margin-bottom: 4px;
-            font-size: 10px;
+            font-size: 13px;
         }
 
         .truncate-text {
@@ -558,11 +559,7 @@
                                     <%= new Date(new Date(patient_details?.patient_dob).setDate(new
                                         Date(patient_details?.patient_dob).getDate())).toLocaleDateString('en-GB')
                                         %>
-                                        <span class="age" style="color: #444; font-weight: 500; margin-left: 10px;"> Age:
-                                        </span>
-                                        <span class="age-value">
-                                            <%= patient_age %>
-                                        </span>
+                                        (<%= patient_age %>)
                                         <span class="age" style="color: #444; font-weight: 500; margin-left: 10px;"> Gender:
                                         </span>
                                         <span class="age-value">
@@ -570,6 +567,9 @@
                                         </span>
                                 </span>
                             </p>
+                            <p><strong>Contact:</strong> <span>
+                                <%= patient_details?.patient_country_code %> <%= patient_details?.patient_mobile %>
+                                </span></p>
                             <p><strong >Address:</strong>
                                 <span>
                                     <%= [
@@ -581,9 +581,7 @@
                                     ].filter(Boolean).join(', ') %>
                                 </span>
                             </p>
-                            <p><strong>Mobile Number:</strong> <span>
-                                <%= patient_details?.patient_country_code %> <%= patient_details?.patient_mobile %>
-                                </span></p>
+                            
                         </div>
                     </div>
 
@@ -593,6 +591,16 @@
                             <p><strong style="min-width: 59px;">Clinic Name:</strong>
                                 <span>
                                     <%= prescription.clinic_name %>
+                                </span>
+                            </p>
+                            <p><strong style="min-width: 59px;">Email Address:</strong> 
+                                <span>
+                                    <%= prescription.clinic_email %>
+                                </span>
+                            </p>
+                            <p><strong style="min-width: 59px;">Telephone:</strong> 
+                                <span>
+                                    <%= prescription.clinic_contact_number %>
                                 </span>
                             </p>
                             <p><strong style="min-width: 59px;">Clinic Address:</strong> 
@@ -606,16 +614,7 @@
                                     ].filter(Boolean).join(', ') %>
                                 </span>
                             </p>
-                            <p><strong style="min-width: 59px;">Email Address:</strong> 
-                                <span>
-                                    <%= prescription.clinic_email %>
-                                </span>
-                            </p>
-                            <p><strong style="min-width: 59px;">Telephone:</strong> 
-                                <span>
-                                    <%= prescription.clinic_contact_number %>
-                                </span>
-                            </p>
+                            
                         </div>
                     </div>
                 </div>
