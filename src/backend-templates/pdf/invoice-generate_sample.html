@@ -55,6 +55,7 @@
             width: auto;
             height: auto;
             max-width: 100%;
+            max-height: 60px;
         }
 
         .header-line{
@@ -71,11 +72,11 @@
         }
 
         .clinic-details p {
-            font-size: 11px;
+            font-size: 13px;
             margin: 2px 0;
         }
         .clinic-details strong {
-            font-size: 15px;
+            font-size: 18px;
             margin: 2px 0;
         }
 
@@ -86,12 +87,12 @@
         }
         .prescription-info-container .px-meta-data-right p,
         .prescription-info-container .px-meta-data-left p{
-            font-size: 12px;
+            font-size: 14px;
             color: #444;
         }
         .prescription-info-container .px-meta-data-right p strong,
         .prescription-info-container .px-meta-data-left p strong{
-            font-size: 12px;
+            font-size: 14px;
             color: #222;
         }
 
@@ -123,7 +124,7 @@
         }
 
         .details-heading {
-            font-size: 10px;
+            font-size: 13px;
             font-weight: 600;
             margin-bottom: 10px;
             color: #222;
@@ -134,6 +135,7 @@
             display: flex;
             justify-content: space-between;
             gap: 5px;
+            margin-block: 0px;
         }
 
         .patient-details strong,
@@ -141,16 +143,18 @@
         .age {
             text-align: left;
             font-weight: 400;
-            font-size: 10px;
+            font-size: 12px;
             color: #444;
         }
-
+        .patient-details strong{
+            min-width: 65px;
+        }
         .patient-details span,
         .appointment-details span,
         .age-value {
             flex-grow: 1;
             text-align: left;
-            font-size: 10px;
+            font-size: 12px;
             color: #222;
         }
         .age-value {
@@ -189,7 +193,7 @@
 
         table th,
         table td {
-            font-size: 10px;
+            font-size: 13px;
             padding: 10px;
             text-align: left;
             vertical-align: top;
@@ -212,7 +216,7 @@
             font-weight: 500;
             color: #444;
             height: 30px;
-            font-size: 11px;
+            font-size: 13px;
             border-bottom: 1px solid #d9d9d9;
         }
 
@@ -248,13 +252,13 @@
             justify-content: space-between;
             margin-bottom: 5px;
             color: #444;
-            font-size: 11px;
+            font-size: 13px;
         }
 
         .totals {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
             border-top: 1px solid #d9d9d9;
             padding-top: 10px;
@@ -320,12 +324,12 @@
                     <p class="dob-age">
                         <strong>DOB:</strong>
                         <span>
-                          8 June 2026
-                            <span class="age" style="color: #444; font-weight: 500; margin-left: 10px;"> Age: </span>
-                            <span class="age-value">
-                                41
-                            </span>
+                          8 June 2026 (41)
                         </span>
+                    </p>
+                     <p>
+                        <strong>Contact:</strong>
+                        <span>+91 +44 20 7946 0958</span>
                     </p>
                     <p>
                         <strong>Address:</strong>
@@ -333,10 +337,7 @@
                             123 High Street, Medical District, London, SW1A 1AA
                         </span>                          
                     </p>
-                    <p>
-                        <strong>Contact Number:</strong>
-                        <span>+91 +44 20 7946 0958</span>
-                    </p>
+                   
                 </div>
             </div>
         
@@ -347,26 +348,22 @@
                 <div class="details-heading">[entityLabel] Information</div>
                 <div class="appointment-details">
                     <p>
-                        <strong style="min-width: 59px;">[entityLabel] Name:</strong>
+                        <strong style="min-width: 100px;">[entityLabel] Name:</strong>
                         <span>HealthFirst Pharmacy</span>
                     </p>
                     <p>
-                        <strong style="min-width: 59px;">[entityLabel] Address:</strong>
-                        <span>
-                            123 High Street, Medical District, London, SW1A 1AA
-                        </span>
-                    </p>
-                    <p>
-                        <strong style="min-width: 59px;">Email Address:</strong>
+                        <strong style="min-width: 100px;">Email:</strong>
                         <span>info@healthfirstpharmacy.co.uk</span>
                     </p>
                     <p>
-                        <strong style="min-width: 59px;">Telephone:</strong>
+                        <strong style="min-width: 100px;">Telephone:</strong>
                         <span>+44 20 7946 0958</span>
                     </p>
                     <p>
-                        <strong style="min-width: 59px;">Postal Code:</strong>
-                        <span>SW1A 1AA</span>
+                        <strong style="min-width: 100px;">Address:</strong>
+                        <span>
+                            123 High Street, Medical District, London, SW1A 1AA
+                        </span>
                     </p>
                 </div>
             </div>
@@ -426,14 +423,6 @@
         
     </div>
     
-    <script>
-        document.querySelectorAll('.table-container').forEach(container => {
-            const minHeight = container.getAttribute('data-min-height');
-            if (minHeight) {
-                container.style.minHeight = minHeight + 'px';
-            }
-        });
-    </script>
 </body>
 
 </html>

@@ -55,6 +55,7 @@
             width: auto;
             height: auto;
             max-width: 100%;
+            max-height: 60px;
         }
 
         .header-line{
@@ -71,11 +72,11 @@
         }
 
         .clinic-details p {
-            font-size: 11px;
+            font-size: 13px;
             margin: 2px 0;
         }
         .clinic-details strong {
-            font-size: 15px;
+            font-size: 18px;
             margin: 2px 0;
         }
 
@@ -86,12 +87,12 @@
         }
         .prescription-info-container .px-meta-data-right p,
         .prescription-info-container .px-meta-data-left p{
-            font-size: 12px;
+            font-size: 14px;
             color: #444;
         }
         .prescription-info-container .px-meta-data-right p strong,
         .prescription-info-container .px-meta-data-left p strong{
-            font-size: 12px;
+            font-size: 14px;
             color: #222;
         }
 
@@ -123,7 +124,7 @@
         }
 
         .details-heading {
-            font-size: 10px;
+            font-size: 13px;
             font-weight: 600;
             margin-bottom: 10px;
             color: #222;
@@ -134,6 +135,7 @@
             display: flex;
             justify-content: space-between;
             gap: 5px;
+            margin-block: 0px;
         }
 
         .patient-details strong,
@@ -141,16 +143,18 @@
         .age {
             text-align: left;
             font-weight: 400;
-            font-size: 10px;
+            font-size: 12px;
             color: #444;
         }
-
+        .patient-details strong{
+            min-width: 65px;
+        }
         .patient-details span,
         .appointment-details span,
         .age-value {
             flex-grow: 1;
             text-align: left;
-            font-size: 10px;
+            font-size: 12px;
             color: #222;
         }
         .age-value {
@@ -189,7 +193,7 @@
 
         table th,
         table td {
-            font-size: 9px;
+            font-size: 13px;
             padding: 10px;
             text-align: left;
             vertical-align: top;
@@ -212,7 +216,7 @@
             font-weight: 500;
             color: #444;
             height: 30px;
-            font-size: 9px;
+            font-size: 13px;
             border-bottom: 1px solid #d9d9d9;
         }
 
@@ -244,13 +248,13 @@
             justify-content: space-between;
             margin-bottom: 5px;
             color: #444;
-            font-size: 11px;
+            font-size: 13px;
         }
 
         .totals {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
             border-top: 1px solid #d9d9d9;
             padding-top: 10px;
@@ -285,7 +289,7 @@
     const items = scans || [];
     let currentPage = 1;
     let itemsProcessed = 0;
-    let availableHeight = 500.54; // Base available height for table
+    let availableHeight = 850; // Base available height for table
     
     // Calculate address height impact once before the loop
     const addressParts = [
@@ -297,9 +301,9 @@
     ].filter(Boolean);
 
     const fullAddress = addressParts.join(', ');
-    if (fullAddress.length > 72) {
-        const dividedValue = Math.floor(fullAddress.length / 36);
-        availableHeight -= (12 * dividedValue) + 10; // 10px is bottom margin of availableHeight
+    if (fullAddress > 85) {
+        const extraLines = Math.ceil(fullAddress / 43) - 1;
+        availableHeight -= (extraLines * 13) + 10;
     }
     
     // Loop through pages using while loop for dynamic pagination
@@ -336,9 +340,7 @@
                     <p class="dob-age">
                         <strong>DOB:</strong>
                         <span>
-                          <%= patient.dob %>
-                            <span class="age" style="color:#444;font-weight:500;margin-left:10px;">Age:</span>
-                            <span class="age-value"><%= patient.patient_age %></span>
+                          <%= patient.dob %> <%= patient_age %>)
                         </span>
                     </p>
                     <p style="line-height: 16px;">
@@ -353,7 +355,7 @@
                       </p>
                       
                       <p>
-                        <strong>Contact Number:</strong>
+                        <strong>Contact:</strong>
                         <span><%= patient?.country_code %> <%= patient?.mobile?.trim() || '-' %></span>
                     </p>
                 </div>
@@ -362,12 +364,22 @@
             <div class="details-box">
                 <div class="details-heading">Clinic Information</div>
                 <div class="appointment-details">
-                    <p><strong style="min-width: 59px;">Clinic Name:</strong>
+                    <p><strong style="min-width: 100px;">Clinic Name:</strong>
                         <span>
                             <%= patient.site_name %>
                         </span>
                     </p>
-                    <p><strong style="min-width: 59px;">Clinic Address:</strong> 
+                    <p><strong style="min-width: 100px;">Email:</strong> 
+                        <span>
+                            <%= patient.site_email %>
+                        </span>
+                    </p>
+                    <p><strong style="min-width: 100px;">Telephone:</strong> 
+                        <span>
+                            <%= patient.site_contact_number %>
+                        </span>
+                    </p>
+                    <p><strong style="min-width: 100px;">Clinic Address:</strong> 
                         <span>
                             <%= [
                               patient.site_address_line_1,
@@ -375,23 +387,9 @@
                               patient.site_address_line_3,
                               patient.site_city,
                               patient.site_county,
-                              patient.site_country
+                              patient.site_country,
+                              patient.site_postal_code,
                             ].filter(Boolean).join(', ') %>
-                        </span>
-                    </p>
-                    <p><strong style="min-width: 59px;">Email Address:</strong> 
-                        <span>
-                            <%= patient.site_email %>
-                        </span>
-                    </p>
-                    <p><strong style="min-width: 59px;">Telephone:</strong> 
-                        <span>
-                            <%= patient.site_contact_number %>
-                        </span>
-                    </p>
-                    <p><strong style="min-width: 59px;">Postal Code:</strong> 
-                        <span>
-                            <%= patient.site_postal_code %>
                         </span>
                     </p>
                 </div>
@@ -422,12 +420,12 @@
 
                             // Estimate the height based on scan name + body part length
                             const scanNameText = `${item.scan_name || ''}${item.body_part ? ' - ' + item.body_part : ''}`;
-                            if (scanNameText.length > 197) {
-                                estimatedHeight += 48;
-                            } else if (scanNameText.length > 131) {
-                                estimatedHeight += 24;
-                            } else if (scanNameText.length > 65) {
-                                estimatedHeight += 12;
+                            if (scanNameText && scanNameText.length > 156) {
+                                estimatedHeight += 52;
+                            } else if (scanNameText && scanNameText.length > 104) {
+                                estimatedHeight += 39;
+                            } else if (scanNameText && scanNameText.length > 52) {
+                                estimatedHeight += 26;
                             }
 
                             // Break if adding this row would exceed available height, but only if we already have at least one row in the current page
@@ -477,14 +475,6 @@
     <% 
         currentPage++;
     } %>
-    <script>
-        document.querySelectorAll('.table-container').forEach(container => {
-            const minHeight = container.getAttribute('data-min-height');
-            if (minHeight) {
-                container.style.minHeight = minHeight + 'px';
-            }
-        });
-    </script>
 </body>
 
 </html>
