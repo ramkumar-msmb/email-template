@@ -5,7 +5,7 @@
     <meta charset='UTF-8'>
     <title>Pathology Request Form</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap'); */
 
         @page {
             size: A4;
@@ -16,7 +16,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Arial', sans-serif;
         }
 
         body {
@@ -44,6 +44,150 @@
             /* padding: 16px 18px; */
         }
 
+        .header {
+            color: #222;
+            border-bottom: 1px solid #D9D9D9;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 18px;
+        }
+
+        .header-left {
+            display: flex;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header img {
+            height: auto;
+            width: auto;
+            max-width: 100%;
+            max-height: 60px;
+        }
+        .clinic-details {
+            text-align: right;
+            line-height: 1.4;
+        }
+
+        .clinic-details p {
+            font-size: 11px;
+            margin: 2px 0;
+        }
+        .clinic-details strong {
+            font-size: 15px;
+            margin: 2px 0;
+        }
+         .prescription-info-container{
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 18px;
+        }
+        .prescription-info-container .px-meta-data-right p,
+        .prescription-info-container .px-meta-data-left p{
+            font-size: 14px;
+            color: #444;
+        }
+        .prescription-info-container .px-meta-data-right p strong,
+        .prescription-info-container .px-meta-data-left p strong{
+            font-size: 14px;
+            color: #222;
+        }
+
+        .details-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 18px;
+            padding-top: 2px;
+            align-items: stretch;
+            gap: 12px;
+        }
+
+        .details-box {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            font-size: 12px;
+        }
+        .details-box .comments{
+            font-size: 12px;
+            font-weight: 400;
+            color: #444;
+        }
+
+        .patient-details,
+        .appointment-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 12px;
+            border-radius: 6px;
+            border: 0.5px solid #D9D9D9;
+            flex-grow: 1;
+        }
+
+        .patient-details,
+        .appointment-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 12px;
+            border-radius: 6px;
+            border: 0.5px solid #D9D9D9;
+            flex-grow: 1;
+        }
+
+
+        .details-heading {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+
+
+        .patient-details p,
+        .appointment-details p {
+            display: flex;
+            justify-content: space-between;
+            gap: 5px;
+        }
+
+
+        .patient-details strong,
+        .appointment-details strong,
+        .age {
+            text-align: left;
+            font-weight: 400;
+            font-size: 12px;
+            color: #444;
+            min-width: 80px !important;
+        }
+
+
+        .patient-details span,
+        .appointment-details span,
+        .age-value {
+            flex-grow: 1;
+            text-align: left;
+            font-size: 12px;
+            color: #222;
+        }
+        .age-value {
+        margin-left: 5px;
+        }
+
+        .dob-age {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
         .header-section {
             display: flex;
             justify-content: space-between;
@@ -72,7 +216,7 @@
         }
 
         .form-title {
-            font-size: 15px;
+            font-size: 18px;
             font-weight: 700;
             color: #1F1F1F;
             text-transform: uppercase;
@@ -84,13 +228,12 @@
             align-items: center;
             padding-inline:18px;
             padding-bottom: 8px;
-            font-size: 10px;
+            font-size: 14px;
         }
 
         .meta-info {
             display: flex;
             flex-direction: column;
-            gap: 6px;
         }
 
         .meta-row {
@@ -132,7 +275,7 @@
         }
 
         .card-title {
-            font-size: 9px;
+            font-size: 13px;
             font-weight: 600;
             color: #222222;
             margin-bottom: 10px;
@@ -179,7 +322,7 @@
         .main-content {
             display: flex;
             gap: 20px;
-            margin-top: 25px;
+            margin-top: 2px;
             flex: 1;
             padding-inline:18px;
             /* allow growing */
@@ -198,7 +341,7 @@
         .tests-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 9px;
+            font-size: 13px;
             position: relative;
             z-index: 1;
         }
@@ -231,7 +374,7 @@
             border: 1px solid #CBE3E3;
             border-radius: 12px;
             padding: 12px;
-            font-size: 9px;
+            font-size: 13px;
             color: #444444;
             line-height: 1.6;
         }
@@ -246,7 +389,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            font-size: 9px;
+            font-size: 13px;
             color: #444444;
             margin-top: 12px;
         }
@@ -258,8 +401,8 @@
         }
 
         .checkbox-icon {
-            width: 10px;
-            height: 10px;
+            width: 14px;
+            height: 14px;
             border: 1.5px solid #444444;
             border-radius: 50%;
             display: flex;
@@ -268,8 +411,8 @@
         }
 
         .checkbox-icon svg {
-            width: 10px;
-            height: 10px;
+            width: 14px;
+            height: 14px;
             color: transparent;
         }
 
@@ -282,7 +425,7 @@
         }
 
         .clinical-text-block {
-            font-size: 9px;
+            font-size: 13px;
             line-height: 1.6;
             color: #444444;
             margin-top: 12px;
@@ -308,7 +451,7 @@
             background-color: #D9D9D9;
         }
         .prescribed-title {
-            font-size: 9px;
+            font-size: 13px;
             font-weight: 600;
             color: #222222;
             margin-bottom: 8px;
@@ -317,7 +460,7 @@
         .prescriber-info {
             display: flex;
             justify-content: space-between;
-            font-size: 8px;
+            font-size: 12px;
             padding: 10px;
             border-radius: 8px;
             border: 1px solid #D9D9D9;
@@ -365,7 +508,7 @@
         }
 
         .signature-details {
-            font-size: 8px;
+            font-size: 11px;
             color: #444444;
             line-height: 1.8;
             flex: 1;
@@ -425,101 +568,87 @@
                 <% const isFirstPage=pageIndex===0; const availableHeight=isFirstPage ? AVAILABLE_HEIGHT_FIRST_PAGE :
                     AVAILABLE_HEIGHT_OTHER_PAGES; let currentHeight=0; let itemsInThisPage=0; let isLastPage=false; %>
                     <div class='page'>
-                        <!-- Header -->
-                        <header class='header-section'>
-                            <div class='logo-box'>
-                                <img src='<%= typeof logo_url !== "undefined" && logo_url ? logo_url : "https://dtl3fe7urqkwq.cloudfront.net/logo.png" %>'
-                                    class='logo-img' alt='Logo'>
+                        <div class="header">
+                            <div class="header-left">
+                                <img class="logo_url" src="<%= logo_url || 'https://dtl3fe7urqkwq.cloudfront.net/logo.png' %>" alt="SendScript">
                             </div>
-                            <div class='form-title'>PATHOLOGY REQUEST FORM</div>
-                        </header>
-                        <div class='meta-section'>
-                            <div class='meta-info'>
-                                <div class="meta-row">
-                                    <span class="meta-label">Order Number:</span>
-                                    <span class="meta-value">
-                                        <%= typeof order_number !=='undefined' ? order_number : '{order_number}' %>
-                                    </span>
-                                </div>
-                                <div class="meta-row">
-                                    <span class="meta-label">Date:</span>
-                                    <span class="meta-value">
-                                        <%= typeof date !=='undefined' ? formatDate(date) : '{date}' %>
-                                    </span>
-                                </div>
+                        
+                            <div class="clinic-details">
+                                <p><strong>PATHOLOGY REQUEST FORM</strong></p>
+                                <p>Powered by SendScript</p>
                             </div>
-                            <div class='lab-provider'>
-                                Lab Provider Name: <strong>
-                                    <%= typeof lab_provider_name !=='undefined' ? lab_provider_name
-                                        : '{lab_provider_name}' %>
-                                </strong>
+                        </div>
+                        <div class="prescription-info-container">
+                            <div class="px-meta-data-right">
+                                <p>Order Number: <strong> <%= typeof order_number !=='undefined' ? order_number : '{order_number}' %> </strong></p>
+                                <p>Date: <strong> <%= typeof date !=='undefined' ? formatDate(date) : '{date}' %> </strong></p>
+                            </div>
+                            <div class="px-meta-data-left">
+                                <p>Lab Provider Name: <strong><%= typeof lab_provider_name !=='undefined' ? lab_provider_name : '{lab_provider_name}' %> </strong></p>
                             </div>
                         </div>
                          <div class="header-line"></div>
                         <% if (isFirstPage || testsList.length===0) { %>
-                            <section class='info-cards-section'>
-                                <div class='info-card-col'>
-                                    <div class='card-title'>Patient Details</div>
-                                    <div class='info-card patient-grid'>
-                                        <span class='grid-label'>Full Name:</span>
-                                        <span class='grid-value full-span'>
-                                            <%= typeof patient_name !=='undefined' ? patient_name : '{patient_name}' %>
-                                        </span>
-
-                                        <span class='grid-label'>Gender:</span>
-                                        <span class='grid-value'>
-                                            <%= typeof patient_gender !=='undefined' ? patient_gender : '{gender}' %>
-                                        </span>
-
-                                        <span class='grid-label'>Mobile Number:</span>
-                                        <span class='grid-value'>
+                            <div class="details-container">
+                                <div class="details-box">
+                                    <div class="details-heading">Patient Details</div>
+                                    <div class="patient-details">
+                                        <p><strong>Full Name:</strong> <span>
+                                                <%= typeof patient_name !=='undefined' ? patient_name : '{patient_name}' %>
+                                            </span>
+                                        </p>
+                                        <p class="dob-age">
+                                            <strong>DOB:</strong> <span>
+                                                <%= typeof patient_dob !=='undefined' ? formatDate(patient_dob) : '{dob}' %>
+                                                    (<%= typeof patient_age !=='undefined' ? patient_age : '{age}' %>)
+                                                    <span class="age" style="color: #444; font-weight: 500; margin-left: 10px;"> Gender:
+                                                    </span>
+                                                    <span class="age-value">
+                                                        <%= typeof patient_gender !=='undefined' ? patient_gender : '{gender}' %>
+                                                    </span>
+                                            </span>
+                                        </p>
+                                        <p><strong>Contact:</strong> <span>
                                             <%= typeof patient_mobile !== 'undefined' ? `${patient_country_code || ''} ${patient_mobile}` : '{mobile}' %>
-                                        </span>
-
-                                        <span class='grid-label'>DOB:</span>
-                                        <span class='grid-value'>
-                                            <%= typeof patient_dob !=='undefined' ? formatDate(patient_dob) : '{dob}' %>
-                                        </span>
-
-                                        <span class='grid-label'>Age:</span>
-                                        <span class='grid-value'>
-                                            <%= typeof patient_age !=='undefined' ? patient_age : '{age}' %>
-                                        </span>
-
-                                        <span class='grid-label' style="align-self: start;">Address:</span>
-                                        <span class='grid-value full-span'>
-                                            <%= typeof patient_address !=='undefined' ? patient_address : '{address}' %>
-                                        </span>
+                                            </span></p>
+                                        <p><strong >Address:</strong>
+                                            <span>
+                                                <%= typeof patient_address !=='undefined' ? patient_address : '{address}' %>
+                                            </span>
+                                        </p>
+                                        
                                     </div>
                                 </div>
 
-                                <div class='info-card-col'>
-                                    <div class='card-title'>Clinic Information</div>
-                                    <div class='info-card clinic-grid'>
-                                        <span class='grid-label'>Clinic Name:</span>
-                                        <span class='grid-value'>
-                                            <%= typeof clinic_name !=='undefined' ? clinic_name : '{clinic_name}' %>
-                                        </span>
-
-                                        <span class='grid-label' style="align-self: start;">Clinic Address:</span>
-                                        <span class='grid-value'>
-                                            <%= typeof clinic_address !=='undefined' ? clinic_address
-                                                : '{clinic_address}' %>
-                                        </span>
-
-                                        <span class='grid-label'>Email Address:</span>
-                                        <span class='grid-value'>
-                                            <%= typeof clinic_email !=='undefined' ? clinic_email : '{clinic_email}' %>
-                                        </span>
-
-                                        <span class='grid-label'>Telephone:</span>
-                                        <span class='grid-value'>
-                                            <%= typeof clinic_telephone !=='undefined' ? clinic_telephone
+                                <div class="details-box">
+                                    <div class="details-heading">Clinic Information</div>
+                                    <div class="appointment-details">
+                                        <p><strong style="min-width: 59px;">Clinic Name:</strong>
+                                            <span>
+                                                <%= typeof clinic_name !=='undefined' ? clinic_name : '{clinic_name}' %>
+                                            </span>
+                                        </p>
+                                        <p><strong style="min-width: 59px;">Email:</strong> 
+                                            <span>
+                                                <%= typeof clinic_email !=='undefined' ? clinic_email : '{clinic_email}' %>
+                                            </span>
+                                        </p>
+                                        <p><strong style="min-width: 59px;">Telephone:</strong> 
+                                            <span>
+                                                <%= typeof clinic_telephone !=='undefined' ? clinic_telephone
                                                 : '{clinic_telephone}' %>
-                                        </span>
+                                            </span>
+                                        </p>
+                                        <p><strong style="min-width: 59px;">Clinic Address:</strong> 
+                                            <span>
+                                                <%= typeof clinic_address !=='undefined' ? clinic_address
+                                                : '{clinic_address}' %>
+                                            </span>
+                                        </p>
+                                        
                                     </div>
                                 </div>
-                            </section>
+                            </div>
                             <% } %>
                             <% if (typeof show_watermark==='undefined' || show_watermark) { %>
                                             <img src="<%= typeof logo_url !== 'undefined' && logo_url ? logo_url : 'https://d2pznqasld4zpy.cloudfront.net/logo.png' %>"

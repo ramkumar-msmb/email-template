@@ -5,13 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Request Form</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Arial', sans-serif;
         }
 
         body {
@@ -25,7 +24,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 0;
         }
 
         .page {
@@ -84,8 +82,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 25px 20px 15px;
+            padding: 15px 18px;
             z-index: 2;
+            color: #222;
+            border-bottom: 1px solid #D9D9D9;
         }
 
         .header-logo {
@@ -98,6 +98,7 @@
             height: auto;
             width: auto;
             max-width: 100%;
+            max-height: 60px;
         }
 
         .header-title {
@@ -119,8 +120,8 @@
         .booking-info-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 20px;
-            font-size: 12px;
+            padding: 10px 18px;
+            font-size: 14px;
             color: #444444;
             z-index: 2;
         }
@@ -129,12 +130,19 @@
             color: #222222;
             font-weight: 600;
         }
+        .header-line{
+            height: 1px;
+            width: 20cm;
+            padding: 0px 18px;
+            margin: 0px 18px 10px 18px;
+            background-color: #D9D9D9;
+        }
 
         /* Patient and Clinic details */
         .details-container {
             display: flex;
             justify-content: space-between;
-            padding: 0 20px;
+            padding: 0 18px;
             margin-top: 8px;
             z-index: 2;
             gap: 20px;
@@ -144,6 +152,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            font-size: 12px;
         }
 
         .details-heading {
@@ -157,7 +166,7 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            padding: 15px;
+            padding: 12px;
             border: 0.5px solid #D9D9D9;
             border-radius: 10px;
             background-color: transparent;
@@ -167,7 +176,7 @@
 
         .details-row {
             display: flex;
-            font-size: 11px;
+            font-size: 12px;
             line-height: 1.4;
         }
 
@@ -187,7 +196,7 @@
 
         /* Scan items table */
         .table-container {
-            padding: 0 20px;
+            padding: 0 18px;
             margin: 10px 0;
             flex: 1;
             min-height: 7.5cm;
@@ -215,20 +224,20 @@
             background: transparent;
             border-bottom: 0.5px solid #D9D9D9;
             font-weight: 500;
-            font-size: 11px;
+            font-size: 13px;
             color: #444444;
             text-align: left;
-            padding: 0 16px;
+            padding: 0 10px;
         }
 
         .scan-table td {
             height: 35px;
             border-bottom: 0.5px solid #EEEEEE;
             font-weight: 400;
-            font-size: 11px;
+            font-size: 13px;
             color: #242424;
             text-align: left;
-            padding: 0 16px;
+            padding: 0 10px;
             vertical-align: middle;
         }
 
@@ -266,7 +275,7 @@
         .info-container {
             display: flex;
             justify-content: space-between;
-            padding: 0 20px;
+            padding: 0 18px;
             margin-top: auto;
             z-index: 2;
             gap: 20px;
@@ -297,14 +306,12 @@
         .info-card {
             border: 0.5px solid #D9D9D9;
             border-radius: 6px;
-            padding: 15px;
-            min-height: 125px;
+            padding: 12px;
+            min-height: 95px;
             font-weight: 400;
-            font-size: 11px;
-            line-height: 1.5;
+            font-size: 12px;
             color: #444444;
             background: transparent;
-            text-align: justify;
             word-wrap: break-word;
         }
 
@@ -312,12 +319,11 @@
         .footer-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
             z-index: 2;
         }
 
         .prescribed-section {
-            padding: 10px 20px 0;
+            padding: 12px 18px;
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -333,7 +339,7 @@
         .prescribed-card {
             border: 0.5px solid #D9D9D9;
             border-radius: 8px;
-            padding: 12px 15px;
+            padding: 8px;
             background: transparent;
         }
 
@@ -344,7 +350,7 @@
 
         .prescribed-table th {
             font-weight: 400;
-            font-size: 9px;
+            font-size: 12px;
             color: #444444;
             text-align: left;
             padding-bottom: 4px;
@@ -352,7 +358,7 @@
 
         .prescribed-table td {
             font-weight: 600;
-            font-size: 11px;
+            font-size: 12px;
             color: #222222;
             text-align: left;
             vertical-align: top;
@@ -361,7 +367,7 @@
 
         .signature-section {
             display: flex;
-            padding: 0 20px;
+            padding: 0 18px;
             align-items: center;
             width: 100%;
             gap: 25px;
@@ -425,7 +431,7 @@
         .footer-text {
             font-size: 10px;
             text-align: justify;
-            padding: 15px 20px 20px;
+            padding: 15px 18px 20px;
             color: #666666;
             line-height: 1.5;
         }
@@ -575,7 +581,7 @@
                                 <%= formattedRequestedDate %>
                             </strong></div>
                     </div>
-
+                     <div class="header-line"></div>
                     <!-- Details Section (Patient / Clinic) -->
                     <div class="details-container">
                         <!-- Patient details column -->
